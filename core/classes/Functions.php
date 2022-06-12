@@ -30,9 +30,13 @@ class Functions
         header("Location:" . BASE_URL . "?action=$route");
     }
 
-    public static function showGameLayout(string $route, array|string|null $data = null): void
+    public static function showGameLayout(string $route, bool $isLogged = true, array|string|null $data = null): void
     {
-        self::renderLayout(['layout/header_html', 'components/main_header', 'components/main_content_header', $route, 'components/main_content_footer', 'components/main_footer', 'layout/footer_html'], $data);
+        $navbar = 'components/navbar_logged';
+        if (!$isLogged) {
+            $navbar = 'components/navbar_not_logged';
+        }
+        self::renderLayout(['layout/header_html', 'components/main_header', $navbar, 'components/main_content_header', $route, 'components/main_content_footer', 'components/main_footer', 'layout/footer_html'], $data);
     }
 
     public static function showMainLayout(string $route = 'home', array|string|null $data = null): void

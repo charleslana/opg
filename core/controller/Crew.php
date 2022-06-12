@@ -9,6 +9,6 @@ class Crew
 
     public function createCrew(): void
     {
-        Functions::showGameLayout('create_crew');
+        Functions::showGameLayout('create_crew', false);
     }
 }
