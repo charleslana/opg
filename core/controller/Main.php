@@ -7,6 +7,11 @@ use core\classes\Functions;
 class Main
 {
 
+    public function confirmEmail(): void
+    {
+        Functions::showMainLayout('confirm_email');
+    }
+
     public function index(): void
     {
         Functions::showMainLayout('home');
@@ -24,6 +29,11 @@ class Main
 //            'error' => 'test error!'
 //        );
 //        echo json_encode($test);
+    }
+
+    public function notFound(): void
+    {
+        Functions::showMainLayout('not_found');
     }
 
     public function register(): void

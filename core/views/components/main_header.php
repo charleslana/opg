@@ -14,7 +14,7 @@
                 </div>
                 <a class="navbar-brand" href="">
                     <div class="d-flex align-items-center py-3">
-                        <span class="font-sans-serif">OPG</span>
+                        <span class="font-sans-serif"><?= APP_TAG_NAME ?></span>
                     </div>
                 </a>
             </div>

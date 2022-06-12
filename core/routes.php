@@ -1,11 +1,14 @@
 <?php
 
-$routes = ['index' => 'main@index', 'login' => 'main@login', 'register' => 'main@register', 'create_crew' => 'Crew@createCrew'];
+$routes = ['index' => 'main@index', 'notFound' => 'main@notFound', 'login' => 'main@login', 'register' => 'main@register', 'confirm_email' => 'main@confirmEmail', 'create_crew' => 'Crew@createCrew'];
 
 $action = 'index';
 
-if (isset($_GET['action']) && array_key_exists($_GET['action'], $routes)) {
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
+    if (!array_key_exists($_GET['action'], $routes)) {
+        $action = 'notFound';
+    }
 }
 
 $parts = explode('@', $routes[$action]);

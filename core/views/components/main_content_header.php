@@ -9,7 +9,7 @@
         </button>
         <a class="navbar-brand me-1 me-sm-3" href="#">
             <div class="d-flex align-items-center">
-                <span class="font-sans-serif">OPG</span>
+                <span class="font-sans-serif"><?= APP_TAG_NAME ?></span>
             </div>
         </a>
         <ul class="navbar-nav align-items-center d-none d-lg-block">
