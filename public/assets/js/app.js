@@ -10,14 +10,10 @@ function login() {
         }
         console.log(response);
         console.log(data);
-        const interval = setInterval(() => {
-            clearInterval(interval);
-            loading(false);
-            successAlert(data);
-        }, 1000);
+        redirect('?action=create_crew');
     }).catch(err => {
         console.error(err);
-    });
+    }).finally(() => loading(false));
     return false;
 }
 
@@ -30,6 +26,7 @@ function errorAlert(message) {
 }
 
 function register() {
+    loading(true);
     axios.post('?action=register', {
         email: 'my-email@email', password: 'my-password'
     }).then(response => {
@@ -43,7 +40,7 @@ function register() {
         successAlert(data);
     }).catch(err => {
         console.error(err);
-    });
+    }).finally(() => loading(false));
     return false;
 }
 
@@ -72,4 +69,8 @@ function fadeOutLoading() {
         clearInterval(interval);
         loadingIcon.style.display = 'none';
     }, 100);
+}
+
+function redirect(page) {
+    window.location.href = page;
 }
