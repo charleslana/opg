@@ -3,6 +3,8 @@
 namespace core\controller;
 
 use core\classes\Functions;
+use core\exception\CustomException;
+use core\service\AccountService;
 
 class Main
 {
@@ -14,15 +16,15 @@ class Main
 
     public function index(): void
     {
-        Functions::showMainLayout('home');
+        Functions::showMainLayout();
     }
 
     public function login(): void
     {
 //        echo '<pre>';
 //        print_r($_POST);
-        $request_body = file_get_contents('php://input');
-        $data = json_decode($request_body, true);
+        $requestBody = file_get_contents('php://input');
+        $data = json_decode($requestBody, true);
         $email = $data['email'];
         echo json_encode($email);
 //        $test = array (
@@ -36,9 +38,14 @@ class Main
         Functions::showMainLayout('not_found');
     }
 
+    /**
+     * @throws CustomException
+     */
     public function register(): void
     {
-        $test = array('error' => 'test error!');
-        echo json_encode($test);
+        Functions::validatePostRequest();
+        $requestBody = file_get_contents('php://input');
+        $data = json_decode($requestBody, true);
+        AccountService::createAccount(array_map('trim', $data));
     }
 }

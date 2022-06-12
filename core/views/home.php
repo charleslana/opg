@@ -96,38 +96,38 @@
                     <form onsubmit="return register()">
                         <div class="mb-3">
                             <input class="form-control" type="text" autocomplete="on" name="name-register"
-                                   id="name-register"
-                                   placeholder="Nome"/>
+                                   id="name-register" placeholder="Nome" required/>
                         </div>
                         <div class="mb-3">
                             <input class="form-control" type="email" autocomplete="on" name="email-register"
-                                   id="email-register"
-                                   placeholder="E-mail"/>
+                                   id="email-register" placeholder="E-mail" required/>
                         </div>
                         <div class="row gx-2">
                             <div class="mb-3 col-sm-6">
                                 <label>
                                     <input class="form-control" type="password" autocomplete="on"
-                                           name="password-register"
-                                           placeholder="Senha"/>
+                                           name="password-register" id="password-register" placeholder="Senha"
+                                           required/>
                                 </label>
                             </div>
                             <div class="mb-3 col-sm-6">
                                 <label>
                                     <input class="form-control" type="password" autocomplete="on"
-                                           name="confirm-password-register"
-                                           placeholder="Confirme a senha"/>
+                                           name="confirm-password-register" id="confirm-password-register"
+                                           placeholder="Confirme a senha" required/>
                                 </label>
                             </div>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="modal-register-checkbox"/>
+                            <input class="form-check-input" type="checkbox" id="modal-register-checkbox" required/>
                             <label class="form-label" for="modal-register-checkbox">
                                 Eu aceito os <a href="#">termos de serviço </a>e <a href="#">política de privacidade</a>
                             </label>
                         </div>
                         <div class="mb-3">
-                            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Registrar
+                            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit"
+                                    id="register-button">
+                                Registrar
                             </button>
                         </div>
                     </form>

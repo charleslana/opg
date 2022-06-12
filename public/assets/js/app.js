@@ -1,3 +1,5 @@
+let loadingInterval;
+
 function login() {
     loading(true);
     axios.post('?action=login', {
@@ -10,7 +12,7 @@ function login() {
         }
         console.log(response);
         console.log(data);
-        redirect('?action=create_crew');
+        redirect('create_crew');
     }).catch(err => {
         console.error(err);
     }).finally(() => loading(false));
@@ -27,24 +29,31 @@ function errorAlert(message) {
 
 function register() {
     loading(true);
+    const button = document.getElementById('register-button');
+    button.disabled = true;
     axios.post('?action=register', {
-        email: 'my-email@email', password: 'my-password'
+        email: document.getElementById('email-register').value,
+        password: document.getElementById('password-register').value,
+        passwordConfirmation: document.getElementById('confirm-password-register').value,
+        name: document.getElementById('name-register').value
     }).then(response => {
         const {data} = response;
         if (data.error) {
             errorAlert(data.error);
             return;
         }
-        console.log(response);
-        console.log(data);
-        successAlert(data);
+        redirect('confirm_email');
     }).catch(err => {
-        console.error(err);
-    }).finally(() => loading(false));
+        errorAlert(err);
+    }).finally(() => {
+        loading(false);
+        button.disabled = false;
+    });
     return false;
 }
 
 function loading(isLoading) {
+    clearInterval(loadingInterval);
     const loadingIcon = document.getElementById('loadingIcon');
     const progressToggle = document.getElementById('progressToggle');
     if (isLoading) {
@@ -52,8 +61,14 @@ function loading(isLoading) {
         progressToggle.classList.add('inner');
         progressToggle.style.animationPlayState = 'running';
         progressToggle.addEventListener('animationend', function () {
-            errorAlert('Ocorreu um erro com a conexão do servidor.');
-            loadingIcon.style.display = 'none';
+            clearInterval(loadingInterval);
+            loadingInterval = setInterval(() => {
+                clearInterval(loadingInterval);
+                if (document.getElementById('progressToggle').classList.contains('inner')) {
+                    errorAlert('Ocorreu um erro com a conexão do servidor.');
+                    loadingIcon.style.display = 'none';
+                }
+            }, 10000);
         });
         return;
     }
@@ -72,5 +87,5 @@ function fadeOutLoading() {
 }
 
 function redirect(page) {
-    window.location.href = page;
+    window.location.href = `?action=${page}`;
 }

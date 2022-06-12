@@ -35,7 +35,7 @@
 }
 
 #loadingIcon .progress-bar.inner {
-    animation: progressbar-countdown 5s linear, 1s linear infinite progress-bar-stripes;
+    animation: progressbar-countdown 5s linear forwards, 1s linear infinite progress-bar-stripes;
 }
 
 #loadingIcon img {
@@ -49,12 +49,4 @@
     100% {
         width: 100%;
     }
-}
-
-.unselectable {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
