@@ -1,0 +1,22 @@
+{
+    "name": "charles/opg",
+    "description": "One Piece Game",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Charles",
+            "email": "charleslanop@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "core\\" : "core/"
+        },
+        "files": [
+            "config.php"
+        ]
+    }
+}
