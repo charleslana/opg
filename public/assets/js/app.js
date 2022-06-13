@@ -13,8 +13,8 @@ function login() {
         console.log(response);
         console.log(data);
         redirect('create_crew');
-    }).catch(err => {
-        console.error(err);
+    }).catch(error => {
+        errorAlert(error.message);
     }).finally(() => loading(false));
     return false;
 }
@@ -43,8 +43,8 @@ function register() {
             return;
         }
         redirect('confirm_email');
-    }).catch(err => {
-        errorAlert(err);
+    }).catch(error => {
+        errorAlert(error.message);
     }).finally(() => {
         loading(false);
         button.disabled = false;
