@@ -10,7 +10,7 @@
                 </p>
                 <div class="card">
                     <div class="card-body p-4 p-sm-5">
-                        <img class="me-2" src="../../public/assets/img/icons/not_found.png" alt="" width="58"/>
+                        <img class="me-2" src="../../public/assets/img/icons/not_found.png" alt="" width="48"/>
                         <p class="lead mt-4 text-800 font-sans-serif fw-semi-bold w-md-75 w-xl-100 mx-auto">
                             A página solicitada não foi encontrada.
                         </p>

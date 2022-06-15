@@ -23,10 +23,6 @@ class Email
         }
     }
 
-    /**
-     * @param PHPMailer $mail
-     * @return void
-     */
     private function configureEmail(PHPMailer $mail): void
     {
         $mail->SMTPDebug = SMTP::DEBUG_OFF;
@@ -40,14 +36,6 @@ class Email
         $mail->CharSet = 'UTF-8';
     }
 
-    /**
-     * @param PHPMailer $mail
-     * @param string $email
-     * @param string $name
-     * @param string $url
-     * @return void
-     * @throws Exception
-     */
     private function configureTemplate(PHPMailer $mail, string $email, string $name, string $url): void
     {
         $mail->setFrom(EMAIL_FROM, APP_NAME);

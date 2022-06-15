@@ -44,11 +44,6 @@ class AccountService
         }
     }
 
-    /**
-     * @param array $data
-     * @param string $token
-     * @return void
-     */
     private static function sendEmailActivateAccount(array $data, string $token): void
     {
         $email = new Email();
@@ -59,10 +54,6 @@ class AccountService
         $_SESSION['accountEmail'] = $data['email'];
     }
 
-    /**
-     * @param array $data
-     * @return void
-     */
     private static function validateData(array $data): void
     {
         if (!$data['email'] || !$data['password'] || !$data['passwordConfirmation'] || !$data['name']) {
@@ -82,9 +73,6 @@ class AccountService
         }
     }
 
-    /**
-     * @return mixed
-     */
     private static function validateUrlToken(): mixed
     {
         if (!isset($_GET['token'])) {
