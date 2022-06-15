@@ -28,6 +28,7 @@ class Functions
     public static function redirect(string $route = 'index'): void
     {
         header("Location:" . BASE_URL . "?action=$route");
+        die();
     }
 
     public static function showGameLayout(string $route, bool $isLogged = true, array|string|null $data = null): void

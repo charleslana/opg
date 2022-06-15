@@ -9,6 +9,15 @@ use core\service\AccountService;
 class Main
 {
 
+    /**
+     * @throws CustomException
+     */
+    public function activateAccount(): void
+    {
+        AccountService::validateAccountToken();
+        Functions::showMainLayout('activate_account');
+    }
+
     public function confirmEmail(): void
     {
         Functions::showMainLayout('confirm_email');
@@ -21,16 +30,9 @@ class Main
 
     public function login(): void
     {
-//        echo '<pre>';
-//        print_r($_POST);
+        Functions::validatePostRequest();
         $requestBody = file_get_contents('php://input');
         $data = json_decode($requestBody, true);
-        $email = $data['email'];
-        echo json_encode($email);
-//        $test = array (
-//            'error' => 'test error!'
-//        );
-//        echo json_encode($test);
     }
 
     public function notFound(): void

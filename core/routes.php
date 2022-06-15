@@ -1,6 +1,6 @@
 <?php
 
-$routes = ['index' => 'main@index', 'notFound' => 'main@notFound', 'login' => 'main@login', 'register' => 'main@register', 'confirm_email' => 'main@confirmEmail', 'create_crew' => 'Crew@createCrew'];
+$routes = ['index' => 'main@index', 'notFound' => 'main@notFound', 'login' => 'main@login', 'register' => 'main@register', 'confirm_email' => 'main@confirmEmail', 'activate_account' => 'main@activateAccount', 'create_crew' => 'Crew@createCrew'];
 
 $action = 'index';
 
