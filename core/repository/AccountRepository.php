@@ -5,6 +5,7 @@ namespace core\repository;
 use core\classes\Database;
 use core\classes\Functions;
 use core\exception\CustomException;
+use core\model\AccountModel;
 
 class AccountRepository
 {
@@ -42,12 +43,40 @@ class AccountRepository
     /**
      * @throws CustomException
      */
-    public function saveAccount(array $data): string
+    public function saveAccount(AccountModel $accountModel): string
     {
         $token = Functions::generateToken();
-        $parameters = [':email' => strtolower($data['email']), ':password' => Functions::encodePassword($data['password']), ':name' => ucwords(strtolower($data['name'])), ':token' => $token];
+        $parameters = [':email' => $accountModel->getEmail(), ':password' => Functions::encodePassword($accountModel->getPassword()), ':name' => $accountModel->getName(), ':token' => $token];
         $database = new Database();
         $database->insert('INSERT INTO account (email, password, name, token) VALUES(:email, :password, :name, :token)', $parameters);
         return $token;
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function validateLogin(AccountModel $accountModel): bool|AccountModel
+    {
+        $parameters = [':email' => $accountModel->getEmail()];
+        $database = new Database();
+        $result = $database->select("SELECT id, email, name, password FROM account WHERE email = :email AND status = 'active' AND deleted_at IS NULL", $parameters);
+        if (count($result) != 1) {
+            return false;
+        }
+        $account = $this->getLoginAccountModel($result[0]);
+        if (!password_verify($accountModel->getPassword(), $account->getPassword())) {
+            return false;
+        }
+        return $account;
+    }
+
+    private function getLoginAccountModel(object $result): AccountModel
+    {
+        $accountModel = new AccountModel();
+        $accountModel->setId($result->id);
+        $accountModel->setEmail($result->email);
+        $accountModel->setName($result->name);
+        $accountModel->setPassword($result->password);
+        return $accountModel;
     }
 }

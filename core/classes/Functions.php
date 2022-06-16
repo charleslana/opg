@@ -2,8 +2,6 @@
 
 namespace core\classes;
 
-use JetBrains\PhpStorm\NoReturn;
-
 class Functions
 {
 
@@ -18,7 +16,7 @@ class Functions
         return substr(str_shuffle($characters), 0, $charactersQuantity);
     }
 
-    #[NoReturn] public static function handleErrors(string $message): void
+    public static function handleErrors(string $message): void
     {
         $error = array('error' => $message);
         echo json_encode($error);
@@ -48,6 +46,13 @@ class Functions
     public static function validateEmail(string $email): bool
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function validateLoggedAccount(): void
+    {
+        if (!isset($_SESSION['accountId'])) {
+            self::redirect();
+        }
     }
 
     public static function validateLoggedUser(): bool

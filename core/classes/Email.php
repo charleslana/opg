@@ -36,6 +36,9 @@ class Email
         $mail->CharSet = 'UTF-8';
     }
 
+    /**
+     * @throws Exception
+     */
     private function configureTemplate(PHPMailer $mail, string $email, string $name, string $url): void
     {
         $mail->setFrom(EMAIL_FROM, APP_NAME);

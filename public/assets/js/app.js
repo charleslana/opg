@@ -1,23 +1,26 @@
 let loadingInterval;
 
-function login() {
+document.getElementById('loginForm').addEventListener('submit', (event) => {
+    event.preventDefault();
     loading(true);
+    const button = document.getElementById('login-button');
+    button.disabled = true;
     axios.post('?action=login', {
-        email: document.getElementById('email-login').value, password: 'my-password'
+        email: document.getElementById('email-login').value, password: document.getElementById('password-login').value
     }).then(response => {
         const {data} = response;
         if (data.error) {
             errorAlert(data.error);
             return;
         }
-        console.log(response);
-        console.log(data);
-        redirect('create_crew');
+        redirect('select_crew');
     }).catch(error => {
         errorAlert(error.message);
-    }).finally(() => loading(false));
-    return false;
-}
+    }).finally(() => {
+        loading(false);
+        button.disabled = false;
+    });
+});
 
 function successAlert(message) {
     Swal.fire('Atenção!', message, 'success');
@@ -27,7 +30,12 @@ function errorAlert(message) {
     Swal.fire('Atenção!', message, 'error');
 }
 
-function register() {
+document.getElementById('registerForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (document.getElementById('password-register').value !== document.getElementById('confirm-password-register').value) {
+        errorAlert('As senhas não são iguais.');
+        return;
+    }
     loading(true);
     const button = document.getElementById('register-button');
     button.disabled = true;
@@ -49,8 +57,7 @@ function register() {
         loading(false);
         button.disabled = false;
     });
-    return false;
-}
+});
 
 function loading(isLoading) {
     clearInterval(loadingInterval);

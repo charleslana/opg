@@ -109,7 +109,7 @@
                         <a class="dropdown-item" href="#">Menu</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Menu</a>
-                        <a class="dropdown-item" href="?action=index">Deslogar</a>
+                        <a class="dropdown-item" href="?action=logout">Deslogar</a>
                     </div>
                 </div>
             </li>

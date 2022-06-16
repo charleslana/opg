@@ -53,14 +53,14 @@
                             <h5 id="modalLabel">Efetuar o login</h5>
                         </div>
                     </div>
-                    <form onsubmit="return login()">
+                    <form id="loginForm">
                         <div class="mb-3">
                             <input class="form-control" type="email" name="email-login" id="email-login"
-                                   placeholder="Digite o e-mail"/>
+                                   placeholder="Digite o e-mail" required/>
                         </div>
                         <div class="mb-3">
                             <input class="form-control" type="password" name="password-login" id="password-login"
-                                   placeholder="Digite a senha"/>
+                                   placeholder="Digite a senha" required/>
                         </div>
                         <div class="row flex-between-center">
                             <div class="col-auto">
@@ -75,7 +75,7 @@
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                    name="submit">Conectar
+                                    name="submit" id="login-button">Conectar
                             </button>
                         </div>
                     </form>
@@ -93,7 +93,7 @@
                             <h5 id="modalLabel">Efetue o cadastro</h5>
                         </div>
                     </div>
-                    <form onsubmit="return register()">
+                    <form id="registerForm">
                         <div class="mb-3">
                             <input class="form-control" type="text" autocomplete="on" name="name-register"
                                    id="name-register" placeholder="Nome" required/>

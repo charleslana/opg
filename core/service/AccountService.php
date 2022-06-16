@@ -6,6 +6,7 @@ use core\classes\Email;
 use core\classes\Functions;
 use core\classes\Messages;
 use core\exception\CustomException;
+use core\model\AccountModel;
 use core\repository\AccountRepository;
 
 class AccountService
@@ -14,18 +15,35 @@ class AccountService
     /**
      * @throws CustomException
      */
-    public static function createAccount(array $data): void
+    public static function createAccount(AccountModel $accountModel): void
     {
         if (Functions::validateLoggedUser()) {
             Functions::handleErrors(Messages::$accountAlreadyLogged);
         }
-        self::validateData($data);
+        self::validateRegisterData($accountModel);
         $accountRepository = new AccountRepository();
-        if ($accountRepository->findByEmail($data['email'])) {
+        if ($accountRepository->findByEmail($accountModel->getEmail())) {
             Functions::handleErrors(Messages::$emailAlreadyRegistered);
         }
-        $token = $accountRepository->saveAccount($data);
-        self::sendEmailActivateAccount($data, $token);
+        $token = $accountRepository->saveAccount($accountModel);
+        self::sendEmailActivateAccount($accountModel->getEmail(), $accountModel->getName(), $token);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public static function login(AccountModel $accountModel): void
+    {
+        if (Functions::validateLoggedUser()) {
+            Functions::handleErrors(Messages::$accountAlreadyLogged);
+        }
+        self::validateLoginData($accountModel);
+        $accountRepository = new AccountRepository();
+        $result = $accountRepository->validateLogin($accountModel);
+        if (is_bool($result)) {
+            Functions::handleErrors(Messages::$invalidLogin);
+        }
+        self::setLoginAccount($result);
     }
 
     /**
@@ -44,31 +62,45 @@ class AccountService
         }
     }
 
-    private static function sendEmailActivateAccount(array $data, string $token): void
+    private static function sendEmailActivateAccount(string $accountEmail, string $name, string $token): void
     {
         $email = new Email();
-        $result = $email->sendEmailNewAccount($data['email'], ucwords(strtolower($data['name'])), $token);
+        $result = $email->sendEmailNewAccount($accountEmail, $name, $token);
         if (!$result) {
             Functions::handleErrors(Messages::$genericError);
         }
-        $_SESSION['accountEmail'] = $data['email'];
+        $_SESSION['accountEmail'] = $accountEmail;
     }
 
-    private static function validateData(array $data): void
+    private static function setLoginAccount(AccountModel $accountModel): void
     {
-        if (!$data['email'] || !$data['password'] || !$data['passwordConfirmation'] || !$data['name']) {
+        $_SESSION['accountId'] = $accountModel->getId();
+        $_SESSION['email'] = $accountModel->getEmail();
+        $_SESSION['name'] = $accountModel->getName();
+    }
+
+    private static function validateLoginData(AccountModel $accountModel): void
+    {
+        if (!$accountModel->getEmail() || !$accountModel->getPassword()) {
             Functions::handleErrors(Messages::$fillData);
         }
-        if (!Functions::validateEmail($data['email'])) {
+        if (!Functions::validateEmail($accountModel->getEmail())) {
             Functions::handleErrors(Messages::$invalidEmail);
         }
-        if (strlen($data['password']) < 6) {
+    }
+
+    private static function validateRegisterData(AccountModel $accountModel): void
+    {
+        if (!$accountModel->getEmail() || !$accountModel->getPassword() || !$accountModel->getName()) {
+            Functions::handleErrors(Messages::$fillData);
+        }
+        if (!Functions::validateEmail($accountModel->getEmail())) {
+            Functions::handleErrors(Messages::$invalidEmail);
+        }
+        if (strlen($accountModel->getPassword()) < 6) {
             Functions::handleErrors(Messages::$weakPassword);
         }
-        if ($data['password'] != $data['passwordConfirmation']) {
-            Functions::handleErrors(Messages::$differentPasswords);
-        }
-        if (!Functions::validateOnlyLettersAndSpace($data['name'])) {
+        if (!Functions::validateOnlyLettersAndSpace($accountModel->getName())) {
             Functions::handleErrors(Messages::$nameContainOnlyLettersAndSpace);
         }
     }
