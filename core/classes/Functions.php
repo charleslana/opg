@@ -31,11 +31,13 @@ class Functions
 
     public static function showGameLayout(string $route, bool $isLogged = true, array|string|null $data = null): void
     {
-        $navbar = 'components/navbar_logged';
+        $menubar = 'components/menubar_character';
+        $navbar = 'components/navbar_character';
         if (!$isLogged) {
-            $navbar = 'components/navbar_not_logged';
+            $menubar = 'components/menubar_account';
+            $navbar = 'components/navbar_account';
         }
-        self::renderLayout(['layout/header_html', 'components/main_header', $navbar, 'components/main_content_header', $route, 'components/main_content_footer', 'components/main_footer', 'layout/footer_html'], $data);
+        self::renderLayout(['layout/header_html', 'components/main_header', $menubar, $navbar, 'components/menubar_dropdown', $route, 'components/main_content_footer', 'components/main_footer', 'layout/footer_html'], $data);
     }
 
     public static function showMainLayout(string $route = 'home', array|string|null $data = null): void

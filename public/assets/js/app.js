@@ -1,6 +1,14 @@
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById('email-login') && localStorage.getItem('emailLogin')) {
+        document.getElementById('email-login').value = localStorage.getItem('emailLogin');
+        document.getElementById('password-login').value = localStorage.getItem('passwordLogin');
+        document.getElementById('modal-checkbox').checked = true;
+    }
+});
+
 let loadingInterval;
 
-document.getElementById('loginForm').addEventListener('submit', (event) => {
+document.getElementById('loginForm')?.addEventListener('submit', (event) => {
     event.preventDefault();
     loading(true);
     const button = document.getElementById('login-button');
@@ -13,6 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', (event) => {
             errorAlert(data.error);
             return;
         }
+        validateSaveLoginData();
         redirect('select_crew');
     }).catch(error => {
         errorAlert(error.message);
@@ -30,7 +39,7 @@ function errorAlert(message) {
     Swal.fire('Atenção!', message, 'error');
 }
 
-document.getElementById('registerForm').addEventListener('submit', (event) => {
+document.getElementById('registerForm')?.addEventListener('submit', (event) => {
     event.preventDefault();
     if (document.getElementById('password-register').value !== document.getElementById('confirm-password-register').value) {
         errorAlert('As senhas não são iguais.');
@@ -95,4 +104,14 @@ function fadeOutLoading() {
 
 function redirect(page) {
     window.location.href = `?action=${page}`;
+}
+
+function validateSaveLoginData() {
+    if (document.getElementById('modal-checkbox').checked) {
+        localStorage.setItem('emailLogin', document.getElementById('email-login').value);
+        localStorage.setItem('passwordLogin', document.getElementById('password-login').value);
+        return;
+    }
+    localStorage.removeItem('emailLogin');
+    localStorage.removeItem('passwordLogin');
 }

@@ -7,10 +7,10 @@ use core\classes\Functions;
 class Crew
 {
 
-    public function createCrew(): void
+    public function recruitCrew(): void
     {
         Functions::validateLoggedAccount();
-        Functions::showGameLayout('create_crew', false);
+        Functions::showGameLayout('recruit_crew', false);
     }
 
     public function selectCrew(): void
