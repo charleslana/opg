@@ -10,7 +10,7 @@
 <script src="../../../public/vendors/fontawesome/all.min.js"></script>
 <script src="../../../public/vendors/lodash/lodash.min.js"></script>
 <script src="../../../public/assets/js/theme.min.js"></script>
-<script src="../../../public/vendors/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script src="../../../public/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="../../../public/assets/js/axios.min.js"></script>
 <script src="../../../public/assets/js/app.js"></script>
 </body>
