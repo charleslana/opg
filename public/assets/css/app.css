@@ -50,3 +50,27 @@
         width: 100%;
     }
 }
+
+.home-bg {
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2)
+    ), url('../img/layout/home_bg.jpg');
+    background-position: center center;
+}
+
+.home-bg-2 {
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.4)
+    ), url('../img/layout/home_bg_2.jpg');
+    background-position: center bottom;
+}
+
+.random-players-bg {
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.4)
+    ), url('../img/layout/random_players_bg.png');
+    background-position: center center;
+}

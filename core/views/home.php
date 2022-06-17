@@ -138,8 +138,7 @@
     <!-- ============================================-->
     <!-- <section> banner ===========================-->
     <section class="py-0 overflow-hidden light" id="banner">
-        <div class="bg-holder overlay"
-             style="background-image:url(../../public/assets/img/layout/home_bg.jpg);background-position: center center;">
+        <div class="bg-holder overlay home-bg">
         </div>
         <!--/.bg-holder-->
         <div class="container">
@@ -238,8 +237,7 @@
     <!-- ============================================-->
     <!-- ============================================-->
     <!-- <section> random players ===================-->
-    <section class="bg-200 text-center"
-             style="background-image:url(../../public/assets/img/layout/random_players_bg.png);background-position: center center;">
+    <section class="bg-200 text-center random-players-bg">
         <div class="container random-players">
             <div class="row">
                 <div class="col">
@@ -306,8 +304,7 @@
     <!-- ============================================-->
     <!-- <section> registered users =================-->
     <section class="light">
-        <div class="bg-holder overlay"
-             style="background-image:url(../../public/assets/img/layout/home_bg_2.jpg);background-position: center top;">
+        <div class="bg-holder overlay home-bg-2">
         </div>
         <!--/.bg-holder-->
         <div class="container">
