@@ -2,7 +2,7 @@
     <a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown"
        aria-haspopup="true" aria-expanded="false">
         <div class="avatar avatar-xl">
-            <img class="rounded-circle" src="../../../public/assets/img/characters/1/portrait/1.png"
+            <img class="rounded-circle" src="../../../public/assets/img/characters/portrait/1.png"
                  alt=""/>
         </div>
     </a>

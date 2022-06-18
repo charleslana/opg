@@ -12,9 +12,37 @@
                 <span class="font-sans-serif"><?= APP_TAG_NAME ?></span>
             </div>
         </a>
-        <ul class="navbar-nav align-items-center d-none d-lg-block">
+        <ul class="navbar-nav align-items-center">
+            <li class="nav-item d-none d-sm-block me-3">
+                <div class="nav-link px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Berries">
+                    <span class="belly-icon"></span> 500
+                </div>
+            </li>
+            <li class="nav-item d-none d-sm-block me-3">
+                <a class="nav-link px-0" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ouro">
+                    <span class="gold-icon"></span> 500
+                    <button class="btn btn-outline-primary btn-sm rounded-pill me-1 mb-1" type="button">
+                        <em class="fas fa-plus fs--2"></em>
+                    </button>
+                </a>
+            </li>
             <li class="nav-item d-none d-sm-block">
-                <p class="nav-link"><?= $_SESSION['email'] ?></p>
+                <span class="badge rounded-pill bg-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      title="Nível">
+                    1
+                </span>
+                <em class="ra ra-flask align-middle" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Experiência"></em>
+            </li>
+            <li class="nav-item d-none d-sm-block me-3">
+                <div class="progress" style="height:20px; width: 100px;"
+                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="25/100">
+                    <div class="progress-bar bg-success" role="progressbar" style="min-width: 5%; width: 50%"
+                         aria-valuenow="25"
+                         aria-valuemin="0"
+                         aria-valuemax="100">50%
+                    </div>
+                </div>
             </li>
         </ul>
         <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
@@ -24,12 +52,12 @@
                            type="checkbox" data-theme-control="theme" value="dark"/>
                     <label class="mb-0 theme-control-toggle-label theme-control-toggle-light"
                            for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left"
-                           title="Switch to light theme">
+                           title="Alternar para o tema claro">
                         <span class="fas fa-sun fs-0"></span>
                     </label>
                     <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark"
                            for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left"
-                           title="Switch to dark theme">
+                           title="Alternar para o tema escuro">
                         <span class="fas fa-moon fs-0"></span>
                     </label>
                 </div>

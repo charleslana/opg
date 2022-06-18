@@ -2,16 +2,18 @@
 
 namespace core\model;
 
+use core\enum\AccountStatusEnum;
+
 class AccountModel
 {
 
     private string $createdAt;
     private string $deletedAt;
     private string $email;
-    private string $id;
+    private int $id;
     private string $name;
     private string $password;
-    private string $status;
+    private AccountStatusEnum $status;
     private string $token;
     private string $updatedAt;
 
@@ -64,17 +66,17 @@ class AccountModel
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param int $id
      */
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -112,17 +114,17 @@ class AccountModel
     }
 
     /**
-     * @return string
+     * @return AccountStatusEnum
      */
-    public function getStatus(): string
+    public function getStatus(): AccountStatusEnum
     {
         return $this->status;
     }
 
     /**
-     * @param string $status
+     * @param AccountStatusEnum $status
      */
-    public function setStatus(string $status): void
+    public function setStatus(AccountStatusEnum $status): void
     {
         $this->status = $status;
     }

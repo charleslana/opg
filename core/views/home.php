@@ -252,10 +252,10 @@
                             <?php for ($i = 1; $i <= 3; $i++) : ?>
                                 <div class="swiper-slide">
                                     <div class="px-5 px-sm-6">
-                                        <p class="fs-sm-1 fs-md-2 fst-italic text-dark">Zoro</p>
+                                        <p class="fs-sm-1 fs-md-2 fst-italic text-dark">Luffy</p>
                                         <p class="fs-0 text-600">Charles<?= $i ?> - Nível 1</p>
                                         <img class="w-auto mx-auto"
-                                             src="../../public/assets/img/characters/<?= $i ?>/<?= $i ?>.png" alt=""
+                                             src="../../public/assets/img/characters/landscape/<?= $i ?>.png" alt=""
                                              height="250"/>
                                     </div>
                                 </div>

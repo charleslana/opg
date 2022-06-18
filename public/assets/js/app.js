@@ -115,3 +115,14 @@ function validateSaveLoginData() {
     localStorage.removeItem('emailLogin');
     localStorage.removeItem('passwordLogin');
 }
+
+function showCanvas() {
+    const element = document.getElementById('offcanvasRight');
+    const bsOffcanvas = new bootstrap.Offcanvas(element);
+    bsOffcanvas.show();
+}
+
+function showCharacterDetails() {
+    //loading(true);
+    showCanvas();
+}

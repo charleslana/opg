@@ -16,6 +16,6 @@ class Crew
     public function selectCrew(): void
     {
         Functions::validateLoggedAccount();
-        Functions::showGameLayout('select_crew', false);
+        Functions::showGameLayout('select_crew');
     }
 }
