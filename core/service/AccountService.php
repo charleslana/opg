@@ -28,6 +28,11 @@ class AccountService
         self::sendEmailActivateAccount($email, $name, $token);
     }
 
+    public static function getAccountId(): int
+    {
+        return $_SESSION['accountId'];
+    }
+
     /**
      * @throws CustomException
      */

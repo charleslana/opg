@@ -4,6 +4,7 @@ namespace core\repository;
 
 use core\classes\Database;
 use core\exception\CustomException;
+use core\service\AccountService;
 
 class CharacterRepository
 {
@@ -20,11 +21,17 @@ class CharacterRepository
     /**
      * @throws CustomException
      */
-    public function findCharacterById(int $id): bool|object
+    public function findCharacterByIdAndAccountCharacterIdAndAccountId(int $id): bool|object
     {
-        $parameters = [':id' => $id];
+        $parameters = [':id' => $id, ':accountId' => AccountService::getAccountId()];
         $database = new Database();
-        $result = $database->select("SELECT * FROM `character` WHERE id = :id", $parameters);
+        $result = $database->select('
+            SELECT c.*, ac.*, a.level AS accountLevel FROM `character` c
+                LEFT OUTER JOIN (SELECT * FROM account_character ORDER BY level DESC, npc_battles DESC, arena_battles DESC, npc_wins DESC, arena_wins DESC LIMIT 1) ac ON (c.id = ac.character_id)
+                    LEFT OUTER JOIN account a ON (a.id = :accountId)
+                        WHERE c.id = :id
+            ', $parameters
+        );
         if (count($result) != 1) {
             return false;
         }

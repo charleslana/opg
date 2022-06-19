@@ -35,12 +35,13 @@
                     title="Experiência"></em>
             </li>
             <li class="nav-item d-none d-sm-block me-3">
-                <div class="progress" style="height:20px; width: 100px;"
+                <div class="progress position-relative" style="height:20px; width: 100px;"
                      data-bs-toggle="tooltip" data-bs-placement="bottom" title="25/100">
-                    <div class="progress-bar bg-success" role="progressbar" style="min-width: 5%; width: 50%"
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
                          aria-valuenow="25"
                          aria-valuemin="0"
-                         aria-valuemax="100">50%
+                         aria-valuemax="100">
+                        <span class="justify-content-center d-flex position-absolute w-100 text-1000">50%</span>
                     </div>
                 </div>
             </li>

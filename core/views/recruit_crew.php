@@ -70,7 +70,8 @@ if (!$characters) {
         <button class="btn-close text-reset" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <img src="../../public/assets/img/characters/landscape/1.png" alt="" height="200" class="center mb-3">
+        <img id="characterImage" src="../../public/assets/img/characters/landscape/1.png" alt="" height="200"
+             class="center mb-3">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="status-tab" data-bs-toggle="tab" href="#tab-status"
@@ -93,100 +94,100 @@ if (!$characters) {
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Atributos de força por nível
-                        <span class="badge badge-soft-primary rounded-pill">+3</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="strengthAttributes">+3</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Atributos de defesa por nível
-                        <span class="badge badge-soft-primary rounded-pill">+1</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="defenseAttributes">+1</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Atributos de vida por nível
-                        <span class="badge badge-soft-primary rounded-pill">+1</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="lifeAttributes">+1</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Atributos de energia por nível
-                        <span class="badge badge-soft-primary rounded-pill">+1</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="energyAttributes">+1</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Atributos de agilidade por nível
-                        <span class="badge badge-soft-primary rounded-pill">+1</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="agilityAttributes">+1</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Atributos de resistência por nível
-                        <span class="badge badge-soft-primary rounded-pill">+1</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="resistanceAttributes">+1</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Nível máximo
-                        <span class="badge badge-soft-primary rounded-pill">60</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="maximumLevel">60</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Desbloqueio de Haki
-                        <span class="badge badge-soft-primary rounded-pill">não</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="hakiUnlock">não</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Desbloqueio de Akuma no mi
-                        <span class="badge badge-soft-primary rounded-pill">sim</span>
+                        <span class="badge badge-soft-primary rounded-pill" id="akumaNoMiUnlock">sim</span>
                     </li>
                 </ul>
             </div>
             <div class="tab-pane fade row" id="tab-requirements" role="tabpanel" aria-labelledby="requirements-tab">
                 <div class="col-12">
                     <p class="fs-0">Nível de jogador</p>
-                    <div class="progress mb-3" style="height:15px">
-                        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">
-                            0/0
+                    <div class="progress mb-3 position-relative" style="height:15px">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100" id="playerLevelUnlock">
+                            <span class="justify-content-center d-flex position-absolute w-100 text-1000">0/0</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <p class="fs-0">Algum personagem de nível</p>
-                    <div class="progress mb-3" style="height:15px">
-                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">
-                            0/0
+                    <div class="progress mb-3 position-relative" style="height:15px">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100" id="characterLevelUnlock">
+                            <span class="justify-content-center d-flex position-absolute w-100 text-1000">0/0</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <p class="fs-0">Algum personagem com batalhas NPC</p>
-                    <div class="progress mb-3" style="height:15px">
-                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">
-                            0/0
+                    <div class="progress mb-3 position-relative" style="height:15px">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100" id="characterNpcBattlesUnlock">
+                            <span class="justify-content-center d-flex position-absolute w-100 text-1000">0/0</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <p class="fs-0">Algum personagem com batalhas Arena</p>
-                    <div class="progress mb-3" style="height:15px">
-                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">
-                            0/0
+                    <div class="progress mb-3 position-relative" style="height:15px">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100" id="characterArenaBattlesUnlock">
+                            <span class="justify-content-center d-flex position-absolute w-100 text-1000">0/0</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <p class="fs-0">Algum personagem com vitórias NPC</p>
-                    <div class="progress mb-3" style="height:15px">
-                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">
-                            0/0
+                    <div class="progress mb-3 position-relative" style="height:15px">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100" id="characterNpcWinsUnlock">
+                            <span class="justify-content-center d-flex position-absolute w-100 text-1000">0/0</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <p class="fs-0">Algum personagem com vitórias Arena</p>
-                    <div class="progress mb-3" style="height:15px">
-                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">
-                            0/0
+                    <div class="progress mb-3 position-relative" style="height:15px">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="25"
+                             aria-valuemin="0" aria-valuemax="100" id="characterArenaWinsUnlock">
+                            <span class="justify-content-center d-flex position-absolute w-100 text-1000">0/0</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="tab-recruit" role="tabpanel" aria-labelledby="recruit-tab">
-                <button class="btn btn-primary me-1 mb-1" type="button">Recrutar gratuito</button>
+                <button class="btn btn-primary me-1 mb-1" type="button" id="free-recruit">Recrutar gratuito</button>
                 <hr>
                 <div class="alert alert-warning" role="alert">
                     Você pode pagar com <span class="gold-icon"></span> para recrutar agora!

@@ -116,7 +116,35 @@ function validateSaveLoginData() {
     localStorage.removeItem('passwordLogin');
 }
 
-function showCanvas() {
+function showCharacterDetailsCanvas(data) {
+    document.getElementById('offcanvasRightLabel').innerText = data.name;
+    document.getElementById('characterImage').src = `../../public/assets/img/characters/landscape/${data.image}.png`;
+    document.getElementById('strengthAttributes').innerText = `+${data.strength_attributes}`;
+    document.getElementById('defenseAttributes').innerText = `+${data.defense_attributes}`;
+    document.getElementById('lifeAttributes').innerText = `+${data.life_attributes}`;
+    document.getElementById('energyAttributes').innerText = `+${data.energy_attributes}`;
+    document.getElementById('agilityAttributes').innerText = `+${data.agility_attributes}`;
+    document.getElementById('resistanceAttributes').innerText = `+${data.resistance_attributes}`;
+    document.getElementById('maximumLevel').innerText = data.maximum_level;
+    document.getElementById('hakiUnlock').innerText = data.haki_unlock === 'no' ? 'não' : 'sim';
+    document.getElementById('akumaNoMiUnlock').innerText = data.akuma_no_mi_unlock === 'no' ? 'não' : 'sim';
+    document.getElementById('playerLevelUnlock').style.width = `${barCalculation(data.accountLevel, +data.player_level_unlock)}%`;
+    document.querySelector('#playerLevelUnlock > span').innerText = `${data.accountLevel}/${+data.player_level_unlock}`;
+    document.getElementById('characterLevelUnlock').style.width = `${barCalculation(+data.level, +data.character_level_unlock)}%`;
+    document.querySelector('#characterLevelUnlock > span').innerText = `${+data.level}/${+data.character_level_unlock}`;
+    document.getElementById('characterNpcBattlesUnlock').style.width = `${barCalculation(+data.npc_battles, +data.character_npc_battles_unlock)}%`;
+    document.querySelector('#characterNpcBattlesUnlock > span').innerText = `${+data.npc_battles}/${+data.character_npc_battles_unlock}`;
+    document.getElementById('characterArenaBattlesUnlock').style.width = `${barCalculation(+data.arena_battles, +data.character_arena_battles_unlock)}%`;
+    document.querySelector('#characterArenaBattlesUnlock > span').innerText = `${+data.arena_battles}/${+data.character_arena_battles_unlock}`;
+    document.getElementById('characterNpcWinsUnlock').style.width = `${barCalculation(+data.npc_wins, +data.character_npc_wins_unlock)}%`;
+    document.querySelector('#characterNpcWinsUnlock > span').innerText = `${+data.npc_wins}/${+data.character_npc_wins_unlock}`;
+    document.getElementById('characterArenaWinsUnlock').style.width = `${barCalculation(+data.arena_wins, +data.character_arena_wins_unlock)}%`;
+    document.querySelector('#characterArenaWinsUnlock > span').innerText = `${+data.arena_wins}/${+data.character_arena_wins_unlock}`;
+    if (data.accountLevel < +data.player_level_unlock || +data.level < +data.character_level_unlock || +data.npc_battles < +data.character_npc_battles_unlock || +data.arena_battles < +data.character_arena_battles_unlock || +data.npc_wins < +data.character_npc_wins_unlock || +data.arena_wins < +data.character_arena_wins_unlock) {
+        document.getElementById('free-recruit').setAttribute('disabled', '');
+    } else {
+        document.getElementById('free-recruit').removeAttribute('disabled');
+    }
     const element = document.getElementById('offcanvasRight');
     const bsOffcanvas = new bootstrap.Offcanvas(element);
     bsOffcanvas.show();
@@ -134,10 +162,22 @@ function showCharacterDetails(id) {
             errorAlert(data.error);
             return;
         }
-        showCanvas();
+        showCharacterDetailsCanvas(data);
     }).catch(error => {
         errorAlert(error.message);
     }).finally(() => {
         loading(false);
     });
+}
+
+function barCalculation(min, max) {
+    if (min >= max) {
+        return 100;
+    }
+    const multiply = (min * max) / max;
+    const result = (multiply * 100) / max;
+    if (result > 100) {
+        return 100;
+    }
+    return result;
 }
