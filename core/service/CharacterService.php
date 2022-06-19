@@ -34,7 +34,7 @@ class CharacterService
             Functions::handleErrors(Messages::$accountNotLogged);
         }
         $characterRepository = new CharacterRepository();
-        $result = $characterRepository->findCharacterByIdAndAccountCharacterIdAndAccountId($id);
+        $result = $characterRepository->findCharacterByIdAndAccountCharacterByIdAndAccountById($id);
         if (!$result) {
             Functions::handleErrors(Messages::$characterNotFound);
         }

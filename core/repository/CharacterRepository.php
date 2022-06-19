@@ -21,7 +21,7 @@ class CharacterRepository
     /**
      * @throws CustomException
      */
-    public function findCharacterByIdAndAccountCharacterIdAndAccountId(int $id): bool|object
+    public function findCharacterByIdAndAccountCharacterByIdAndAccountById(int $id): bool|object
     {
         $parameters = [':id' => $id, ':accountId' => AccountService::getAccountId()];
         $database = new Database();
