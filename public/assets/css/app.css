@@ -87,10 +87,6 @@
     border: 10px solid transparent;
 }
 
-.blocked {
-    filter: grayscale(1);
-}
-
 .center {
     display: block;
     margin-left: auto;

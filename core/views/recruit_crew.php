@@ -31,9 +31,7 @@ if (!$characters) {
     <div class="row row-cols-auto mb-3">
         <?php foreach ($characters as $key => $character) : ?>
             <div class="col text-start separate-column">
-                <div class="character-portrait <?php if ($key == 0) {
-                    echo 'blocked';
-                } ?>" onclick="showCharacterDetails(<?= $character->id ?>)"
+                <div class="character-portrait" onclick="showCharacterDetails(<?= $character->id ?>)"
                      style="background-image: url('/public/assets/img/characters/portrait/<?= $character->image ?>.png')"></div>
             </div>
         <?php endforeach; ?>
