@@ -24,6 +24,9 @@ class AccountService
         if ($accountRepository->findByEmail($email)) {
             Functions::handleErrors(Messages::$emailAlreadyRegistered);
         }
+        if ($accountRepository->findByName($name)) {
+            Functions::handleErrors(Messages::$nameAlreadyRegistered);
+        }
         $token = $accountRepository->saveAccount($name, $email, $password);
         self::sendEmailActivateAccount($email, $name, $token);
     }
@@ -112,8 +115,11 @@ class AccountService
         if (strlen($password) < 6) {
             Functions::handleErrors(Messages::$weakPassword);
         }
-        if (!Functions::validateOnlyLettersAndSpace($name)) {
-            Functions::handleErrors(Messages::$nameContainOnlyLettersAndSpace);
+        if (strlen($name) < 3 || strlen($name) > 20) {
+            Functions::handleErrors(Messages::$nameCharacterMinMax);
+        }
+        if (!Functions::validateName($name)) {
+            Functions::handleErrors(Messages::$invalidName);
         }
     }
 

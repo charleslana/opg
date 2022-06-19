@@ -56,6 +56,20 @@ class AccountRepository
     /**
      * @throws CustomException
      */
+    public function findByName(string $name): bool
+    {
+        $parameters = [':name' => $name];
+        $database = new Database();
+        $result = $database->select('SELECT name from account WHERE name = :name', $parameters);
+        if (count($result) != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @throws CustomException
+     */
     public function saveAccount(string $name, string $email, string $password): string
     {
         $token = Functions::generateToken();

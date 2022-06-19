@@ -192,7 +192,7 @@ if (!$characters) {
                 <div class="alert alert-warning" role="alert">
                     Você pode pagar com <span class="gold-icon"></span> para recrutar agora!
                 </div>
-                <button class="btn btn-outline-warning me-1 mb-1" type="button">
+                <button class="btn btn-outline-warning me-1 mb-1" type="button" id="goldUnlock">
                     Recrutar 1K <span class="gold-icon"></span>
                 </button>
             </div>

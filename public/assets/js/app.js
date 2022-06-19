@@ -145,6 +145,7 @@ function showCharacterDetailsCanvas(data) {
     } else {
         document.getElementById('free-recruit').removeAttribute('disabled');
     }
+    document.getElementById('goldUnlock').innerHTML = `Recrutar ${data.gold_unlock} <span class="gold-icon"></span>`;
     const element = document.getElementById('offcanvasRight');
     const bsOffcanvas = new bootstrap.Offcanvas(element);
     bsOffcanvas.show();

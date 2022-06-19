@@ -22,12 +22,14 @@ $account = AccountService::getAccount();
         </a>
         <ul class="navbar-nav align-items-center">
             <li class="nav-item d-none d-sm-block me-3">
-                <div class="nav-link px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Berries">
+                <div class="nav-link px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                     title="Berries<br><?= Functions::numberFormat($account->belly) ?>">
                     <span class="belly-icon"></span> <?= Functions::numberAbbreviation($account->belly) ?>
                 </div>
             </li>
             <li class="nav-item d-none d-sm-block me-3">
-                <a class="nav-link px-0" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ouro">
+                <a class="nav-link px-0" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   data-bs-html="true" title="Ouro<br><?= Functions::numberFormat($account->gold) ?>">
                     <span class="gold-icon"></span> <?= Functions::numberAbbreviation($account->gold) ?>
                     <button class="btn btn-outline-primary btn-sm rounded-pill me-1 mb-1" type="button">
                         <em class="fas fa-plus fs--2"></em>

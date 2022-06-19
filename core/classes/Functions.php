@@ -31,6 +31,11 @@ class Functions
         return number_format($number / (1000 ** $i), $m ? $floating_points : 0) . $m;
     }
 
+    public static function numberFormat(int $number): string
+    {
+        return number_format($number, 0, '.', '.');
+    }
+
     public static function redirect(string $route = 'index'): void
     {
         header("Location:" . BASE_URL . "?action=$route");
@@ -87,9 +92,9 @@ class Functions
         return isset($_SESSION['accountId']);
     }
 
-    public static function validateOnlyLettersAndSpace(string $text): bool
+    public static function validateName(string $text): bool
     {
-        $result = preg_match('|^[\pL\s]+$|u', $text);
+        $result = preg_match('|^[\pL\s\d]+$|u', $text);
         if ($result) {
             return true;
         }
