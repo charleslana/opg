@@ -1,3 +1,11 @@
+<?php
+
+use core\classes\Functions;
+use core\service\AccountService;
+
+$account = AccountService::getAccount();
+
+?>
 <div class="content">
     <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand" aria-label="">
         <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button"
@@ -15,12 +23,12 @@
         <ul class="navbar-nav align-items-center">
             <li class="nav-item d-none d-sm-block me-3">
                 <div class="nav-link px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Berries">
-                    <span class="belly-icon"></span> 500
+                    <span class="belly-icon"></span> <?= Functions::numberAbbreviation($account->belly) ?>
                 </div>
             </li>
             <li class="nav-item d-none d-sm-block me-3">
                 <a class="nav-link px-0" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ouro">
-                    <span class="gold-icon"></span> 500
+                    <span class="gold-icon"></span> <?= Functions::numberAbbreviation($account->gold) ?>
                     <button class="btn btn-outline-primary btn-sm rounded-pill me-1 mb-1" type="button">
                         <em class="fas fa-plus fs--2"></em>
                     </button>

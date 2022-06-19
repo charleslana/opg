@@ -23,6 +23,14 @@ class Functions
         die();
     }
 
+    public static function numberAbbreviation(int $number, int $floating_points = 1): string
+    {
+        $a = ['', 'K', 'M', 'B', 't', 'q', 'Q', 's', 'S', 'o', 'n', 'd'];
+        $i = intdiv(strlen((string)$number) - 1, 3);
+        $m = $a[$i] ?? '';
+        return number_format($number / (1000 ** $i), $m ? $floating_points : 0) . $m;
+    }
+
     public static function redirect(string $route = 'index'): void
     {
         header("Location:" . BASE_URL . "?action=$route");

@@ -28,12 +28,26 @@ class AccountRepository
     /**
      * @throws CustomException
      */
+    public function findByAccount(int $id): bool|object
+    {
+        $parameters = [':id' => $id];
+        $database = new Database();
+        $result = $database->select('SELECT id, email, name, role, level, belly, gold from account WHERE id = :id', $parameters);
+        if (count($result) != 1) {
+            return false;
+        }
+        return $result[0];
+    }
+
+    /**
+     * @throws CustomException
+     */
     public function findByEmail(string $email): bool
     {
         $parameters = [':email' => $email];
         $database = new Database();
-        $results = $database->select('SELECT email from account WHERE email = :email', $parameters);
-        if (count($results) != 0) {
+        $result = $database->select('SELECT email from account WHERE email = :email', $parameters);
+        if (count($result) != 0) {
             return true;
         }
         return false;

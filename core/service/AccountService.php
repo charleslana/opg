@@ -28,6 +28,15 @@ class AccountService
         self::sendEmailActivateAccount($email, $name, $token);
     }
 
+    /**
+     * @throws CustomException
+     */
+    public static function getAccount(): object
+    {
+        $accountRepository = new AccountRepository();
+        return $accountRepository->findByAccount(self::getAccountId());
+    }
+
     public static function getAccountId(): int
     {
         return $_SESSION['accountId'];
