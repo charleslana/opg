@@ -122,7 +122,22 @@ function showCanvas() {
     bsOffcanvas.show();
 }
 
-function showCharacterDetails() {
-    //loading(true);
-    showCanvas();
+function showCharacterDetails(id) {
+    loading(true);
+    axios.get('?action=get_character_details', {
+        params: {
+            id: id
+        }
+    }).then(response => {
+        const {data} = response;
+        if (data.error) {
+            errorAlert(data.error);
+            return;
+        }
+        showCanvas();
+    }).catch(error => {
+        errorAlert(error.message);
+    }).finally(() => {
+        loading(false);
+    });
 }

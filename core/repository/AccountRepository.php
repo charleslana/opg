@@ -5,7 +5,6 @@ namespace core\repository;
 use core\classes\Database;
 use core\classes\Functions;
 use core\exception\CustomException;
-use core\model\AccountModel;
 
 class AccountRepository
 {
@@ -43,10 +42,10 @@ class AccountRepository
     /**
      * @throws CustomException
      */
-    public function saveAccount(AccountModel $accountModel): string
+    public function saveAccount(string $name, string $email, string $password): string
     {
         $token = Functions::generateToken();
-        $parameters = [':email' => $accountModel->getEmail(), ':password' => Functions::encodePassword($accountModel->getPassword()), ':name' => $accountModel->getName(), ':token' => $token];
+        $parameters = [':email' => strtolower($email), ':password' => Functions::encodePassword($password), ':name' => ucwords(strtolower($name)), ':token' => $token];
         $database = new Database();
         $database->insert('INSERT INTO account (email, password, name, token) VALUES(:email, :password, :name, :token)', $parameters);
         return $token;
@@ -55,28 +54,18 @@ class AccountRepository
     /**
      * @throws CustomException
      */
-    public function validateLogin(AccountModel $accountModel): bool|AccountModel
+    public function validateLogin(string $email, string $password): bool|object
     {
-        $parameters = [':email' => $accountModel->getEmail()];
+        $parameters = [':email' => $email];
         $database = new Database();
         $result = $database->select("SELECT id, email, name, password FROM account WHERE email = :email AND status = 'active' AND deleted_at IS NULL", $parameters);
         if (count($result) != 1) {
             return false;
         }
-        $account = $this->getLoginAccountModel($result[0]);
-        if (!password_verify($accountModel->getPassword(), $account->getPassword())) {
+        $account = $result[0];
+        if (!password_verify($password, $account->password)) {
             return false;
         }
         return $account;
-    }
-
-    private function getLoginAccountModel(object $result): AccountModel
-    {
-        $accountModel = new AccountModel();
-        $accountModel->setId($result->id);
-        $accountModel->setEmail($result->email);
-        $accountModel->setName($result->name);
-        $accountModel->setPassword($result->password);
-        return $accountModel;
     }
 }

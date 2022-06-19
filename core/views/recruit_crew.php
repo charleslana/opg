@@ -1,9 +1,10 @@
 <?php
 
+use core\classes\Functions;
 use core\service\CharacterService;
 
 $nextPage = true;
-$page = !isset($_GET['page']) ? 1 : $_GET['page'];
+$page = !isset($_GET['page']) ? 1 : Functions::setAbsoluteValue($_GET['page']);
 $characters = CharacterService::showAllCharacter($page);
 if (!$characters) {
     $nextPage = false;
@@ -29,10 +30,10 @@ if (!$characters) {
 <?php if ($nextPage) : ?>
     <div class="row row-cols-auto mb-3">
         <?php foreach ($characters as $key => $character) : ?>
-            <div class="col text-start">
+            <div class="col text-start separate-column">
                 <div class="character-portrait <?php if ($key == 0) {
                     echo 'blocked';
-                } ?>" onclick="showCharacterDetails()"
+                } ?>" onclick="showCharacterDetails(<?= $character->id ?>)"
                      style="background-image: url('/public/assets/img/characters/portrait/<?= $character->image ?>.png')"></div>
             </div>
         <?php endforeach; ?>
@@ -46,7 +47,7 @@ if (!$characters) {
             <li class="page-item">
                 <a class="page-link" href="?action=recruit_crew&page=<?= $page - 1 ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
+                    <span class="sr-only">Anterior</span>
                 </a>
             </li>
         <?php endif; ?>
@@ -57,7 +58,7 @@ if (!$characters) {
             <li class="page-item">
                 <a class="page-link" href="?action=recruit_crew&page=<?= $page + 1 ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
+                    <span class="sr-only">Próximo</span>
                 </a>
             </li>
         <?php endif; ?>
@@ -65,7 +66,7 @@ if (!$characters) {
 </nav>
 <div class="offcanvas offcanvas-end" id="offcanvasRight" tabindex="-1" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel" class="placeholder-glow"><span class="placeholder">Luffy</span></h5>
+        <h5 id="offcanvasRightLabel">Luffy</h5>
         <button class="btn-close text-reset" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">

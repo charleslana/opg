@@ -82,7 +82,7 @@
     cursor: pointer;
 }
 
-[class*="col-"], .col {
+.separate-column {
     background-clip: padding-box;
     border: 10px solid transparent;
 }

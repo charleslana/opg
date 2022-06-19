@@ -29,6 +29,15 @@ class Functions
         die();
     }
 
+    public static function setAbsoluteValue(string $value): int
+    {
+        $result = abs((int)$value);
+        if (strlen($result) > 10) {
+            return 0;
+        }
+        return $result;
+    }
+
     public static function showGameLayout(string $route, bool $isLogged = true, array|string|null $data = null): void
     {
         $menubar = 'components/menubar_character';
@@ -50,6 +59,14 @@ class Functions
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
+    public static function validateGetRequest(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
+            Functions::showMainLayout();
+            die();
+        }
+    }
+
     public static function validateLoggedAccount(): void
     {
         if (!isset($_SESSION['accountId'])) {
@@ -59,7 +76,7 @@ class Functions
 
     public static function validateLoggedUser(): bool
     {
-        return isset($_SESSION['user']);
+        return isset($_SESSION['accountId']);
     }
 
     public static function validateOnlyLettersAndSpace(string $text): bool

@@ -2,6 +2,8 @@
 
 namespace core\service;
 
+use core\classes\Functions;
+use core\classes\Messages;
 use core\exception\CustomException;
 use core\repository\CharacterRepository;
 
@@ -21,5 +23,21 @@ class CharacterService
         }
         $characterRepository = new CharacterRepository();
         return $characterRepository->findAllByCharacterWithPagination($page, $total);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public static function showCharacter(int $id): object
+    {
+        if (!Functions::validateLoggedUser()) {
+            Functions::handleErrors(Messages::$accountNotLogged);
+        }
+        $characterRepository = new CharacterRepository();
+        $result = $characterRepository->findCharacterById($id);
+        if (!$result) {
+            Functions::handleErrors(Messages::$characterNotFound);
+        }
+        return $result;
     }
 }

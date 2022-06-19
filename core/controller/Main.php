@@ -4,7 +4,6 @@ namespace core\controller;
 
 use core\classes\Functions;
 use core\exception\CustomException;
-use core\model\AccountModel;
 use core\service\AccountService;
 
 class Main
@@ -43,10 +42,8 @@ class Main
     {
         Functions::validatePostRequest();
         $requestBody = json_decode(file_get_contents('php://input'), true);
-        $accountModel = new AccountModel();
-        $accountModel->setEmail($requestBody['email']);
-        $accountModel->setPassword($requestBody['password']);
-        AccountService::login($accountModel);
+        $data = array_map('trim', $requestBody);
+        AccountService::login($data['email'], $data['password']);
     }
 
     public function logout(): void
@@ -72,10 +69,7 @@ class Main
     {
         Functions::validatePostRequest();
         $requestBody = json_decode(file_get_contents('php://input'), true);
-        $accountModel = new AccountModel();
-        $accountModel->setName($requestBody['name']);
-        $accountModel->setEmail($requestBody['email']);
-        $accountModel->setPassword($requestBody['password']);
-        AccountService::createAccount($accountModel);
+        $data = array_map('trim', $requestBody);
+        AccountService::createAccount($data['name'], $data['email'], $data['password']);
     }
 }
