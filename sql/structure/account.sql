@@ -7,11 +7,11 @@ create table account
     name       varchar(255)                                            not null,
     status     enum ('active', 'inactive') default 'inactive'          null,
     token      varchar(255)                                            null,
+    role       enum ('admin', 'user')      default 'user'              null,
     created_at datetime                    default current_timestamp() null,
     updated_at datetime                    default current_timestamp() null on update current_timestamp(),
     deleted_at datetime                                                null,
     constraint account_email_uindex
         unique (email)
 );
-
 
