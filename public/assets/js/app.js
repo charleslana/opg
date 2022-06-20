@@ -140,12 +140,36 @@ function showCharacterDetailsCanvas(data) {
     document.querySelector('#characterNpcWinsUnlock > span').innerText = `${+data.npc_wins}/${+data.character_npc_wins_unlock}`;
     document.getElementById('characterArenaWinsUnlock').style.width = `${barCalculation(+data.arena_wins, +data.character_arena_wins_unlock)}%`;
     document.querySelector('#characterArenaWinsUnlock > span').innerText = `${+data.arena_wins}/${+data.character_arena_wins_unlock}`;
+    const freeRecruitElement = document.getElementById('free-recruit');
+    freeRecruitElement.style.display = 'block';
     if (data.accountLevel < +data.player_level_unlock || +data.level < +data.character_level_unlock || +data.npc_battles < +data.character_npc_battles_unlock || +data.arena_battles < +data.character_arena_battles_unlock || +data.npc_wins < +data.character_npc_wins_unlock || +data.arena_wins < +data.character_arena_wins_unlock) {
-        document.getElementById('free-recruit').setAttribute('disabled', '');
+        freeRecruitElement.setAttribute('disabled', '');
     } else {
-        document.getElementById('free-recruit').removeAttribute('disabled');
+        freeRecruitElement.removeAttribute('disabled');
     }
-    document.getElementById('goldUnlock').innerHTML = `Recrutar ${data.gold_unlock} <span class="gold-icon"></span>`;
+    const goldUnlockElement = document.getElementById('goldUnlock');
+    goldUnlockElement.style.display = 'block';
+    goldUnlockElement.innerHTML = `Recrutar ${numberAbbreviation(data.gold_unlock)} <span class="gold-icon"></span>`;
+    goldUnlockElement.setAttribute('data-bs-original-title', `${numberFormat(data.gold_unlock)} Ouro`);
+    const arrayAccountCharacterIds = [];
+    const accountCharacterIds = data.accountCharacterIds.split(',');
+    accountCharacterIds.forEach(function (obj) {
+        arrayAccountCharacterIds.push(parseInt(obj, 10));
+    });
+    const alert = document.getElementById('alert');
+    alert.classList.remove('alert-success');
+    alert.classList.add('alert-warning');
+    alert.innerHTML = 'Você pode pagar com <span class="gold-icon"></span> para recrutar agora!';
+    const tabRecruitHr = document.querySelector('#tab-recruit hr');
+    tabRecruitHr.style.display = 'block';
+    if (arrayAccountCharacterIds.indexOf(data.id) !== -1) {
+        freeRecruitElement.style.display = 'none';
+        goldUnlockElement.style.display = 'none';
+        alert.classList.remove('alert-warning');
+        alert.classList.add('alert-success');
+        alert.innerText = 'Você já possui este tripulante!';
+        tabRecruitHr.style.display = 'none';
+    }
     const element = document.getElementById('offcanvasRight');
     const bsOffcanvas = new bootstrap.Offcanvas(element);
     bsOffcanvas.show();
@@ -181,4 +205,35 @@ function barCalculation(min, max) {
         return 100;
     }
     return result;
+}
+
+function numberAbbreviation(num, digits = 1) {
+    const lookup = [
+        {value: 1, symbol: ''},
+        {value: 1e3, symbol: 'K'},
+        {value: 1e6, symbol: 'M'},
+        {value: 1e9, symbol: 'B'},
+        {value: 1e12, symbol: 't'},
+        {value: 1e15, symbol: 'q'},
+        {value: 1e18, symbol: 'Q'},
+        {value: 1e21, symbol: 's'},
+        {value: 1e24, symbol: 'S'},
+        {value: 1e27, symbol: 'o'},
+        {value: 1e30, symbol: 'n'},
+        {value: 1e33, symbol: 'd'},
+    ];
+    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    const item = lookup
+        .slice()
+        .reverse()
+        .find(function (it) {
+            return num >= it.value;
+        });
+    return item
+        ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
+        : '0';
+}
+
+function numberFormat(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }

@@ -187,10 +187,11 @@ if (!$characters) {
             <div class="tab-pane fade" id="tab-recruit" role="tabpanel" aria-labelledby="recruit-tab">
                 <button class="btn btn-primary me-1 mb-1" type="button" id="free-recruit">Recrutar gratuito</button>
                 <hr>
-                <div class="alert alert-warning" role="alert">
+                <div class="alert alert-warning" role="alert" id="alert">
                     Você pode pagar com <span class="gold-icon"></span> para recrutar agora!
                 </div>
-                <button class="btn btn-outline-warning me-1 mb-1" type="button" id="goldUnlock">
+                <button class="btn btn-outline-warning me-1 mb-1" type="button" id="goldUnlock" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="0 Ouro">
                     Recrutar 1K <span class="gold-icon"></span>
                 </button>
             </div>
