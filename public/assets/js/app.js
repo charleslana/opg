@@ -142,15 +142,18 @@ function showCharacterDetailsCanvas(data) {
     document.querySelector('#characterArenaWinsUnlock > span').innerText = `${+data.arena_wins}/${+data.character_arena_wins_unlock}`;
     const freeRecruitElement = document.getElementById('free-recruit');
     freeRecruitElement.style.display = 'block';
+    freeRecruitElement.removeAttribute('disabled');
     if (data.accountLevel < +data.player_level_unlock || +data.level < +data.character_level_unlock || +data.npc_battles < +data.character_npc_battles_unlock || +data.arena_battles < +data.character_arena_battles_unlock || +data.npc_wins < +data.character_npc_wins_unlock || +data.arena_wins < +data.character_arena_wins_unlock) {
         freeRecruitElement.setAttribute('disabled', '');
-    } else {
-        freeRecruitElement.removeAttribute('disabled');
     }
     const goldUnlockElement = document.getElementById('goldUnlock');
     goldUnlockElement.style.display = 'block';
+    goldUnlockElement.removeAttribute('disabled');
     goldUnlockElement.innerHTML = `Recrutar ${numberAbbreviation(data.gold_unlock)} <span class="gold-icon"></span>`;
     goldUnlockElement.setAttribute('data-bs-original-title', `${numberFormat(data.gold_unlock)} Ouro`);
+    if (data.accountGold < data.gold_unlock) {
+        goldUnlockElement.setAttribute('disabled', '');
+    }
     const arrayAccountCharacterIds = [];
     const accountCharacterIds = data.accountCharacterIds.split(',');
     accountCharacterIds.forEach(function (obj) {
