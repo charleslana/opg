@@ -1,2 +1,0 @@
-insert into opg.account (id, email, password, name, status, token, role, created_at, updated_at, deleted_at)
-values  (1, 'suporteopgame@gmail.com', '$2y$10$9qnTSsBpskB3JnY6OIGFdOSALW1JZ2IxAbYFLuwqT6ksZvF7J7Kwe', 'Charles Lana', 'active', null, 'user', '2022-06-19 00:39:52.0', '2022-06-19 00:40:45.0', null);

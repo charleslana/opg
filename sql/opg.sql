@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 19-Jun-2022 às 22:29
+-- Tempo de geração: 22-Jun-2022 às 03:42
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -31,7 +31,7 @@ CREATE TABLE `account` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(20) NOT NULL,
   `status` enum('active','inactive') DEFAULT 'inactive',
   `token` varchar(255) DEFAULT NULL,
   `role` enum('admin','user') DEFAULT 'user',
@@ -48,8 +48,10 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `created_at`, `updated_at`, `deleted_at`, `level`, `belly`, `gold`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$9qnTSsBpskB3JnY6OIGFdOSALW1JZ2IxAbYFLuwqT6ksZvF7J7Kwe', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-19 13:51:49', NULL, 5, 1500, 0),
-(2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL, 1, 0, 0);
+(1, 'suporteopgame@gmail.com', '$2y$10$9qnTSsBpskB3JnY6OIGFdOSALW1JZ2IxAbYFLuwqT6ksZvF7J7Kwe', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-20 22:21:55', NULL, 5, 1500, 500),
+(2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL, 1, 0, 0),
+(3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'inactive', 'V1RDlLUPQSov', 'user', '2022-06-19 17:36:10', '2022-06-19 17:36:10', NULL, 1, 0, 0),
+(4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -114,7 +116,7 @@ INSERT INTO `character` (`id`, `name`, `image`, `strength_attributes`, `defense_
 (3, 'Luffy3', '3', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (4, 'Luffy4', '4', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (5, 'Luffy5', '5', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(6, 'Luffy6', '6', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(6, 'Luffy (Gear third)', '6', 4, 1, 1, 1, 1, 1, 100, 'yes', 'yes', 10, NULL, 10, 10, 5, 1, 500),
 (7, 'Luffy (Gear second)', '7', 3, 2, 2, 1, 3, 2, 100, 'yes', 'yes', 20, 50, NULL, NULL, NULL, NULL, 1000),
 (8, 'Luffy8', '8', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (9, 'Luffy9', '9', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
@@ -178,7 +180,7 @@ ALTER TABLE `character`
 -- AUTO_INCREMENT de tabela `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `account_character`
