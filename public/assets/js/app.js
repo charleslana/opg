@@ -15,15 +15,15 @@ document.getElementById('loginForm')?.addEventListener('submit', (event) => {
     button.disabled = true;
     axios.post('?action=login', {
         email: document.getElementById('email-login').value, password: document.getElementById('password-login').value
-    }).then(response => {
-        const {data} = response;
+    }).then(() => {
+        validateSaveLoginData();
+        redirect('select_crew');
+    }).catch(error => {
+        const {data} = error.response;
         if (data.error) {
             errorAlert(data.error);
             return;
         }
-        validateSaveLoginData();
-        redirect('select_crew');
-    }).catch(error => {
         errorAlert(error.message);
     }).finally(() => {
         loading(false);
@@ -32,11 +32,27 @@ document.getElementById('loginForm')?.addEventListener('submit', (event) => {
 });
 
 function successAlert(message) {
-    Swal.fire('Atenção!', message, 'success');
+    Swal.fire('Sucesso!', message, 'success');
 }
 
 function errorAlert(message) {
-    Swal.fire('Atenção!', message, 'error');
+    Swal.fire('Erro!', message, 'error');
+}
+
+async function confirmAlert() {
+    return Swal.fire({
+        title: 'Confirmação!',
+        text: 'Tem certeza que realmente deseja continuar?',
+        icon: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            return true;
+        }
+    })
 }
 
 document.getElementById('registerForm')?.addEventListener('submit', (event) => {
@@ -53,14 +69,14 @@ document.getElementById('registerForm')?.addEventListener('submit', (event) => {
         password: document.getElementById('password-register').value,
         passwordConfirmation: document.getElementById('confirm-password-register').value,
         name: document.getElementById('name-register').value
-    }).then(response => {
-        const {data} = response;
+    }).then(() => {
+        redirect('confirm_email');
+    }).catch(error => {
+        const {data} = error.response;
         if (data.error) {
             errorAlert(data.error);
             return;
         }
-        redirect('confirm_email');
-    }).catch(error => {
         errorAlert(error.message);
     }).finally(() => {
         loading(false);
@@ -173,6 +189,7 @@ function showCharacterDetailsCanvas(data) {
         alert.innerText = 'Você já possui este tripulante!';
         tabRecruitHr.style.display = 'none';
     }
+    freeRecruitElement.setAttribute('data-id', data.id);
     const element = document.getElementById('offcanvasRight');
     const bsOffcanvas = new bootstrap.Offcanvas(element);
     bsOffcanvas.show();
@@ -186,12 +203,13 @@ function showCharacterDetails(id) {
         }
     }).then(response => {
         const {data} = response;
+        showCharacterDetailsCanvas(data);
+    }).catch(error => {
+        const {data} = error.response;
         if (data.error) {
             errorAlert(data.error);
             return;
         }
-        showCharacterDetailsCanvas(data);
-    }).catch(error => {
         errorAlert(error.message);
     }).finally(() => {
         loading(false);
@@ -239,4 +257,73 @@ function numberAbbreviation(num, digits = 1) {
 
 function numberFormat(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function recruitCrewFree() {
+    const freeRecruitButton = document.getElementById('free-recruit');
+    const id = freeRecruitButton.getAttribute('data-id');
+    loading(true);
+    freeRecruitButton.disabled = true;
+    axios.post('?action=add_crew', null, {
+        params: {
+            id: id
+        }
+    }).then(response => {
+        const {data} = response;
+        if (data.success) {
+            closeOffCanvas();
+            successAlert(data.success);
+        }
+    }).catch(error => {
+        const {data} = error.response;
+        if (data.error) {
+            errorAlert(data.error);
+            return;
+        }
+        errorAlert(error.message);
+    }).finally(() => {
+        loading(false);
+        freeRecruitButton.disabled = false;
+    });
+}
+
+function closeOffCanvas() {
+    const element = document.getElementById('offcanvasRight');
+    const openedCanvas = bootstrap.Offcanvas.getInstance(element);
+    openedCanvas.hide();
+}
+
+async function recruitPaidCrew() {
+    const checkConfirmAlert = await confirmAlert();
+    if (!checkConfirmAlert) {
+        return;
+    }
+    const goldUnlockButton = document.getElementById('goldUnlock');
+    const id = document.getElementById('free-recruit').getAttribute('data-id');
+    const tooltip = bootstrap.Tooltip.getInstance(goldUnlockButton);
+    tooltip.hide();
+    loading(true);
+    goldUnlockButton.disabled = true;
+    axios.post('?action=add_crew', null, {
+        params: {
+            id: id,
+            isPaid: true
+        }
+    }).then(response => {
+        const {data} = response;
+        if (data.success) {
+            closeOffCanvas();
+            successAlert(data.success);
+        }
+    }).catch(error => {
+        const {data} = error.response;
+        if (data.error) {
+            errorAlert(data.error);
+            return;
+        }
+        errorAlert(error.message);
+    }).finally(() => {
+        loading(false);
+        goldUnlockButton.disabled = false;
+    });
 }

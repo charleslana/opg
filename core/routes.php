@@ -10,7 +10,8 @@ $routes = [
     'logout' => 'main@logout',
     'select_crew' => 'Crew@selectCrew',
     'recruit_crew' => 'Crew@recruitCrew',
-    'get_character_details' => 'Crew@getCharacterDetails'
+    'get_character_details' => 'Crew@getCharacterDetails',
+    'add_crew' => 'Crew@addCrew'
 ];
 
 $action = 'index';

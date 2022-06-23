@@ -39,4 +39,14 @@ class CharacterRepository
         }
         return $result[0];
     }
+
+    /**
+     * @throws CustomException
+     */
+    public function saveCharacter(int $id): bool
+    {
+        $parameters = [':characterId' => $id, ':accountId' => AccountService::getAccountId()];
+        $database = new Database();
+        return $database->insert('INSERT INTO account_character (account_id, character_id) VALUES (:accountId, :characterId)', $parameters);
+    }
 }

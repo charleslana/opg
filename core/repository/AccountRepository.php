@@ -82,6 +82,17 @@ class AccountRepository
     /**
      * @throws CustomException
      */
+    public function saveGold(int $accountId, int $gold): bool
+    {
+        $parameters = [':gold' => $gold, ':id' => $accountId];
+        $database = new Database();
+        return $database->update('UPDATE account SET gold = :gold WHERE id = :id', $parameters);
+        //TODO: criar tabela de histórico de dados do usuário, gold, etcs
+    }
+
+    /**
+     * @throws CustomException
+     */
     public function validateLogin(string $email, string $password): bool|object
     {
         $parameters = [':email' => $email];

@@ -17,15 +17,15 @@ class AccountService
     public static function createAccount(string $name, string $email, string $password): void
     {
         if (Functions::validateLoggedUser()) {
-            Functions::handleErrors(Messages::$accountAlreadyLogged);
+            Functions::handleResponse(Messages::$accountAlreadyLogged);
         }
         self::validateRegisterData($name, $email, $password);
         $accountRepository = new AccountRepository();
         if ($accountRepository->findByEmail($email)) {
-            Functions::handleErrors(Messages::$emailAlreadyRegistered);
+            Functions::handleResponse(Messages::$emailAlreadyRegistered);
         }
         if ($accountRepository->findByName($name)) {
-            Functions::handleErrors(Messages::$nameAlreadyRegistered);
+            Functions::handleResponse(Messages::$nameAlreadyRegistered);
         }
         $token = $accountRepository->saveAccount($name, $email, $password);
         self::sendEmailActivateAccount($email, $name, $token);
@@ -51,15 +51,24 @@ class AccountService
     public static function login(string $email, string $password): void
     {
         if (Functions::validateLoggedUser()) {
-            Functions::handleErrors(Messages::$accountAlreadyLogged);
+            Functions::handleResponse(Messages::$accountAlreadyLogged);
         }
         self::validateLoginData($email, $password);
         $accountRepository = new AccountRepository();
         $result = $accountRepository->validateLogin($email, $password);
         if (is_bool($result)) {
-            Functions::handleErrors(Messages::$invalidLogin);
+            Functions::handleResponse(Messages::$invalidLogin);
         }
         self::setLoginAccount($result->id, $result->name);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public static function updateGold(int $gold): void
+    {
+        $accountRepository = new AccountRepository();
+        $accountRepository->saveGold(self::getAccountId(), $gold);
     }
 
     /**
@@ -83,7 +92,7 @@ class AccountService
         $email = new Email();
         $result = $email->sendEmailNewAccount($accountEmail, $name, $token);
         if (!$result) {
-            Functions::handleErrors(Messages::$genericError);
+            Functions::handleResponse(Messages::$genericError);
         }
         $_SESSION['accountEmail'] = $accountEmail;
     }
@@ -97,29 +106,29 @@ class AccountService
     private static function validateLoginData(string $email, string $password): void
     {
         if (!$email || !$password) {
-            Functions::handleErrors(Messages::$fillData);
+            Functions::handleResponse(Messages::$fillData);
         }
         if (!Functions::validateEmail($email)) {
-            Functions::handleErrors(Messages::$invalidEmail);
+            Functions::handleResponse(Messages::$invalidEmail);
         }
     }
 
     private static function validateRegisterData(string $name, string $email, string $password): void
     {
         if (!$email || !$password || !$name) {
-            Functions::handleErrors(Messages::$fillData);
+            Functions::handleResponse(Messages::$fillData);
         }
         if (!Functions::validateEmail($email)) {
-            Functions::handleErrors(Messages::$invalidEmail);
+            Functions::handleResponse(Messages::$invalidEmail);
         }
         if (strlen($password) < 6) {
-            Functions::handleErrors(Messages::$weakPassword);
+            Functions::handleResponse(Messages::$weakPassword);
         }
         if (strlen($name) < 3 || strlen($name) > 20) {
-            Functions::handleErrors(Messages::$nameCharacterMinMax);
+            Functions::handleResponse(Messages::$nameCharacterMinMax);
         }
         if (!Functions::validateName($name)) {
-            Functions::handleErrors(Messages::$invalidName);
+            Functions::handleResponse(Messages::$invalidName);
         }
     }
 

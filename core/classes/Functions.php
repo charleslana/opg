@@ -2,6 +2,8 @@
 
 namespace core\classes;
 
+use core\enum\ResponseEnum;
+
 class Functions
 {
 
@@ -16,10 +18,13 @@ class Functions
         return substr(str_shuffle($characters), 0, $charactersQuantity);
     }
 
-    public static function handleErrors(string $message): void
+    public static function handleResponse(string $message, ResponseEnum $status = ResponseEnum::Error): void
     {
-        $error = array('error' => $message);
-        echo json_encode($error);
+        if ($status == ResponseEnum::Error) {
+            http_response_code(400);
+        }
+        $response = array($status->value => $message);
+        echo json_encode($response);
         die();
     }
 
