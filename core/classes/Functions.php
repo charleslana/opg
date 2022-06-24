@@ -80,7 +80,7 @@ class Functions
     public static function validateGetRequest(): void
     {
         if ($_SERVER['REQUEST_METHOD'] != 'GET') {
-            Functions::showMainLayout();
+            self::showMainLayout('not_found');
             die();
         }
     }
@@ -109,7 +109,7 @@ class Functions
     public static function validatePostRequest(): void
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            Functions::showMainLayout();
+            self::showMainLayout('not_found');
             die();
         }
     }

@@ -327,3 +327,33 @@ async function recruitPaidCrew() {
         goldUnlockButton.disabled = false;
     });
 }
+
+function selectCharacter(id, name, level) {
+    Swal.fire({
+        text: `${name} [${level}]`,
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Conectar',
+        cancelButtonText: 'Fechar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            loading(true);
+            axios.post('?action=create_crew_session', null, {
+                params: {
+                    id: id
+                }
+            }).then(() => {
+                redirect('status');
+            }).catch(error => {
+                const {data} = error.response;
+                if (data.error) {
+                    errorAlert(data.error);
+                    return;
+                }
+                errorAlert(error.message);
+            }).finally(() => {
+                loading(false);
+            });
+        }
+    })
+}

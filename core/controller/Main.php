@@ -48,12 +48,7 @@ class Main
 
     public function logout(): void
     {
-        if (isset($_SESSION['accountId'])) {
-            unset($_SESSION['accountId']);
-            unset($_SESSION['email']);
-            unset($_SESSION['name']);
-            Functions::redirect();
-        }
+        AccountService::logout();
         Functions::redirect();
     }
 

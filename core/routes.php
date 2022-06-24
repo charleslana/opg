@@ -2,7 +2,7 @@
 
 $routes = [
     'index' => 'main@index',
-    'notFound' => 'main@notFound',
+    'not_found' => 'main@notFound',
     'login' => 'main@login',
     'register' => 'main@register',
     'confirm_email' => 'main@confirmEmail',
@@ -11,7 +11,8 @@ $routes = [
     'select_crew' => 'Crew@selectCrew',
     'recruit_crew' => 'Crew@recruitCrew',
     'get_character_details' => 'Crew@getCharacterDetails',
-    'add_crew' => 'Crew@addCrew'
+    'add_crew' => 'Crew@addCrew',
+    'create_crew_session' => 'Crew@createCrewSession'
 ];
 
 $action = 'index';
@@ -19,7 +20,7 @@ $action = 'index';
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
     if (!array_key_exists($_GET['action'], $routes)) {
-        $action = 'notFound';
+        $action = 'not_found';
     }
 }
 

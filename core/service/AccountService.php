@@ -62,6 +62,14 @@ class AccountService
         self::setLoginAccount($result->id, $result->name);
     }
 
+    public static function logout(): void
+    {
+        if (isset($_SESSION['accountId'])) {
+            unset($_SESSION['accountId']);
+            unset($_SESSION['name']);
+        }
+    }
+
     /**
      * @throws CustomException
      */
