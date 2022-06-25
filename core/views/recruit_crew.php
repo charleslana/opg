@@ -1,4 +1,7 @@
 <?php
+if (!class_exists('core\classes\Functions')) {
+    die();
+}
 
 use core\classes\Functions;
 use core\service\CharacterService;
@@ -9,24 +12,15 @@ $characters = CharacterService::showAllCharacter($page);
 if (!$characters) {
     $nextPage = false;
 }
+
+$data = array(
+    'image' => 1,
+    'title' => 'Olá, seja bem vindo(a)',
+    'description' => 'Aqui você recrutar novos tripulantes',
+    'infoText' => 'Lembre-se, para desbloquear personagens é necessário alguns requisitosconforme cada personagem.'
+);
+include('components/helper.php');
 ?>
-<div class="card mb-3">
-    <div class="card-body overflow-hidden p-lg-3">
-        <div class="row align-items-center">
-            <div class="col-md-3 text-center"><img src="/public/assets/img/helper/1.png" alt="" height="200"></div>
-            <div class="col-md-9 ps-lg-4 my-5 text-center text-lg-start">
-                <h3 class="text-primary">Olá, seja bem vindo(a)</h3>
-                <p class="lead">Aqui você recrutar novos tripulantes</p>
-                <div class="alert alert-info border-2 d-flex align-items-center" role="alert">
-                    <div class="bg-info me-3 icon-item"><span class="fas fa-info-circle text-white fs-3"></span></div>
-                    <p class="mb-0 flex-1">Lembre-se, para desbloquear personagens é necessário alguns requisitos
-                        conforme cada personagem.</p>
-                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <?php if ($nextPage) : ?>
     <div class="row row-cols-auto mb-3">
         <?php foreach ($characters as $key => $character) : ?>

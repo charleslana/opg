@@ -1,4 +1,7 @@
 <?php
+if (!class_exists('core\classes\Functions')) {
+    die();
+}
 
 use core\classes\Functions;
 use core\service\AccountCharacterService;
@@ -9,18 +12,10 @@ $accountCharacters = AccountCharacterService::showAllCharacter($page);
 if (!$accountCharacters) {
     $nextPage = false;
 }
+
+$data = array('title' => 'Selecione um tripulante para começar a jogar!');
+include('components/title.php');
 ?>
-<div class="card mb-3">
-    <div class="card-header">
-        <div class="row flex-between-end">
-            <div class="col-auto align-self-center">
-                <h5 class="mb-0" data-anchor="data-anchor" id="additional-content">
-                    Selecione um tripulante para começar a jogar!
-                </h5>
-            </div>
-        </div>
-    </div>
-</div>
 <?php if ($nextPage) : ?>
     <div class="row row-cols-auto mb-3">
         <?php foreach ($accountCharacters as $accountCharacter) : ?>

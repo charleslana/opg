@@ -64,6 +64,7 @@ class AccountService
 
     public static function logout(): void
     {
+        AccountCharacterService::characterLogout();
         if (isset($_SESSION['accountId'])) {
             unset($_SESSION['accountId']);
             unset($_SESSION['name']);

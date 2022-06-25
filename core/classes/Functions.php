@@ -60,11 +60,13 @@ class Functions
     {
         $menubar = 'components/menubar_character';
         $navbar = 'components/navbar_character';
+        $navbarDropdown = 'components/navbar_dropdown_character';
         if (!$isLogged) {
-            $menubar = 'components/menubar_account';
-            $navbar = 'components/navbar_account';
+            $menubar = 'components/menubar';
+            $navbar = 'components/navbar';
+            $navbarDropdown = 'components/navbar_dropdown';
         }
-        self::renderLayout(['layout/header_html', 'components/main_header', $menubar, $navbar, 'components/menubar_dropdown', $route, 'components/main_content_footer', 'components/main_footer', 'layout/footer_html'], $data);
+        self::renderLayout(['layout/header_html', 'components/main_header', $menubar, $navbar, $navbarDropdown, $route, 'components/main_content_footer', 'components/main_footer', 'layout/footer_html'], $data);
     }
 
     public static function showMainLayout(string $route = 'home', array|string|null $data = null): void
@@ -90,6 +92,18 @@ class Functions
         if (!isset($_SESSION['accountId'])) {
             self::redirect();
         }
+    }
+
+    public static function validateLoggedAccountCharacter(): void
+    {
+        if (!isset($_SESSION['characterId'])) {
+            self::redirect();
+        }
+    }
+
+    public static function validateLoggedCrew(): bool
+    {
+        return isset($_SESSION['characterId']);
     }
 
     public static function validateLoggedUser(): bool

@@ -12,7 +12,8 @@ $routes = [
     'recruit_crew' => 'Crew@recruitCrew',
     'get_character_details' => 'Crew@getCharacterDetails',
     'add_crew' => 'Crew@addCrew',
-    'create_crew_session' => 'Crew@createCrewSession'
+    'create_crew_session' => 'Crew@createCrewSession',
+    'status' => 'Status@status'
 ];
 
 $action = 'index';
@@ -28,5 +29,7 @@ $parts = explode('@', $routes[$action]);
 $controller = 'core\\controller\\' . ucfirst($parts[0]);
 $method = $parts[1];
 
-$ctr = new $controller();
-$ctr->$method();
+if (class_exists($controller)) {
+    $ctr = new $controller();
+    $ctr->$method();
+}

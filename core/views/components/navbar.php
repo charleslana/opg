@@ -1,4 +1,7 @@
 <?php
+if (!class_exists('core\classes\Functions')) {
+    die();
+}
 
 use core\classes\Functions;
 use core\service\AccountService;

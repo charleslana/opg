@@ -1,3 +1,8 @@
+<?php
+if (!defined('APP_NAME')) {
+    die();
+}
+?>
 <!doctype html>
 <html lang="pt-br">
 <head>
