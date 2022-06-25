@@ -17,7 +17,7 @@ $data = array(
     'image' => 1,
     'title' => 'Olá, seja bem vindo(a)',
     'description' => 'Aqui você recrutar novos tripulantes',
-    'infoText' => 'Lembre-se, para desbloquear personagens é necessário alguns requisitosconforme cada personagem.'
+    'infoText' => 'Lembre-se, para desbloquear personagens é necessário alguns requisitos conforme cada personagem.'
 );
 include('components/helper.php');
 ?>
