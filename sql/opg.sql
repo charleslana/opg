@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 25-Jun-2022 às 04:28
+-- Tempo de geração: 25/06/2022 às 21:19
 -- Versão do servidor: 10.4.24-MariaDB
--- versão do PHP: 8.1.6
+-- Versão do PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account`
+-- Estrutura para tabela `account`
 --
 
 CREATE TABLE `account` (
@@ -40,23 +40,24 @@ CREATE TABLE `account` (
   `deleted_at` datetime DEFAULT NULL,
   `level` int(10) UNSIGNED DEFAULT 1,
   `belly` float DEFAULT 0,
-  `gold` float DEFAULT 0
+  `gold` float DEFAULT 0,
+  `avatar` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `account`
+-- Despejando dados para a tabela `account`
 --
 
-INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `created_at`, `updated_at`, `deleted_at`, `level`, `belly`, `gold`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$9qnTSsBpskB3JnY6OIGFdOSALW1JZ2IxAbYFLuwqT6ksZvF7J7Kwe', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-23 00:09:28', NULL, 5, 1500, 500),
-(2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL, 1, 0, 0),
-(3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'inactive', 'V1RDlLUPQSov', 'user', '2022-06-19 17:36:10', '2022-06-19 17:36:10', NULL, 1, 0, 0),
-(4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL, 1, 0, 0);
+INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `created_at`, `updated_at`, `deleted_at`, `level`, `belly`, `gold`, `avatar`) VALUES
+(1, 'suporteopgame@gmail.com', '$2y$10$9qnTSsBpskB3JnY6OIGFdOSALW1JZ2IxAbYFLuwqT6ksZvF7J7Kwe', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-25 12:03:51', NULL, 5, 1500, 500, 2),
+(2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL, 1, 0, 0, 1),
+(3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'inactive', 'V1RDlLUPQSov', 'user', '2022-06-19 17:36:10', '2022-06-19 17:36:10', NULL, 1, 0, 0, 1),
+(4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL, 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_character`
+-- Estrutura para tabela `account_character`
 --
 
 CREATE TABLE `account_character` (
@@ -71,7 +72,7 @@ CREATE TABLE `account_character` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `account_character`
+-- Despejando dados para a tabela `account_character`
 --
 
 INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `npc_battles`, `arena_battles`, `npc_wins`, `arena_wins`) VALUES
@@ -86,7 +87,7 @@ INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `n
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `character`
+-- Estrutura para tabela `character`
 --
 
 CREATE TABLE `character` (
@@ -112,7 +113,7 @@ CREATE TABLE `character` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `character`
+-- Despejando dados para a tabela `character`
 --
 
 INSERT INTO `character` (`id`, `name`, `image`, `strength_attributes`, `defense_attributes`, `life_attributes`, `energy_attributes`, `agility_attributes`, `resistance_attributes`, `maximum_level`, `haki_unlock`, `akuma_no_mi_unlock`, `player_level_unlock`, `character_level_unlock`, `character_npc_battles_unlock`, `character_arena_battles_unlock`, `character_npc_wins_unlock`, `character_arena_wins_unlock`, `gold_unlock`) VALUES
@@ -155,7 +156,7 @@ INSERT INTO `character` (`id`, `name`, `image`, `strength_attributes`, `defense_
 --
 
 --
--- Índices para tabela `account`
+-- Índices de tabela `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`id`),
@@ -163,7 +164,7 @@ ALTER TABLE `account`
   ADD UNIQUE KEY `account_name_uindex` (`name`);
 
 --
--- Índices para tabela `account_character`
+-- Índices de tabela `account_character`
 --
 ALTER TABLE `account_character`
   ADD PRIMARY KEY (`id`),
@@ -171,14 +172,14 @@ ALTER TABLE `account_character`
   ADD KEY `fk_account` (`account_id`);
 
 --
--- Índices para tabela `character`
+-- Índices de tabela `character`
 --
 ALTER TABLE `character`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `character_name_uindex` (`name`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -200,11 +201,11 @@ ALTER TABLE `character`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `account_character`
+-- Restrições para tabelas `account_character`
 --
 ALTER TABLE `account_character`
   ADD CONSTRAINT `fk_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
