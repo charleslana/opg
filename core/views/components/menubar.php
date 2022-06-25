@@ -1,3 +1,8 @@
+<?php
+if (!defined('APP_TAG_NAME')) {
+    die();
+}
+?>
 <nav class="navbar navbar-light navbar-vertical navbar-expand-xl" aria-label="">
     <div class="d-flex align-items-center">
         <div class="toggle-icon-wrapper">
@@ -15,6 +20,7 @@
     </div>
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
         <div class="navbar-vertical-content scrollbar">
+            <span class="d-block d-sm-none"><?php include('status_bar.php') ?></span>
             <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
                 <li class="nav-item">
                     <div class="row navbar-vertical-label-wrapper mt-3 mb-2">

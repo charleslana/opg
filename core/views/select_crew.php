@@ -17,14 +17,18 @@ $data = array('title' => 'Selecione um tripulante para começar a jogar!');
 include('components/title.php');
 ?>
 <?php if ($nextPage) : ?>
-    <div class="row row-cols-auto mb-3">
-        <?php foreach ($accountCharacters as $accountCharacter) : ?>
-            <div class="col text-start separate-column">
-                <div class="character-portrait"
-                     onclick="selectCharacter(<?= $accountCharacter->id ?>, '<?= $accountCharacter->name ?>', <?= $accountCharacter->level ?>)"
-                     style="background-image: url('/public/assets/img/characters/portrait/<?= $accountCharacter->image ?>.png')"></div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row row-cols-auto mb-3">
+                <?php foreach ($accountCharacters as $accountCharacter) : ?>
+                    <div class="col text-start separate-column">
+                        <div class="character-portrait"
+                             onclick="selectCharacter(<?= $accountCharacter->id ?>, '<?= $accountCharacter->name ?>', <?= $accountCharacter->level ?>)"
+                             style="background-image: url('/public/assets/img/characters/portrait/<?= $accountCharacter->image ?>.png')"></div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-        <?php endforeach; ?>
+        </div>
     </div>
 <?php elseif ($page == 1): ?>
     <div class="alert alert-danger text-center mb-3" role="alert">

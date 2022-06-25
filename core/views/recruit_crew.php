@@ -22,13 +22,17 @@ $data = array(
 include('components/helper.php');
 ?>
 <?php if ($nextPage) : ?>
-    <div class="row row-cols-auto mb-3">
-        <?php foreach ($characters as $key => $character) : ?>
-            <div class="col text-start separate-column">
-                <div class="character-portrait" onclick="showCharacterDetails(<?= $character->id ?>)"
-                     style="background-image: url('/public/assets/img/characters/portrait/<?= $character->image ?>.png')"></div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row row-cols-auto mb-3">
+                <?php foreach ($characters as $key => $character) : ?>
+                    <div class="col text-start separate-column">
+                        <div class="character-portrait" onclick="showCharacterDetails(<?= $character->id ?>)"
+                             style="background-image: url('/public/assets/img/characters/portrait/<?= $character->image ?>.png')"></div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-        <?php endforeach; ?>
+        </div>
     </div>
 <?php else: ?>
     <div class="alert alert-danger text-center mb-3" role="alert">Nenhum personagem encontrado</div>
