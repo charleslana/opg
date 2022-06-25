@@ -17,6 +17,15 @@ class AccountCharacterService
         }
     }
 
+    /**
+     * @throws CustomException
+     */
+    public static function getCharacter(): object
+    {
+        $accountCharacterRepository = new AccountCharacterRepository();
+        return $accountCharacterRepository->findByCharacter(self::getCharacterId(), AccountService::getAccountId());
+    }
+
     public static function getCharacterId(): int
     {
         return $_SESSION['characterId'];
@@ -35,7 +44,7 @@ class AccountCharacterService
         if (!$result) {
             Functions::handleResponse(Messages::$characterNotFound);
         }
-        $_SESSION['characterId'] = $result->id;
+        $_SESSION['characterId'] = $result->accountCharacterId;
     }
 
     /**

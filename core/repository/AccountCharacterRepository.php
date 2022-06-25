@@ -30,7 +30,11 @@ class AccountCharacterRepository
     {
         $parameters = [':id' => $id, ':accountId' => $accountId];
         $database = new Database();
-        $result = $database->select('SELECT * from account_character WHERE id = :id AND account_id = :accountId', $parameters);
+        $result = $database->select('
+            SELECT ac.*, ac.id AS accountCharacterId, c.* FROM account_character ac
+                LEFT OUTER JOIN `character` c ON (c.id = ac.character_id)
+                    WHERE ac.id = :id AND ac.account_id = :accountId
+            ', $parameters);
         if (count($result) != 1) {
             return false;
         }
