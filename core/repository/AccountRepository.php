@@ -16,7 +16,7 @@ class AccountRepository
     {
         $parameters = [':token' => $token];
         $database = new Database();
-        $result = $database->select('SELECT id FROM account WHERE token = :token', $parameters);
+        $result = $database->select('SELECT id FROM account WHERE token = :token AND status = "inactive"', $parameters);
         if (count($result) != 1) {
             return false;
         }
@@ -42,15 +42,15 @@ class AccountRepository
     /**
      * @throws CustomException
      */
-    public function findByEmail(string $email): bool
+    public function findByEmail(string $email): bool|object
     {
         $parameters = [':email' => $email];
         $database = new Database();
-        $result = $database->select('SELECT email from account WHERE email = :email', $parameters);
-        if (count($result) != 0) {
-            return true;
+        $result = $database->select('SELECT id, email, name, status, token from account WHERE email = :email', $parameters);
+        if (count($result) != 1) {
+            return false;
         }
-        return false;
+        return $result[0];
     }
 
     /**
@@ -65,6 +65,20 @@ class AccountRepository
             return true;
         }
         return false;
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function findByTokenAndStatusActive(string $token): bool|object
+    {
+        $parameters = [':token' => $token];
+        $database = new Database();
+        $result = $database->select('SELECT id FROM account WHERE token = :token AND status = "active"', $parameters);
+        if (count($result) != 1) {
+            return false;
+        }
+        return $result[0];
     }
 
     /**
@@ -93,11 +107,31 @@ class AccountRepository
     /**
      * @throws CustomException
      */
+    public function savePassword(int $accountId, string $password): bool
+    {
+        $parameters = [':password' => Functions::encodePassword($password), ':id' => $accountId];
+        $database = new Database();
+        return $database->update('UPDATE account SET password = :password WHERE id = :id', $parameters);
+    }
+
+    /**
+     * @throws CustomException
+     */
     public function saveSession(int $accountId, string $session): bool
     {
         $parameters = [':session' => $session, ':id' => $accountId];
         $database = new Database();
         return $database->update('UPDATE account SET session = :session WHERE id = :id', $parameters);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function saveToken(int $accountId, ?string $token): bool
+    {
+        $parameters = [':token' => $token, ':id' => $accountId];
+        $database = new Database();
+        return $database->update('UPDATE account SET token = :token WHERE id = :id', $parameters);
     }
 
     /**

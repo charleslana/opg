@@ -69,16 +69,81 @@
                                     <label class="form-check-label mb-0" for="modal-checkbox">Salvar dados</label>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <a class="fs--1" href="#">Recuperar senha?</a>
-                            </div>
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                    name="submit" id="login-button">Conectar
+                                    name="login-button" id="login-button">Conectar
                             </button>
                         </div>
                     </form>
+                    <a class="fs--1" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                       aria-expanded="false" aria-controls="collapseExample">
+                        Problemas no login?
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <div class="border p-card rounded">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading1">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapse1"
+                                                aria-expanded="true" aria-controls="collapse1">
+                                            Não conseguir ativar minha conta
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="collapse1"
+                                         aria-labelledby="heading1" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <form id="activateEmailForm">
+                                                <div class="mb-3">
+                                                    <input class="form-control" type="email"
+                                                           name="activate-email"
+                                                           id="activate-email"
+                                                           placeholder="Digite o e-mail" required/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button class="btn btn-falcon-default d-block w-100 mt-3"
+                                                            type="submit"
+                                                            name="activate-email-button" id="activate-email-button">
+                                                        Enviar e-mail de ativação
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading2">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapse2"
+                                                aria-expanded="true" aria-controls="collapse2">
+                                            Recuperar senha?
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="collapse2"
+                                         aria-labelledby="heading2" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <form id="recoverPasswordForm">
+                                                <div class="mb-3">
+                                                    <input class="form-control" type="email"
+                                                           name="recover-password"
+                                                           id="recover-password"
+                                                           placeholder="Digite o e-mail" required/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button class="btn btn-falcon-default d-block w-100 mt-3"
+                                                            type="submit"
+                                                            name="recover-password-button" id="recover-password-button">
+                                                        Enviar e-mail de recuperação
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,7 +190,7 @@
                             </label>
                         </div>
                         <div class="mb-3">
-                            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit"
+                            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="register-button"
                                     id="register-button">
                                 Registrar
                             </button>

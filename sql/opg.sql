@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 26/06/2022 às 04:23
+-- Tempo de geração: 26/06/2022 às 20:47
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -50,9 +50,9 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `created_at`, `updated_at`, `deleted_at`, `level`, `belly`, `gold`, `avatar`, `session`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$9qnTSsBpskB3JnY6OIGFdOSALW1JZ2IxAbYFLuwqT6ksZvF7J7Kwe', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-25 23:22:29', NULL, 5, 1500, 500, 2, '7e1KCqRJZi3MTYfsSuBbAyl0PnFaEI'),
+(1, 'suporteopgame@gmail.com', '$2y$10$2g/DigaWkh5gILD9PafRy.he5gVGvBX5bi.GJl2WedaawZnWYON3W', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-26 15:47:34', NULL, 5, 1500, 500, 2, '2bo3s4admuH9OFEynxUfMJiNcDLtvW'),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL, 1, 0, 0, 1, NULL),
-(3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'inactive', 'V1RDlLUPQSov', 'user', '2022-06-19 17:36:10', '2022-06-19 17:36:10', NULL, 1, 0, 0, 1, NULL),
+(3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', '2022-06-19 17:36:10', '2022-06-26 14:43:36', NULL, 1, 0, 0, 1, NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL, 1, 0, 0, 1, NULL),
 (5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', '2022-06-25 22:39:40', '2022-06-25 22:56:33', NULL, 1, 0, 0, 1, '#A8xJ3rns7XepY0aFKmEzIwhTiuWBq');
 
@@ -165,7 +165,9 @@ INSERT INTO `character` (`id`, `name`, `image`, `strength_attributes`, `defense_
 ALTER TABLE `account`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `account_email_uindex` (`email`),
-  ADD UNIQUE KEY `account_name_uindex` (`name`);
+  ADD UNIQUE KEY `account_name_uindex` (`name`),
+  ADD UNIQUE KEY `account_session_uindex` (`session`),
+  ADD UNIQUE KEY `account_token_uindex` (`token`);
 
 --
 -- Índices de tabela `account_character`

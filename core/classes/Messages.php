@@ -20,5 +20,7 @@ class Messages
     public static string $nameAlreadyRegistered = 'Nome já registrado.';
     public static string $nameCharacterMinMax = 'O nome deve conter no mínimo 3 caracteres e no máximo 20 caracteres';
     public static string $necessaryRequirements = 'Existem requisitos faltante.';
+    public static string $passwordChangedSuccessfully = 'Senha alterada com sucesso.';
+    public static string $tokenNotFound = 'Token não encontrado.';
     public static string $weakPassword = 'A senha deve conter no mínimo 6 caracteres.';
 }

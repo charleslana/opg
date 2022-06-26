@@ -15,7 +15,7 @@ class Functions
 
     public static function generateToken(int $charactersQuantity = 12): string
     {
-        $characters = '0123456789#abcdefghilkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters = '0123456789abcdefghilkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         return substr(str_shuffle($characters), 0, $charactersQuantity);
     }
 

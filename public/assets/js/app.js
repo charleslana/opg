@@ -390,3 +390,94 @@ function selectCharacter(id, name, level) {
         }
     })
 }
+
+document.getElementById('activateEmailForm')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    loading(true);
+    const button = document.getElementById('activate-email-button');
+    button.disabled = true;
+    axios.post('?action=activate_email', {
+        email: document.getElementById('activate-email').value
+    }).then(() => {
+        redirect('confirm_activate_email');
+    }).catch(error => {
+        const {data} = error.response;
+        if (data.error) {
+            errorAlert(data.error);
+            return;
+        }
+        errorAlert(error.message);
+    }).finally(() => {
+        loading(false);
+        button.disabled = false;
+    });
+});
+
+document.getElementById('recoverPasswordForm')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    loading(true);
+    const button = document.getElementById('recover-password-button');
+    button.disabled = true;
+    axios.post('?action=recover_password', {
+        email: document.getElementById('recover-password').value
+    }).then(() => {
+        redirect('confirm_recover_password');
+    }).catch(error => {
+        const {data} = error.response;
+        if (data.error) {
+            errorAlert(data.error);
+            return;
+        }
+        errorAlert(error.message);
+    }).finally(() => {
+        loading(false);
+        button.disabled = false;
+    });
+});
+
+document.getElementById('recoverAccountForm')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (document.getElementById('new-password').value !== document.getElementById('confirm-password').value) {
+        errorAlert('As senhas não são iguais.');
+        return;
+    }
+    loading(true);
+    const button = document.getElementById('recover-password-button');
+    button.disabled = true;
+    axios.post('?action=recover', {
+        password: document.getElementById('new-password').value, token: getQueryStringParams('token')
+    }).then(response => {
+        const {data} = response;
+        if (data.success) {
+            document.getElementById('recoverAccount').innerHTML = `
+            <div class="text-center">
+                <p>${data.success}</p>
+                <a class="btn btn-primary btn-sm mt-3" href="?action=index">
+                    <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4 down-1"></span>Retornar para login
+                </a>
+            </div>
+        `;
+        }
+    }).catch(error => {
+        const {data} = error.response;
+        if (data.error) {
+            errorAlert(data.error);
+            return;
+        }
+        errorAlert(error.message);
+    }).finally(() => {
+        loading(false);
+        button.disabled = false;
+    });
+});
+
+function getQueryStringParams(param) {
+    const pageURL = window.location.search.substring(1);
+    const urlVariables = pageURL.split('&');
+    for (let i = 0; i < urlVariables.length; i++) {
+        const parameterName = urlVariables[i].split('=');
+        if (parameterName[0] === param) {
+            return parameterName[1];
+        }
+    }
+}

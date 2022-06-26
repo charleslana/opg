@@ -5,12 +5,35 @@ namespace core\service;
 use core\classes\Email;
 use core\classes\Functions;
 use core\classes\Messages;
+use core\enum\ResponseEnum;
 use core\enum\SessionEnum;
+use core\enum\StatusEnum;
 use core\exception\CustomException;
 use core\repository\AccountRepository;
 
 class AccountService
 {
+
+    /**
+     * @throws CustomException
+     */
+    public static function changeRecoverPassword(string $token, string $password): void
+    {
+        if (Functions::validateLoggedUser()) {
+            Functions::handleResponse(Messages::$accountAlreadyLogged);
+        }
+        if (strlen($password) < 6) {
+            Functions::handleResponse(Messages::$weakPassword);
+        }
+        $accountRepository = new AccountRepository();
+        $result = $accountRepository->findByTokenAndStatusActive($token);
+        if (!$result) {
+            Functions::handleResponse(Messages::$tokenNotFound);
+        }
+        $accountRepository->saveToken($result->id, null);
+        $accountRepository->savePassword($result->id, $password);
+        Functions::handleResponse(Messages::$passwordChangedSuccessfully, ResponseEnum::Success);
+    }
 
     /**
      * @throws CustomException
@@ -77,6 +100,48 @@ class AccountService
     /**
      * @throws CustomException
      */
+    public static function sendActivateEmail(string $email): void
+    {
+        if (Functions::validateLoggedUser()) {
+            Functions::handleResponse(Messages::$accountAlreadyLogged);
+        }
+        if (!Functions::validateEmail($email)) {
+            Functions::handleResponse(Messages::$invalidEmail);
+        }
+        $accountRepository = new AccountRepository();
+        $result = $accountRepository->findByEmail($email);
+        if ($result->status == StatusEnum::Inactive->value) {
+            self::sendEmailActivateAccount($result->email, $result->name, $result->token);
+            return;
+        }
+        $_SESSION[SessionEnum::AccountEmail->value] = $email;
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public static function sendRecoverPassword(string $email): void
+    {
+        if (Functions::validateLoggedUser()) {
+            Functions::handleResponse(Messages::$accountAlreadyLogged);
+        }
+        if (!Functions::validateEmail($email)) {
+            Functions::handleResponse(Messages::$invalidEmail);
+        }
+        $accountRepository = new AccountRepository();
+        $result = $accountRepository->findByEmail($email);
+        if ($result->status == StatusEnum::Active->value) {
+            $token = Functions::generateToken();
+            $accountRepository->saveToken($result->id, $token);
+            self::sendEmailRecoverPassword($result->email, $result->name, $token);
+            return;
+        }
+        $_SESSION[SessionEnum::AccountEmail->value] = $email;
+    }
+
+    /**
+     * @throws CustomException
+     */
     public static function updateGold(int $gold): void
     {
         $accountRepository = new AccountRepository();
@@ -95,7 +160,23 @@ class AccountService
         $accountRepository = new AccountRepository();
         $result = $accountRepository->activateAccount($token);
         if (!$result) {
+            Functions::redirect('not_found');
+        }
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public static function validateTokenRecoverPassword(): void
+    {
+        if (Functions::validateLoggedUser()) {
             Functions::redirect();
+        }
+        $token = self::validateUrlToken();
+        $accountRepository = new AccountRepository();
+        $result = $accountRepository->findByTokenAndStatusActive($token);
+        if (!$result) {
+            Functions::redirect('not_found');
         }
     }
 
@@ -115,6 +196,16 @@ class AccountService
     {
         $email = new Email();
         $result = $email->sendEmailNewAccount($accountEmail, $name, $token);
+        if (!$result) {
+            Functions::handleResponse(Messages::$genericError);
+        }
+        $_SESSION[SessionEnum::AccountEmail->value] = $accountEmail;
+    }
+
+    private static function sendEmailRecoverPassword(string $accountEmail, string $name, string $token): void
+    {
+        $email = new Email();
+        $result = $email->sendEmailRecoverPassword($accountEmail, $name, $token);
         if (!$result) {
             Functions::handleResponse(Messages::$genericError);
         }
@@ -161,11 +252,11 @@ class AccountService
     private static function validateUrlToken(): mixed
     {
         if (!isset($_GET['token'])) {
-            Functions::redirect();
+            Functions::redirect('not_found');
         }
         $token = $_GET['token'];
         if (strlen($token) != 12) {
-            Functions::redirect();
+            Functions::redirect('not_found');
         }
         return $token;
     }
