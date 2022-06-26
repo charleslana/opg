@@ -5,6 +5,7 @@ namespace core\service;
 use core\classes\Email;
 use core\classes\Functions;
 use core\classes\Messages;
+use core\enum\SessionEnum;
 use core\exception\CustomException;
 use core\repository\AccountRepository;
 
@@ -37,12 +38,14 @@ class AccountService
     public static function getAccount(): object
     {
         $accountRepository = new AccountRepository();
-        return $accountRepository->findByAccount(self::getAccountId());
+        $result = $accountRepository->findByAccount(self::getAccountId());
+        self::validateAccountSession($result);
+        return $result;
     }
 
     public static function getAccountId(): int
     {
-        return $_SESSION['accountId'];
+        return $_SESSION[SessionEnum::AccountId->value];
     }
 
     /**
@@ -59,15 +62,15 @@ class AccountService
         if (is_bool($result)) {
             Functions::handleResponse(Messages::$invalidLogin);
         }
-        self::setLoginAccount($result->id, $result->name);
+        self::createSessionLogin($accountRepository, $result);
     }
 
     public static function logout(): void
     {
         AccountCharacterService::characterLogout();
-        if (isset($_SESSION['accountId'])) {
-            unset($_SESSION['accountId']);
-            unset($_SESSION['name']);
+        if (isset($_SESSION[SessionEnum::AccountId->value])) {
+            unset($_SESSION[SessionEnum::AccountId->value]);
+            unset($_SESSION[SessionEnum::AccountName->value]);
         }
     }
 
@@ -96,6 +99,18 @@ class AccountService
         }
     }
 
+    /**
+     * @throws CustomException
+     */
+    private static function createSessionLogin(AccountRepository $accountRepository, mixed $result): void
+    {
+        $session = Functions::generateToken('30');
+        $accountRepository->saveSession($result->id, $session);
+        $_SESSION[SessionEnum::AccountSession->value] = $session;
+        $_SESSION[SessionEnum::AccountId->value] = $result->id;
+        $_SESSION[SessionEnum::AccountName->value] = $result->name;
+    }
+
     private static function sendEmailActivateAccount(string $accountEmail, string $name, string $token): void
     {
         $email = new Email();
@@ -103,13 +118,15 @@ class AccountService
         if (!$result) {
             Functions::handleResponse(Messages::$genericError);
         }
-        $_SESSION['accountEmail'] = $accountEmail;
+        $_SESSION[SessionEnum::AccountEmail->value] = $accountEmail;
     }
 
-    private static function setLoginAccount($id, $name): void
+    private static function validateAccountSession(bool|object $result): void
     {
-        $_SESSION['accountId'] = $id;
-        $_SESSION['name'] = $name;
+        if ($result->session != $_SESSION[SessionEnum::AccountSession->value]) {
+            self::logout();
+            Functions::redirect();
+        }
     }
 
     private static function validateLoginData(string $email, string $password): void

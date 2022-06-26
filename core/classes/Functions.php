@@ -3,6 +3,7 @@
 namespace core\classes;
 
 use core\enum\ResponseEnum;
+use core\enum\SessionEnum;
 
 class Functions
 {
@@ -89,26 +90,26 @@ class Functions
 
     public static function validateLoggedAccount(): void
     {
-        if (!isset($_SESSION['accountId'])) {
+        if (!isset($_SESSION[SessionEnum::AccountId->value])) {
             self::redirect();
         }
     }
 
     public static function validateLoggedAccountCharacter(): void
     {
-        if (!isset($_SESSION['characterId'])) {
+        if (!isset($_SESSION[SessionEnum::AccountCharacterId->value])) {
             self::redirect();
         }
     }
 
     public static function validateLoggedCrew(): bool
     {
-        return isset($_SESSION['characterId']);
+        return isset($_SESSION[SessionEnum::AccountCharacterId->value]);
     }
 
     public static function validateLoggedUser(): bool
     {
-        return isset($_SESSION['accountId']);
+        return isset($_SESSION[SessionEnum::AccountId->value]);
     }
 
     public static function validateName(string $text): bool

@@ -132,7 +132,7 @@ function validateSaveLoginData() {
     localStorage.removeItem('passwordLogin');
 }
 
-function showCharacterDetailsCanvas(data) {
+function getCharacterStatusDetails(data) {
     document.getElementById('offcanvasRightLabel').innerText = data.name;
     document.getElementById('characterImage').src = `../../public/assets/img/characters/landscape/${data.image}.png`;
     document.getElementById('strengthAttributes').innerText = `+${data.strength_attributes}`;
@@ -144,6 +144,9 @@ function showCharacterDetailsCanvas(data) {
     document.getElementById('maximumLevel').innerText = data.maximum_level;
     document.getElementById('hakiUnlock').innerText = data.haki_unlock === 'no' ? 'não' : 'sim';
     document.getElementById('akumaNoMiUnlock').innerText = data.akuma_no_mi_unlock === 'no' ? 'não' : 'sim';
+}
+
+function getCharacterRequirementsDetails(data) {
     document.getElementById('playerLevelUnlock').style.width = `${barCalculation(data.accountLevel, +data.player_level_unlock)}%`;
     document.querySelector('#playerLevelUnlock > span').innerText = `${data.accountLevel}/${+data.player_level_unlock}`;
     document.getElementById('characterLevelUnlock').style.width = `${barCalculation(+data.level, +data.character_level_unlock)}%`;
@@ -156,12 +159,19 @@ function showCharacterDetailsCanvas(data) {
     document.querySelector('#characterNpcWinsUnlock > span').innerText = `${+data.npc_wins}/${+data.character_npc_wins_unlock}`;
     document.getElementById('characterArenaWinsUnlock').style.width = `${barCalculation(+data.arena_wins, +data.character_arena_wins_unlock)}%`;
     document.querySelector('#characterArenaWinsUnlock > span').innerText = `${+data.arena_wins}/${+data.character_arena_wins_unlock}`;
+}
+
+function getCharacterFreeRecruitDetails(data) {
     const freeRecruitElement = document.getElementById('free-recruit');
     freeRecruitElement.style.display = 'block';
     freeRecruitElement.removeAttribute('disabled');
     if (data.accountLevel < +data.player_level_unlock || +data.level < +data.character_level_unlock || +data.npc_battles < +data.character_npc_battles_unlock || +data.arena_battles < +data.character_arena_battles_unlock || +data.npc_wins < +data.character_npc_wins_unlock || +data.arena_wins < +data.character_arena_wins_unlock) {
         freeRecruitElement.setAttribute('disabled', '');
     }
+    return freeRecruitElement;
+}
+
+function getCharacterGoldUnlockDetails(data) {
     const goldUnlockElement = document.getElementById('goldUnlock');
     goldUnlockElement.style.display = 'block';
     goldUnlockElement.removeAttribute('disabled');
@@ -170,11 +180,21 @@ function showCharacterDetailsCanvas(data) {
     if (data.accountGold < data.gold_unlock) {
         goldUnlockElement.setAttribute('disabled', '');
     }
+    return goldUnlockElement;
+}
+
+function getArrayAccountCharacterIds(data) {
     const arrayAccountCharacterIds = [];
-    const accountCharacterIds = data.accountCharacterIds.split(',');
-    accountCharacterIds.forEach(function (obj) {
-        arrayAccountCharacterIds.push(parseInt(obj, 10));
-    });
+    if (typeof data.accountCharacterIds === 'string') {
+        const accountCharacterIds = data.accountCharacterIds.split(',');
+        accountCharacterIds.forEach(function (obj) {
+            arrayAccountCharacterIds.push(parseInt(obj, 10));
+        });
+    }
+    return arrayAccountCharacterIds;
+}
+
+function getCharacterAlertRecruitDetails(arrayAccountCharacterIds, data, freeRecruitElement, goldUnlockElement) {
     const alert = document.getElementById('alert');
     alert.classList.remove('alert-success');
     alert.classList.add('alert-warning');
@@ -189,6 +209,15 @@ function showCharacterDetailsCanvas(data) {
         alert.innerText = 'Você já possui este tripulante!';
         tabRecruitHr.style.display = 'none';
     }
+}
+
+function showCharacterDetailsCanvas(data) {
+    getCharacterStatusDetails(data);
+    getCharacterRequirementsDetails(data);
+    const freeRecruitElement = getCharacterFreeRecruitDetails(data);
+    const goldUnlockElement = getCharacterGoldUnlockDetails(data);
+    const arrayAccountCharacterIds = getArrayAccountCharacterIds(data);
+    getCharacterAlertRecruitDetails(arrayAccountCharacterIds, data, freeRecruitElement, goldUnlockElement);
     freeRecruitElement.setAttribute('data-id', data.id);
     const element = document.getElementById('offcanvasRight');
     const bsOffcanvas = new bootstrap.Offcanvas(element);
@@ -228,8 +257,8 @@ function barCalculation(min, max) {
     return result;
 }
 
-function numberAbbreviation(num, digits = 1) {
-    const lookup = [
+function numberAbbreviationSymbol() {
+    return [
         {value: 1, symbol: ''},
         {value: 1e3, symbol: 'K'},
         {value: 1e6, symbol: 'M'},
@@ -243,6 +272,10 @@ function numberAbbreviation(num, digits = 1) {
         {value: 1e30, symbol: 'n'},
         {value: 1e33, symbol: 'd'},
     ];
+}
+
+function numberAbbreviation(num, digits = 1) {
+    const lookup = numberAbbreviationSymbol();
     const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
     const item = lookup
         .slice()

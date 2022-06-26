@@ -49,6 +49,7 @@ class Email
         $html .= '<p>Para entrar no jogo, você deve confirmar o e-mail.</p>';
         $html .= '<p>Clique abaixo para confirmar sua conta:</p>';
         $html .= "<p><a href='$url'>Confirmar a conta</a></p>";
+        $html .= "<p>Se preferir copie e cole o link no navegador: $url</p>";
         $html .= '<p><i><small>' . APP_NAME . '</small></i></p>';
         $mail->Body = $html;
     }

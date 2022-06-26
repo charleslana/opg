@@ -3,6 +3,7 @@
 namespace core\controller;
 
 use core\classes\Functions;
+use core\enum\SessionEnum;
 use core\exception\CustomException;
 use core\service\AccountService;
 
@@ -20,16 +21,16 @@ class Main
 
     public function confirmEmail(): void
     {
-        if (!isset($_SESSION['accountEmail'])) {
+        if (!isset($_SESSION[SessionEnum::AccountEmail->value])) {
             Functions::redirect();
         }
         Functions::showMainLayout('confirm_email');
-        unset($_SESSION['accountEmail']);
+        unset($_SESSION[SessionEnum::AccountEmail->value]);
     }
 
     public function index(): void
     {
-        if (isset($_SESSION['accountId'])) {
+        if (isset($_SESSION[SessionEnum::AccountId->value])) {
             Functions::redirect('select_crew');
         }
         Functions::showMainLayout();

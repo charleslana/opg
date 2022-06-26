@@ -32,7 +32,7 @@ class AccountRepository
     {
         $parameters = [':id' => $id];
         $database = new Database();
-        $result = $database->select('SELECT id, email, name, role, level, belly, gold, avatar from account WHERE id = :id', $parameters);
+        $result = $database->select('SELECT id, email, name, role, level, belly, gold, avatar, session from account WHERE id = :id', $parameters);
         if (count($result) != 1) {
             return false;
         }
@@ -88,6 +88,16 @@ class AccountRepository
         $database = new Database();
         return $database->update('UPDATE account SET gold = :gold WHERE id = :id', $parameters);
         //TODO: criar tabela de histórico de dados do usuário, gold, etcs
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function saveSession(int $accountId, string $session): bool
+    {
+        $parameters = [':session' => $session, ':id' => $accountId];
+        $database = new Database();
+        return $database->update('UPDATE account SET session = :session WHERE id = :id', $parameters);
     }
 
     /**

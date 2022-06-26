@@ -2,6 +2,9 @@
 if (!defined('APP_TAG_NAME')) {
     die();
 }
+
+use core\enum\SessionEnum;
+
 ?>
 <!-- ===============================================-->
 <!--    Main Content-->
@@ -28,7 +31,8 @@ if (!defined('APP_TAG_NAME')) {
                                     <img class="d-block mx-auto mb-4" src="../../public/assets/img/icons/email.png"
                                          alt="Email" width="96"/>
                                     <h3 class="mb-2">Por favor confirme sua conta!</h3>
-                                    <p>Um e-mail foi enviado para <strong><?= $_SESSION['accountEmail'] ?></strong>.
+                                    <p>Um e-mail foi enviado para
+                                        <strong><?= $_SESSION[SessionEnum::AccountEmail->value] ?></strong>.
                                         Clique no link do e-mail para confirmar sua conta
                                     </p>
                                     <a class="btn btn-primary btn-sm mt-3" href="?action=index">

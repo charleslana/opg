@@ -4,6 +4,7 @@ namespace core\service;
 
 use core\classes\Functions;
 use core\classes\Messages;
+use core\enum\SessionEnum;
 use core\exception\CustomException;
 use core\repository\AccountCharacterRepository;
 
@@ -12,8 +13,8 @@ class AccountCharacterService
 
     public static function characterLogout(): void
     {
-        if (isset($_SESSION['characterId'])) {
-            unset($_SESSION['characterId']);
+        if (isset($_SESSION[SessionEnum::AccountCharacterId->value])) {
+            unset($_SESSION[SessionEnum::AccountCharacterId->value]);
         }
     }
 
@@ -28,7 +29,7 @@ class AccountCharacterService
 
     public static function getCharacterId(): int
     {
-        return $_SESSION['characterId'];
+        return $_SESSION[SessionEnum::AccountCharacterId->value];
     }
 
     /**
@@ -44,7 +45,7 @@ class AccountCharacterService
         if (!$result) {
             Functions::handleResponse(Messages::$characterNotFound);
         }
-        $_SESSION['characterId'] = $result->accountCharacterId;
+        $_SESSION[SessionEnum::AccountCharacterId->value] = $result->accountCharacterId;
     }
 
     /**

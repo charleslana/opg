@@ -2,6 +2,9 @@
 if (!defined('APP_TAG_NAME')) {
     die();
 }
+
+use core\enum\SessionEnum;
+
 ?>
 <nav class="navbar navbar-light navbar-vertical navbar-expand-xl" aria-label="">
     <div class="d-flex align-items-center">
@@ -24,7 +27,7 @@ if (!defined('APP_TAG_NAME')) {
             <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
                 <li class="nav-item">
                     <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                        <div class="col-auto navbar-vertical-label"><?= $_SESSION['name'] ?></div>
+                        <div class="col-auto navbar-vertical-label"><?= $_SESSION[SessionEnum::AccountName->value] ?></div>
                         <div class="col ps-0">
                             <hr class="mb-0 navbar-vertical-divider"/>
                         </div>
