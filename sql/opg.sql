@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 26/06/2022 às 20:47
+-- Tempo de geração: 27/06/2022 às 03:35
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -41,7 +41,7 @@ CREATE TABLE `account` (
   `level` int(10) UNSIGNED DEFAULT 1,
   `belly` float DEFAULT 0,
   `gold` float DEFAULT 0,
-  `avatar` int(11) DEFAULT 1,
+  `avatar` int(10) DEFAULT 1,
   `session` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -50,7 +50,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `created_at`, `updated_at`, `deleted_at`, `level`, `belly`, `gold`, `avatar`, `session`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$2g/DigaWkh5gILD9PafRy.he5gVGvBX5bi.GJl2WedaawZnWYON3W', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-26 15:47:34', NULL, 5, 1500, 500, 2, '2bo3s4admuH9OFEynxUfMJiNcDLtvW'),
+(1, 'suporteopgame@gmail.com', '$2y$10$2g/DigaWkh5gILD9PafRy.he5gVGvBX5bi.GJl2WedaawZnWYON3W', 'Charles Lana', 'active', NULL, 'user', '2022-06-19 00:39:52', '2022-06-26 22:34:41', NULL, 5, 1500, 500, 2, '0oX5uhyA8wTe4tW7Qk9cVrRHfNDYbg'),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL, 1, 0, 0, 1, NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', '2022-06-19 17:36:10', '2022-06-26 14:43:36', NULL, 1, 0, 0, 1, NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL, 1, 0, 0, 1, NULL),
@@ -66,11 +66,13 @@ CREATE TABLE `account_character` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_id` int(10) UNSIGNED NOT NULL,
   `character_id` int(10) UNSIGNED NOT NULL,
-  `level` int(11) UNSIGNED DEFAULT 1,
-  `npc_battles` int(11) UNSIGNED DEFAULT 0,
-  `arena_battles` int(11) UNSIGNED DEFAULT 0,
-  `npc_wins` int(11) UNSIGNED DEFAULT 0,
-  `arena_wins` int(11) UNSIGNED DEFAULT 0,
+  `level` int(10) UNSIGNED DEFAULT 1,
+  `npc_battles` int(10) UNSIGNED DEFAULT 0,
+  `arena_battles` int(10) UNSIGNED DEFAULT 0,
+  `npc_wins` int(10) UNSIGNED DEFAULT 0,
+  `npc_defeats` int(10) UNSIGNED DEFAULT 0,
+  `arena_wins` int(10) UNSIGNED DEFAULT 0,
+  `arena_defeats` int(10) UNSIGNED DEFAULT 0,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -79,14 +81,14 @@ CREATE TABLE `account_character` (
 -- Despejando dados para a tabela `account_character`
 --
 
-INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `npc_battles`, `arena_battles`, `npc_wins`, `arena_wins`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 25, 20, 30, 40, 50, '2022-06-25 20:45:25', '2022-06-25 20:47:07'),
-(3, 1, 1, 10, 100, 120, 130, 140, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
-(4, 1, 3, 1, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
-(5, 1, 33, 1, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
-(6, 1, 32, 1, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
-(7, 1, 6, 1, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
-(8, 2, 26, 1, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25');
+INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `npc_battles`, `arena_battles`, `npc_wins`, `npc_defeats`, `arena_wins`, `arena_defeats`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 25, 20, 30, 40, 0, 50, 0, '2022-06-25 20:45:25', '2022-06-25 20:47:07'),
+(3, 1, 1, 10, 100, 120, 130, 0, 140, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
+(4, 1, 3, 1, 0, 0, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
+(5, 1, 33, 1, 0, 0, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
+(6, 1, 32, 1, 0, 0, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
+(7, 1, 6, 3, 0, 0, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-26 21:45:19'),
+(8, 2, 26, 1, 0, 0, 0, 0, 0, 0, '2022-06-25 20:45:25', '2022-06-25 20:45:25');
 
 -- --------------------------------------------------------
 
@@ -98,21 +100,21 @@ CREATE TABLE `character` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `strength_attributes` int(11) UNSIGNED NOT NULL,
-  `defense_attributes` int(11) UNSIGNED NOT NULL,
-  `life_attributes` int(11) UNSIGNED NOT NULL,
-  `energy_attributes` int(11) UNSIGNED NOT NULL,
-  `agility_attributes` int(11) UNSIGNED NOT NULL,
-  `resistance_attributes` int(11) UNSIGNED NOT NULL,
-  `maximum_level` int(11) UNSIGNED NOT NULL,
+  `strength_attributes` int(10) UNSIGNED NOT NULL,
+  `defense_attributes` int(10) UNSIGNED NOT NULL,
+  `life_attributes` int(10) UNSIGNED NOT NULL,
+  `energy_attributes` int(10) UNSIGNED NOT NULL,
+  `agility_attributes` int(10) UNSIGNED NOT NULL,
+  `resistance_attributes` int(10) UNSIGNED NOT NULL,
+  `maximum_level` int(10) UNSIGNED NOT NULL,
   `haki_unlock` enum('no','yes') NOT NULL,
   `akuma_no_mi_unlock` enum('no','yes') NOT NULL,
-  `player_level_unlock` int(11) UNSIGNED DEFAULT NULL,
-  `character_level_unlock` int(11) UNSIGNED DEFAULT NULL,
-  `character_npc_battles_unlock` int(11) UNSIGNED DEFAULT NULL,
-  `character_arena_battles_unlock` int(11) UNSIGNED DEFAULT NULL,
-  `character_npc_wins_unlock` int(11) UNSIGNED DEFAULT NULL,
-  `character_arena_wins_unlock` int(11) UNSIGNED DEFAULT NULL,
+  `player_level_unlock` int(10) UNSIGNED DEFAULT NULL,
+  `character_level_unlock` int(10) UNSIGNED DEFAULT NULL,
+  `character_npc_battles_unlock` int(10) UNSIGNED DEFAULT NULL,
+  `character_arena_battles_unlock` int(10) UNSIGNED DEFAULT NULL,
+  `character_npc_wins_unlock` int(10) UNSIGNED DEFAULT NULL,
+  `character_arena_wins_unlock` int(10) UNSIGNED DEFAULT NULL,
   `gold_unlock` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
