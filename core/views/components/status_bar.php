@@ -7,6 +7,8 @@ use core\classes\Functions;
 use core\service\AccountService;
 
 $account = AccountService::getAccount();
+$maximumExperience = AccountService::calculateExperience($account->level);
+$percentageExperience = Functions::calculatePercentage($account->experience, $maximumExperience);
 ?>
 <ul class="navbar-nav align-items-center">
     <li class="nav-item me-3">
@@ -26,19 +28,20 @@ $account = AccountService::getAccount();
     </li>
     <li class="nav-item">
         <span class="badge rounded-pill bg-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nível">
-            1
+            <?= $account->level ?>
         </span>
         <em class="ra ra-flask align-middle" data-bs-toggle="tooltip" data-bs-placement="bottom"
             title="Experiência"></em>
     </li>
     <li class="nav-item me-3">
         <div class="progress position-relative" style="height:20px; width: 100px;"
-             data-bs-toggle="tooltip" data-bs-placement="bottom" title="25/100">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
+             data-bs-toggle="tooltip" data-bs-placement="bottom"
+             title="<?= Functions::numberFormat($account->experience) ?>/<?= Functions::numberFormat($maximumExperience) ?>">
+            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $percentageExperience ?>%"
                  aria-valuenow="0"
                  aria-valuemin="0"
                  aria-valuemax="100">
-                <span class="justify-content-center d-flex position-absolute w-100 text-1000">50%</span>
+                <span class="justify-content-center d-flex position-absolute w-100 text-1000"><?= $percentageExperience ?>%</span>
             </div>
         </div>
     </li>

@@ -14,6 +14,11 @@ use core\repository\AccountRepository;
 class AccountService
 {
 
+    public static function calculateExperience(int $level): int
+    {
+        return round(($level * 5000) / 2);
+    }
+
     /**
      * @throws CustomException
      */

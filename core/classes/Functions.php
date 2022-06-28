@@ -8,6 +8,16 @@ use core\enum\SessionEnum;
 class Functions
 {
 
+    public static function calculatePercentage(int $minimum, int $maximum): int
+    {
+        $multiply = ($minimum * $maximum) / $maximum;
+        $result = ($multiply * 100) / $maximum;
+        if ($result > 100) {
+            return 100;
+        }
+        return $result;
+    }
+
     public static function encodePassword(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);

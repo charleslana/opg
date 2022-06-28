@@ -9,6 +9,12 @@ use core\service\StatusService;
 extract(get_object_vars($character));
 $data = array('title' => 'Status do personagem');
 include('components/title.php');
+$damage = StatusService::calculateDamage($character->strength_attributes, $character->level);
+$shield = StatusService::calculateShield($character->defense_attributes, $character->level);
+$calculateLife = StatusService::calculateLife($character->life_attributes, $character->level);
+$calculatePercentageOfLife = StatusService::calculatePercentageOfValue($character->life, $calculateLife);
+$calculateEnergy = StatusService::calculateEnergy($character->energy_attributes, $character->level);
+$calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($character->energy, $calculateEnergy);
 ?>
 <div class="card mb-3">
     <div class="card-header">
@@ -29,7 +35,7 @@ include('components/title.php');
                     <li class="nav-item"><a class="nav-link" id="power-tab" data-bs-toggle="tab" href="#tab-power"
                                             role="tab" aria-controls="tab-profile" aria-selected="false">Poder</a></li>
                 </ul>
-                <div class="tab-content border-x border-bottom p-3" id="myTabContent">
+                <div class="tab-content border-x border-bottom p-3" id="attribute">
                     <div class="tab-pane fade show active" id="tab-attribute" role="tabpanel"
                          aria-labelledby="attribute-tab">
                         <ul class="list-group">
@@ -81,34 +87,18 @@ include('components/title.php');
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="<?= Functions::numberFormat(StatusService::calculateDamage($character->strength_attributes, $character->level)) ?>">
+                                title="<?= Functions::numberFormat($damage) ?>">
                                 Dano
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberAbbreviation(StatusService::calculateDamage($character->strength_attributes, $character->level)) ?>
+                                    <?= Functions::numberAbbreviation($damage) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="<?= Functions::numberFormat(StatusService::calculateShield($character->defense_attributes, $character->level)) ?>">
+                                title="<?= Functions::numberFormat($shield) ?>">
                                 Escudo
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberAbbreviation(StatusService::calculateShield($character->defense_attributes, $character->level)) ?>
-                                </span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="<?= Functions::numberFormat(StatusService::calculateLife($character->life_attributes, $character->level)) ?>">
-                                Vida
-                                <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberAbbreviation(StatusService::calculateLife($character->life_attributes, $character->level)) ?>
-                                </span>
-                            </li>
-                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="<?= Functions::numberFormat(StatusService::calculateEnergy($character->energy_attributes, $character->level)) ?>">
-                                Energia
-                                <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberAbbreviation(StatusService::calculateEnergy($character->energy_attributes, $character->level)) ?>
+                                    <?= Functions::numberAbbreviation($shield) ?>
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -123,6 +113,38 @@ include('components/title.php');
                                     <?= StatusService::calculateDodge($character->resistance_attributes, $character->level) ?>%
                                 </span>
                             </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Vida
+                                <div class="progress position-relative" style="height:20px; width: 75%"
+                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                     title="<?= Functions::numberFormat($calculatePercentageOfLife) ?>/<?= Functions::numberFormat($calculateLife) ?>">
+                                    <div class="progress-bar bg-danger progress-bar-striped"
+                                         role="progressbar" style="width: <?= $character->life ?>%"
+                                         aria-valuenow="0"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100">
+                                        <span class="justify-content-center d-flex position-absolute w-100 text-1000 fw-bold">
+                                            <?= Functions::numberAbbreviation($calculatePercentageOfLife) ?>/<?= Functions::numberAbbreviation($calculateLife) ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                                Energia
+                                <div class="progress position-relative" style="height:20px; width: 75%"
+                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                     title="<?= Functions::numberFormat($calculatePercentageOfEnergy) ?>/<?= Functions::numberFormat($calculateEnergy) ?>">
+                                    <div class="progress-bar bg-primary progress-bar-striped"
+                                         role="progressbar" style="width: <?= $character->energy ?>%"
+                                         aria-valuenow="0"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100">
+                                        <span class="justify-content-center d-flex position-absolute w-100 text-1000 fw-bold">
+                                            <?= Functions::numberAbbreviation($calculatePercentageOfEnergy) ?>/<?= Functions::numberAbbreviation($calculateEnergy) ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -131,44 +153,78 @@ include('components/title.php');
         <hr>
         <div class="row">
             <div class="col">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
-                        Batalhas NPC
-                        <span class="badge badge-soft-primary rounded-pill">
-                            <?= Functions::numberFormat($character->npc_battles) ?>
-                        </span>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="npc-tab" data-bs-toggle="tab" href="#tab-npc" role="tab"
+                           aria-controls="tab-npc" aria-selected="true">
+                            NPC
+                        </a>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Batalhas Arena
-                        <span class="badge badge-soft-primary rounded-pill">
-                            <?= Functions::numberFormat($character->arena_battles) ?>
-                        </span>
-                    </li>
-                    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
-                        Vitórias NPC
-                        <span class="badge badge-soft-primary rounded-pill">
-                            <?= Functions::numberFormat($character->npc_wins) ?>
-                        </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Derrotas NPC
-                        <span class="badge badge-soft-primary rounded-pill">
-                            <?= Functions::numberFormat($character->npc_defeats) ?>
-                        </span>
-                    </li>
-                    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
-                        Vitórias Arena
-                        <span class="badge badge-soft-primary rounded-pill">
-                            <?= Functions::numberFormat($character->arena_wins) ?>
-                        </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Derrotas Arena
-                        <span class="badge badge-soft-primary rounded-pill">
-                            <?= Functions::numberFormat($character->arena_defeats) ?>
-                        </span>
+                    <li class="nav-item">
+                        <a class="nav-link" id="arena-tab" data-bs-toggle="tab" href="#tab-arena" role="tab"
+                           aria-controls="tab-arena" aria-selected="false">
+                            Arena
+                        </a>
                     </li>
                 </ul>
+                <div class="tab-content border-x border-bottom p-3" id="battles">
+                    <div class="tab-pane fade show active" id="tab-npc" role="tabpanel" aria-labelledby="npc-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                                Batalhas NPC
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->npc_battles) ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Vitórias NPC
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->npc_wins) ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-secondary  d-flex justify-content-between align-items-center">
+                                Derrotas NPC
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->npc_defeats) ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Empates NPC
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->npc_draws) ?>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="tab-arena" role="tabpanel" aria-labelledby="arena-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Batalhas Arena
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->arena_battles) ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                                Vitórias Arena
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->arena_wins) ?>
+                             </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Derrotas Arena
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->arena_defeats) ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                                Empates Arena
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= Functions::numberFormat($character->arena_draws) ?>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

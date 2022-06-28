@@ -32,7 +32,7 @@ class AccountRepository
     {
         $parameters = [':id' => $id];
         $database = new Database();
-        $result = $database->select('SELECT id, email, name, role, level, belly, gold, avatar, session from account WHERE id = :id', $parameters);
+        $result = $database->select('SELECT id, email, name, role, session, level, belly, gold, avatar, experience from account WHERE id = :id', $parameters);
         if (count($result) != 1) {
             return false;
         }

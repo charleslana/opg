@@ -43,6 +43,11 @@ class StatusService
         return 1000 + self::calculateAttribute($life, $level);
     }
 
+    public static function calculatePercentageOfValue(int $percentage, int $value): int
+    {
+        return ($value * $percentage) / 100;
+    }
+
     public static function calculateShield(int $defense, int $level): int
     {
         return 20 * self::calculateAttribute($defense, $level);

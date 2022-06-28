@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let loadingInterval;
 
+function getAxiosError(error) {
+    const {data} = error.response;
+    if (data.error) {
+        errorAlert(data.error);
+        return;
+    }
+    errorAlert(error.message);
+}
+
 document.getElementById('loginForm')?.addEventListener('submit', (event) => {
     event.preventDefault();
     loading(true);
@@ -19,12 +28,7 @@ document.getElementById('loginForm')?.addEventListener('submit', (event) => {
         validateSaveLoginData();
         redirect('select_crew');
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         button.disabled = false;
@@ -55,6 +59,15 @@ async function confirmAlert() {
     })
 }
 
+function getPostRegister() {
+    return {
+        email: document.getElementById('email-register').value,
+        password: document.getElementById('password-register').value,
+        passwordConfirmation: document.getElementById('confirm-password-register').value,
+        name: document.getElementById('name-register').value
+    };
+}
+
 document.getElementById('registerForm')?.addEventListener('submit', (event) => {
     event.preventDefault();
     if (document.getElementById('password-register').value !== document.getElementById('confirm-password-register').value) {
@@ -64,20 +77,10 @@ document.getElementById('registerForm')?.addEventListener('submit', (event) => {
     loading(true);
     const button = document.getElementById('register-button');
     button.disabled = true;
-    axios.post('?action=register', {
-        email: document.getElementById('email-register').value,
-        password: document.getElementById('password-register').value,
-        passwordConfirmation: document.getElementById('confirm-password-register').value,
-        name: document.getElementById('name-register').value
-    }).then(() => {
+    axios.post('?action=register', getPostRegister()).then(() => {
         redirect('confirm_email');
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         button.disabled = false;
@@ -234,12 +237,7 @@ function showCharacterDetails(id) {
         const {data} = response;
         showCharacterDetailsCanvas(data);
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
     });
@@ -308,12 +306,7 @@ function recruitCrewFree() {
             successAlert(data.success);
         }
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         freeRecruitButton.disabled = false;
@@ -349,12 +342,7 @@ async function recruitPaidCrew() {
             successAlert(data.success);
         }
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         goldUnlockButton.disabled = false;
@@ -378,12 +366,7 @@ function selectCharacter(id, name, level) {
             }).then(() => {
                 redirect('status');
             }).catch(error => {
-                const {data} = error.response;
-                if (data.error) {
-                    errorAlert(data.error);
-                    return;
-                }
-                errorAlert(error.message);
+                getAxiosError(error);
             }).finally(() => {
                 loading(false);
             });
@@ -401,12 +384,7 @@ document.getElementById('activateEmailForm')?.addEventListener('submit', (event)
     }).then(() => {
         redirect('confirm_activate_email');
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         button.disabled = false;
@@ -423,17 +401,26 @@ document.getElementById('recoverPasswordForm')?.addEventListener('submit', (even
     }).then(() => {
         redirect('confirm_recover_password');
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         button.disabled = false;
     });
 });
+
+function getRecoverAccountSuccess(response) {
+    const {data} = response;
+    if (data.success) {
+        document.getElementById('recoverAccount').innerHTML = `
+            <div class="text-center">
+                <p>${data.success}</p>
+                <a class="btn btn-primary btn-sm mt-3" href="?action=index">
+                    <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4 down-1"></span>Retornar para login
+                </a>
+            </div>
+        `;
+    }
+}
 
 document.getElementById('recoverAccountForm')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -447,24 +434,9 @@ document.getElementById('recoverAccountForm')?.addEventListener('submit', (event
     axios.post('?action=recover', {
         password: document.getElementById('new-password').value, token: getQueryStringParams('token')
     }).then(response => {
-        const {data} = response;
-        if (data.success) {
-            document.getElementById('recoverAccount').innerHTML = `
-            <div class="text-center">
-                <p>${data.success}</p>
-                <a class="btn btn-primary btn-sm mt-3" href="?action=index">
-                    <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4 down-1"></span>Retornar para login
-                </a>
-            </div>
-        `;
-        }
+        getRecoverAccountSuccess(response);
     }).catch(error => {
-        const {data} = error.response;
-        if (data.error) {
-            errorAlert(data.error);
-            return;
-        }
-        errorAlert(error.message);
+        getAxiosError(error);
     }).finally(() => {
         loading(false);
         button.disabled = false;
