@@ -4,6 +4,7 @@ namespace core\classes;
 
 use core\enum\ResponseEnum;
 use core\enum\SessionEnum;
+use core\model\ResponseModel;
 
 class Functions
 {
@@ -29,13 +30,15 @@ class Functions
         return substr(str_shuffle($characters), 0, $charactersQuantity);
     }
 
-    public static function handleResponse(string $message, ResponseEnum $status = ResponseEnum::Error): void
+    public static function handleResponse(string $message, ResponseEnum $status = ResponseEnum::Error): ResponseModel
     {
         if ($status == ResponseEnum::Error) {
             http_response_code(400);
         }
-        $response = array($status->value => $message);
-        echo json_encode($response);
+        $responseModel = new ResponseModel();
+        $responseModel->status = $status->value;
+        $responseModel->message = $message;
+        echo json_encode($responseModel);
         die();
     }
 

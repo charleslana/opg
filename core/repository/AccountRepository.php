@@ -65,7 +65,7 @@ class AccountRepository
     {
         $parameters = [':id' => $id];
         $database = new Database();
-        $result = $database->select('SELECT * from account WHERE id = :id', $parameters);
+        $result = $database->select('SELECT * FROM account WHERE id = :id', $parameters);
         if (count($result) != 1) {
             return null;
         }

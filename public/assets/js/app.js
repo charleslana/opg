@@ -10,8 +10,8 @@ let loadingInterval;
 
 function getAxiosError(error) {
     const {data} = error.response;
-    if (data.error) {
-        errorAlert(data.error);
+    if (data) {
+        errorAlert(data.message);
         return;
     }
     errorAlert(error.message);
@@ -301,9 +301,9 @@ function recruitCrewFree() {
         }
     }).then(response => {
         const {data} = response;
-        if (data.success) {
+        if (data) {
             closeOffCanvas();
-            successAlert(data.success);
+            successAlert(data.message);
         }
     }).catch(error => {
         getAxiosError(error);
@@ -337,9 +337,9 @@ async function recruitPaidCrew() {
         }
     }).then(response => {
         const {data} = response;
-        if (data.success) {
+        if (data) {
             closeOffCanvas();
-            successAlert(data.success);
+            successAlert(data.message);
         }
     }).catch(error => {
         getAxiosError(error);

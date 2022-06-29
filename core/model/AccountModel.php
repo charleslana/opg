@@ -4,21 +4,27 @@ namespace core\model;
 
 use core\enum\RoleEnum;
 use core\enum\StatusEnum;
+use DateTime;
 
-class AccountModel extends AbstractModel
+class AccountModel
 {
 
     private int $avatar;
     private int $belly;
+    private DateTime $createdAt;
+    private ?DateTime $deletedAt;
     private string $email;
     private int $experience;
     private int $gold;
+    private int $id;
     private int $level;
+    private string $name;
     private string $password;
     private RoleEnum $role;
     private ?string $session;
     private StatusEnum $status;
     private ?string $token;
+    private DateTime $updatedAt;
 
     /**
      * @return int
@@ -50,6 +56,38 @@ class AccountModel extends AbstractModel
     public function setBelly(int $belly): void
     {
         $this->belly = $belly;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDeletedAt(): ?DateTime
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param DateTime|null $deletedAt
+     */
+    public function setDeletedAt(?DateTime $deletedAt): void
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     /**
@@ -103,6 +141,22 @@ class AccountModel extends AbstractModel
     /**
      * @return int
      */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
     public function getLevel(): int
     {
         return $this->level;
@@ -114,6 +168,22 @@ class AccountModel extends AbstractModel
     public function setLevel(int $level): void
     {
         $this->level = $level;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -194,5 +264,21 @@ class AccountModel extends AbstractModel
     public function setToken(?string $token): void
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     */
+    public function setUpdatedAt(DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }
