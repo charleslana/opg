@@ -4,7 +4,12 @@ namespace core\repository;
 
 use core\classes\Database;
 use core\classes\Functions;
+use core\enum\RoleEnum;
+use core\enum\StatusEnum;
 use core\exception\CustomException;
+use core\model\AccountModel;
+use DateTime;
+use Exception;
 
 class AccountRepository
 {
@@ -20,43 +25,28 @@ class AccountRepository
         if (count($result) != 1) {
             return false;
         }
-        $id = $result[0]->id;
-        $parameters = [':id' => $id];
+        $parameters = [':id' => $result[0]->id];
         return $database->update('UPDATE account SET token = null, status = "active" WHERE id = :id', $parameters);
     }
 
     /**
      * @throws CustomException
      */
-    public function findByAccount(int $id): bool|object
-    {
-        $parameters = [':id' => $id];
-        $database = new Database();
-        $result = $database->select('SELECT id, email, name, role, session, level, belly, gold, avatar, experience from account WHERE id = :id', $parameters);
-        if (count($result) != 1) {
-            return false;
-        }
-        return $result[0];
-    }
-
-    /**
-     * @throws CustomException
-     */
-    public function findByEmail(string $email): bool|object
+    public function existsByEmail(string $email): bool
     {
         $parameters = [':email' => $email];
         $database = new Database();
-        $result = $database->select('SELECT id, email, name, status, token from account WHERE email = :email', $parameters);
-        if (count($result) != 1) {
-            return false;
+        $result = $database->select('SELECT email from account WHERE email = :email', $parameters);
+        if (count($result) != 0) {
+            return true;
         }
-        return $result[0];
+        return false;
     }
 
     /**
      * @throws CustomException
      */
-    public function findByName(string $name): bool
+    public function existsByName(string $name): bool
     {
         $parameters = [':name' => $name];
         $database = new Database();
@@ -69,16 +59,47 @@ class AccountRepository
 
     /**
      * @throws CustomException
+     * @throws Exception
      */
-    public function findByTokenAndStatusActive(string $token): bool|object
+    public function findByAccount(int $id): ?AccountModel
+    {
+        $parameters = [':id' => $id];
+        $database = new Database();
+        $result = $database->select('SELECT * from account WHERE id = :id', $parameters);
+        if (count($result) != 1) {
+            return null;
+        }
+        return $this->setAccount($result[0]);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function findByEmail(string $email): ?AccountModel
+    {
+        $parameters = [':email' => $email];
+        $database = new Database();
+        $result = $database->select('SELECT id, email, name, status, token from account WHERE email = :email', $parameters);
+        if (count($result) != 1) {
+            return null;
+        }
+        return $this->setFindByEmailAccount($result[0]);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function findByTokenAndStatusActive(string $token): ?AccountModel
     {
         $parameters = [':token' => $token];
         $database = new Database();
         $result = $database->select('SELECT id FROM account WHERE token = :token AND status = "active"', $parameters);
         if (count($result) != 1) {
-            return false;
+            return null;
         }
-        return $result[0];
+        $accountModel = new AccountModel();
+        $accountModel->setId($result[0]->id);
+        return $accountModel;
     }
 
     /**
@@ -101,7 +122,6 @@ class AccountRepository
         $parameters = [':gold' => $gold, ':id' => $accountId];
         $database = new Database();
         return $database->update('UPDATE account SET gold = :gold WHERE id = :id', $parameters);
-        //TODO: criar tabela de histórico de dados do usuário, gold, etcs
     }
 
     /**
@@ -137,18 +157,80 @@ class AccountRepository
     /**
      * @throws CustomException
      */
-    public function validateLogin(string $email, string $password): bool|object
+    public function validateLogin(string $email, string $password): ?AccountModel
     {
         $parameters = [':email' => $email];
         $database = new Database();
         $result = $database->select("SELECT id, email, name, password FROM account WHERE email = :email AND status = 'active' AND deleted_at IS NULL", $parameters);
         if (count($result) != 1) {
-            return false;
+            return null;
         }
         $account = $result[0];
         if (!password_verify($password, $account->password)) {
-            return false;
+            return null;
         }
-        return $account;
+        return $this->setValidateLoginAccount($account);
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function setAccount(object $account): AccountModel
+    {
+        $accountModel = new AccountModel();
+        $this->setAccountFirstData($accountModel, $account);
+        $this->setAccountSecondData($accountModel, $account);
+        return $accountModel;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function setAccountFirstData(AccountModel $accountModel, object $account): void
+    {
+        $accountModel->setId($account->id);
+        $accountModel->setEmail($account->email);
+        $accountModel->setName($account->name);
+        $accountModel->setPassword($account->password);
+        $accountModel->setAvatar($account->avatar);
+        $accountModel->setBelly($account->belly);
+        $accountModel->setCreatedAt(new DateTime($account->created_at));
+        $accountModel->setDeletedAt($account->deleted_at == null ? null : new DateTime($account->deleted_at));
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function setAccountSecondData(AccountModel $accountModel, object $account): void
+    {
+        $accountModel->setExperience($account->experience);
+        $accountModel->setGold($account->gold);
+        $accountModel->setLevel($account->level);
+        $accountModel->setRole(RoleEnum::from($account->role));
+        $accountModel->setSession($account->session);
+        $accountModel->setStatus(StatusEnum::from($account->status));
+        $accountModel->setToken($account->token);
+        $accountModel->setUpdatedAt(new DateTime($account->updated_at));
+    }
+
+    private function setFindByEmailAccount(object $account): AccountModel
+    {
+        $accountModel = new AccountModel();
+        $accountModel->setId($account->id);
+        $accountModel->setEmail($account->email);
+        $accountModel->setName($account->name);
+        $accountModel->setStatus(StatusEnum::from($account->status));
+        $accountModel->setToken($account->token);
+        return $accountModel;
+    }
+
+    private function setValidateLoginAccount(object $account): AccountModel
+    {
+        $accountModel = new AccountModel();
+        $accountModel->setId($account->id);
+        $accountModel->setEmail($account->email);
+        $accountModel->setName($account->name);
+        $accountModel->setPassword($account->password);
+        return $accountModel;
     }
 }

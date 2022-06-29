@@ -4,7 +4,7 @@ namespace core\service;
 
 use core\classes\Functions;
 use core\classes\Messages;
-use core\enum\PaidEnum;
+use core\enum\PaymentEnum;
 use core\enum\ResponseEnum;
 use core\exception\CustomException;
 use core\repository\CharacterRepository;
@@ -15,13 +15,13 @@ class CharacterService
     /**
      * @throws CustomException
      */
-    public static function addCharacter(int $id, PaidEnum $paid): void
+    public static function addCharacter(int $id, PaymentEnum $payment): void
     {
         if (!Functions::validateLoggedUser()) {
             Functions::handleResponse(Messages::$accountNotLogged);
         }
         $characterRepository = new CharacterRepository();
-        self::validateCharacterRequirements($characterRepository, $id, $paid);
+        self::validateCharacterRequirements($characterRepository, $id, $payment);
         $characterRepository->saveCharacter($id);
         Functions::handleResponse(Messages::$characterAddedSuccessfully, ResponseEnum::Success);
     }
@@ -60,9 +60,9 @@ class CharacterService
     /**
      * @throws CustomException
      */
-    private static function payCrew(PaidEnum $paid, object|bool $result): void
+    private static function payCrew(PaymentEnum $payment, object|bool $result): void
     {
-        if ($paid == PaidEnum::Paid) {
+        if ($payment == PaymentEnum::Pay) {
             if ($result->accountGold < $result->gold_unlock) {
                 Functions::handleResponse(Messages::$insufficientGold);
             }
@@ -73,19 +73,19 @@ class CharacterService
     /**
      * @throws CustomException
      */
-    private static function validateCharacterRequirements(CharacterRepository $characterRepository, int $id, PaidEnum $paid): void
+    private static function validateCharacterRequirements(CharacterRepository $characterRepository, int $id, PaymentEnum $payment): void
     {
         $result = $characterRepository->findCharacterByIdAndAccountCharacterByIdAndAccountById($id);
         if (!$result) {
             Functions::handleResponse(Messages::$characterNotFound);
         }
-        if ($paid == PaidEnum::Free && (AccountService::getAccount()->level < $result->player_level_unlock || $result->level < $result->character_level_unlock || $result->npc_battles < $result->character_npc_battles_unlock || $result->arena_battles < $result->character_arena_battles_unlock || $result->npc_wins < $result->character_npc_wins_unlock || $result->arena_wins < $result->character_arena_wins_unlock)) {
+        if ($payment == PaymentEnum::Free && (AccountService::getAccount()->getLevel() < $result->player_level_unlock || $result->level < $result->character_level_unlock || $result->npc_battles < $result->character_npc_battles_unlock || $result->arena_battles < $result->character_arena_battles_unlock || $result->npc_wins < $result->character_npc_wins_unlock || $result->arena_wins < $result->character_arena_wins_unlock)) {
             Functions::handleResponse(Messages::$necessaryRequirements);
         }
         $existCharacterId = preg_grep("/$id/", explode(',', $result->accountCharacterIds));
         if ($existCharacterId) {
             Functions::handleResponse(Messages::$characterAlreadyAdded);
         }
-        self::payCrew($paid, $result);
+        self::payCrew($payment, $result);
     }
 }

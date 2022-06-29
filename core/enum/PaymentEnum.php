@@ -2,8 +2,8 @@
 
 namespace core\enum;
 
-enum PaidEnum
+enum PaymentEnum
 {
     case Free;
-    case Paid;
+    case Pay;
 }

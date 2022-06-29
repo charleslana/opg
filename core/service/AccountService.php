@@ -9,6 +9,7 @@ use core\enum\ResponseEnum;
 use core\enum\SessionEnum;
 use core\enum\StatusEnum;
 use core\exception\CustomException;
+use core\model\AccountModel;
 use core\repository\AccountRepository;
 
 class AccountService
@@ -16,7 +17,7 @@ class AccountService
 
     public static function calculateExperience(int $level): int
     {
-        return round(($level * 5000) / 2);
+        return ($level * 5000) / 2;
     }
 
     /**
@@ -31,12 +32,12 @@ class AccountService
             Functions::handleResponse(Messages::$weakPassword);
         }
         $accountRepository = new AccountRepository();
-        $result = $accountRepository->findByTokenAndStatusActive($token);
-        if (!$result) {
+        $account = $accountRepository->findByTokenAndStatusActive($token);
+        if (is_null($account)) {
             Functions::handleResponse(Messages::$tokenNotFound);
         }
-        $accountRepository->saveToken($result->id, null);
-        $accountRepository->savePassword($result->id, $password);
+        $accountRepository->saveToken($account->getId(), null);
+        $accountRepository->savePassword($account->getId(), $password);
         Functions::handleResponse(Messages::$passwordChangedSuccessfully, ResponseEnum::Success);
     }
 
@@ -50,10 +51,10 @@ class AccountService
         }
         self::validateRegisterData($name, $email, $password);
         $accountRepository = new AccountRepository();
-        if ($accountRepository->findByEmail($email)) {
+        if ($accountRepository->existsByEmail($email)) {
             Functions::handleResponse(Messages::$emailAlreadyRegistered);
         }
-        if ($accountRepository->findByName($name)) {
+        if ($accountRepository->existsByName($name)) {
             Functions::handleResponse(Messages::$nameAlreadyRegistered);
         }
         $token = $accountRepository->saveAccount($name, $email, $password);
@@ -63,12 +64,12 @@ class AccountService
     /**
      * @throws CustomException
      */
-    public static function getAccount(): object
+    public static function getAccount(): AccountModel
     {
         $accountRepository = new AccountRepository();
-        $result = $accountRepository->findByAccount(self::getAccountId());
-        self::validateAccountSession($result);
-        return $result;
+        $account = $accountRepository->findByAccount(self::getAccountId());
+        self::validateAccountSession($account);
+        return $account;
     }
 
     public static function getAccountId(): int
@@ -86,11 +87,11 @@ class AccountService
         }
         self::validateLoginData($email, $password);
         $accountRepository = new AccountRepository();
-        $result = $accountRepository->validateLogin($email, $password);
-        if (is_bool($result)) {
+        $account = $accountRepository->validateLogin($email, $password);
+        if (is_null($account)) {
             Functions::handleResponse(Messages::$invalidLogin);
         }
-        self::createSessionLogin($accountRepository, $result);
+        self::createSessionLogin($accountRepository, $account);
     }
 
     public static function logout(): void
@@ -114,9 +115,9 @@ class AccountService
             Functions::handleResponse(Messages::$invalidEmail);
         }
         $accountRepository = new AccountRepository();
-        $result = $accountRepository->findByEmail($email);
-        if ($result->status == StatusEnum::Inactive->value) {
-            self::sendEmailActivateAccount($result->email, $result->name, $result->token);
+        $account = $accountRepository->findByEmail($email);
+        if ($account->getStatus() == StatusEnum::Inactive) {
+            self::sendEmailActivateAccount($account->getEmail(), $account->getName(), $account->getToken());
             return;
         }
         $_SESSION[SessionEnum::AccountEmail->value] = $email;
@@ -134,11 +135,11 @@ class AccountService
             Functions::handleResponse(Messages::$invalidEmail);
         }
         $accountRepository = new AccountRepository();
-        $result = $accountRepository->findByEmail($email);
-        if ($result->status == StatusEnum::Active->value) {
+        $account = $accountRepository->findByEmail($email);
+        if ($account->getStatus() == StatusEnum::Active) {
             $token = Functions::generateToken();
-            $accountRepository->saveToken($result->id, $token);
-            self::sendEmailRecoverPassword($result->email, $result->name, $token);
+            $accountRepository->saveToken($account->getId(), $token);
+            self::sendEmailRecoverPassword($account->getEmail(), $account->getName(), $token);
             return;
         }
         $_SESSION[SessionEnum::AccountEmail->value] = $email;
@@ -179,8 +180,8 @@ class AccountService
         }
         $token = self::validateUrlToken();
         $accountRepository = new AccountRepository();
-        $result = $accountRepository->findByTokenAndStatusActive($token);
-        if (!$result) {
+        $account = $accountRepository->findByTokenAndStatusActive($token);
+        if (is_null($account)) {
             Functions::redirect('not_found');
         }
     }
@@ -188,13 +189,13 @@ class AccountService
     /**
      * @throws CustomException
      */
-    private static function createSessionLogin(AccountRepository $accountRepository, mixed $result): void
+    private static function createSessionLogin(AccountRepository $accountRepository, AccountModel $accountModel): void
     {
         $session = Functions::generateToken('30');
-        $accountRepository->saveSession($result->id, $session);
+        $accountRepository->saveSession($accountModel->getId(), $session);
         $_SESSION[SessionEnum::AccountSession->value] = $session;
-        $_SESSION[SessionEnum::AccountId->value] = $result->id;
-        $_SESSION[SessionEnum::AccountName->value] = $result->name;
+        $_SESSION[SessionEnum::AccountId->value] = $accountModel->getId();
+        $_SESSION[SessionEnum::AccountName->value] = $accountModel->getName();
     }
 
     private static function sendEmailActivateAccount(string $accountEmail, string $name, string $token): void
@@ -217,9 +218,9 @@ class AccountService
         $_SESSION[SessionEnum::AccountEmail->value] = $accountEmail;
     }
 
-    private static function validateAccountSession(bool|object $result): void
+    private static function validateAccountSession(AccountModel $accountModel): void
     {
-        if ($result->session != $_SESSION[SessionEnum::AccountSession->value]) {
+        if ($accountModel->getSession() != $_SESSION[SessionEnum::AccountSession->value]) {
             self::logout();
             Functions::redirect();
         }

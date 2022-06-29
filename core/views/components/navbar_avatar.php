@@ -8,7 +8,8 @@ extract(get_object_vars($account));
     <a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown"
        aria-haspopup="true" aria-expanded="false">
         <div class="avatar avatar-xl">
-            <img class="rounded-circle" src="../../../public/assets/img/characters/portrait/<?= $account->avatar ?>.png"
+            <img class="rounded-circle"
+                 src="../../../public/assets/img/characters/portrait/<?= $account->getAvatar() ?>.png"
                  alt=""/>
         </div>
     </a>

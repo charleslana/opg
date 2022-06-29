@@ -3,7 +3,7 @@
 namespace core\controller;
 
 use core\classes\Functions;
-use core\enum\PaidEnum;
+use core\enum\PaymentEnum;
 use core\exception\CustomException;
 use core\service\AccountCharacterService;
 use core\service\CharacterService;
@@ -21,11 +21,11 @@ class Crew
         if (isset($_GET['id'])) {
             $id = Functions::setAbsoluteValue($_GET['id']);
         }
-        $paid = PaidEnum::Free;
+        $payment = PaymentEnum::Free;
         if (isset($_GET['isPaid'])) {
-            $paid = PaidEnum::Paid;
+            $payment = PaymentEnum::Pay;
         }
-        CharacterService::addCharacter($id, $paid);
+        CharacterService::addCharacter($id, $payment);
     }
 
     /**
