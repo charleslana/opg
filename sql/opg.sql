@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 28/06/2022 às 02:41
+-- Tempo de geração: 29/06/2022 às 03:59
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -51,11 +51,12 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `session`, `level`, `belly`, `gold`, `avatar`, `experience`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$OgOkti80DxDL6v0pYL6tA.dwFSZVnRGHeeULGYExxoKII36XOe5Bm', 'Charles Lana', 'active', NULL, 'user', '32RqPetXkSQBnTmFY7gw8idE4ZVlc0', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-06-27 21:41:15', NULL),
+(1, 'suporteopgame@gmail.com', '$2y$10$OgOkti80DxDL6v0pYL6tA.dwFSZVnRGHeeULGYExxoKII36XOe5Bm', 'Charles Lana', 'active', NULL, 'user', 'ypCsk3QI2wB4mWtfrUJu8PYTG1oE0z', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-06-28 22:36:44', NULL),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', 'hSAOzKc9LDsYI2lyRvV0QntgiPEZ17', 1, 0, 0, 1, 0, '2022-06-19 17:36:10', '2022-06-26 22:40:25', NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL),
-(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', '#A8xJ3rns7XepY0aFKmEzIwhTiuWBq', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-06-25 22:56:33', NULL);
+(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', '#A8xJ3rns7XepY0aFKmEzIwhTiuWBq', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-06-25 22:56:33', NULL),
+(6, 'jiroxi4322@lenfly.com', '$2y$10$YS1dwoyGFSbM0iPdJQ5Gceh0IFmAc48cxj5ttdcVmsCy9FJagCswG', 'Usuário Temp', 'active', NULL, 'user', 'BMJAGs6CpDHKuei4lvOgIZPcUXN0d8', 1, 0, 0, 1, 0, '2022-06-28 22:27:05', '2022-06-28 22:45:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,8 @@ INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `n
 (7, 1, 6, 3, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-26 21:45:19'),
 (8, 2, 26, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
 (9, 1, 22, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-27 21:20:59', '2022-06-27 21:20:59'),
-(10, 1, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-27 21:21:08', '2022-06-27 21:21:08');
+(10, 1, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-27 21:21:08', '2022-06-27 21:21:08'),
+(11, 6, 20, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-28 22:44:10', '2022-06-28 22:44:10');
 
 -- --------------------------------------------------------
 
@@ -201,13 +203,13 @@ ALTER TABLE `character`
 -- AUTO_INCREMENT de tabela `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `account_character`
 --
 ALTER TABLE `account_character`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `character`
