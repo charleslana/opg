@@ -28,7 +28,7 @@ class AccountService
         if (Functions::validateLoggedUser()) {
             Functions::handleResponse(Messages::$accountAlreadyLogged);
         }
-        if (strlen($password) < 6) {
+        if (mb_strlen($password) < 6) {
             Functions::handleResponse(Messages::$weakPassword);
         }
         $accountRepository = new AccountRepository();
@@ -244,10 +244,10 @@ class AccountService
         if (!Functions::validateEmail($email)) {
             Functions::handleResponse(Messages::$invalidEmail);
         }
-        if (strlen($password) < 6) {
+        if (mb_strlen($password) < 6) {
             Functions::handleResponse(Messages::$weakPassword);
         }
-        if (strlen($name) < 3 || strlen($name) > 20) {
+        if (mb_strlen($name) < 3 || mb_strlen($name) > 20) {
             Functions::handleResponse(Messages::$nameCharacterMinMax);
         }
         if (!Functions::validateName($name)) {

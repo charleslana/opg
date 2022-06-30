@@ -410,10 +410,10 @@ document.getElementById('recoverPasswordForm')?.addEventListener('submit', (even
 
 function getRecoverAccountSuccess(response) {
     const {data} = response;
-    if (data.success) {
+    if (data) {
         document.getElementById('recoverAccount').innerHTML = `
             <div class="text-center">
-                <p>${data.success}</p>
+                <p>${data.message}</p>
                 <a class="btn btn-primary btn-sm mt-3" href="?action=index">
                     <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4 down-1"></span>Retornar para login
                 </a>
@@ -446,8 +446,8 @@ document.getElementById('recoverAccountForm')?.addEventListener('submit', (event
 function getQueryStringParams(param) {
     const pageURL = window.location.search.substring(1);
     const urlVariables = pageURL.split('&');
-    for (let i = 0; i < urlVariables.length; i++) {
-        const parameterName = urlVariables[i].split('=');
+    for (const element of urlVariables) {
+        const parameterName = element.split('=');
         if (parameterName[0] === param) {
             return parameterName[1];
         }

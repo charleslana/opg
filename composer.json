@@ -10,7 +10,8 @@
     ],
     "require": {
         "ext-pdo": "*",
-        "phpmailer/phpmailer": "^6.6"
+        "phpmailer/phpmailer": "^6.6",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {
