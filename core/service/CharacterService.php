@@ -7,6 +7,7 @@ use core\classes\Messages;
 use core\enum\PaymentEnum;
 use core\enum\ResponseEnum;
 use core\exception\CustomException;
+use core\model\CharacterModel;
 use core\repository\CharacterRepository;
 
 class CharacterService
@@ -27,6 +28,7 @@ class CharacterService
     }
 
     /**
+     * @return CharacterModel[]
      * @throws CustomException
      */
     public static function showAllCharacter(int $actualPage): array

@@ -4,18 +4,28 @@ namespace core\repository;
 
 use core\classes\Database;
 use core\exception\CustomException;
+use core\model\CharacterModel;
 use core\service\AccountService;
 
 class CharacterRepository
 {
 
     /**
+     * @return CharacterModel[]
      * @throws CustomException
      */
-    public function findAllByCharacterWithPagination(int $page, int $size): array|bool
+    public function findAllByCharacterWithPagination(int $page, int $size): array
     {
         $database = new Database();
-        return $database->select("SELECT id, image FROM `character` LIMIT $page,$size");
+        $results = $database->select("SELECT id, image FROM `character` LIMIT $page,$size");
+        $characters = [];
+        foreach ($results as $result) {
+            $characterModel = new CharacterModel();
+            $characterModel->setId($result->id);
+            $characterModel->setImage($result->image);
+            $characters[] = $characterModel;
+        }
+        return $characters;
     }
 
     /**

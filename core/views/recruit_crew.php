@@ -25,10 +25,10 @@ include('components/helper.php');
     <div class="card mb-3">
         <div class="card-header">
             <div class="row row-cols-auto mb-3">
-                <?php foreach ($characters as $key => $character) : ?>
+                <?php foreach ($characters as &$character) : ?>
                     <div class="col text-start separate-column">
-                        <div class="character-portrait" onclick="showCharacterDetails(<?= $character->id ?>)"
-                             style="background-image: url('/public/assets/img/characters/portrait/<?= $character->image ?>.png')"></div>
+                        <div class="character-portrait" onclick="showCharacterDetails(<?= $character->getId() ?>)"
+                             style="background-image: url('/public/assets/img/characters/portrait/<?= $character->getImage() ?>.png')"></div>
                     </div>
                 <?php endforeach; ?>
             </div>
