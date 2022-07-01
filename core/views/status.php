@@ -9,20 +9,21 @@ use core\service\StatusService;
 extract(get_object_vars($character));
 $data = array('title' => 'Status do personagem');
 include('components/title.php');
-$damage = StatusService::calculateDamage($character->strength_attributes, $character->level);
-$shield = StatusService::calculateShield($character->defense_attributes, $character->level);
-$calculateLife = StatusService::calculateLife($character->life_attributes, $character->level);
-$calculatePercentageOfLife = StatusService::calculatePercentageOfValue($character->life, $calculateLife);
-$calculateEnergy = StatusService::calculateEnergy($character->energy_attributes, $character->level);
-$calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($character->energy, $calculateEnergy);
+$damage = StatusService::calculateDamage($character->getCharacter()->getStrengthAttributes(), $character->getAccountCharacter()->getLevel());
+$shield = StatusService::calculateShield($character->getCharacter()->getDefenseAttributes(), $character->getAccountCharacter()->getLevel());
+$calculateLife = StatusService::calculateLife($character->getCharacter()->getLifeAttributes(), $character->getAccountCharacter()->getLevel());
+$calculatePercentageOfLife = StatusService::calculatePercentageOfValue($character->getAccountCharacter()->getLife(), $calculateLife);
+$calculateEnergy = StatusService::calculateEnergy($character->getCharacter()->getEnergyAttributes(), $character->getAccountCharacter()->getLevel());
+$calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($character->getAccountCharacter()->getEnergy(), $calculateEnergy);
 ?>
 <div class="card mb-3">
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-md-6 mb-3">
-                <img src="../../public/assets/img/characters/landscape/<?= $character->image ?>.png" alt=""
+                <img src="../../public/assets/img/characters/landscape/<?= $character->getCharacter()->getImage() ?>.png"
+                     alt=""
                      class="center mb-3 img-fluid" height="200"/>
-                <span class="badge bg-secondary w-100"><?= $character->name ?></span>
+                <span class="badge bg-secondary w-100"><?= $character->getCharacter()->getName() ?></span>
             </div>
             <div class="col-md-6">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -42,43 +43,43 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Nível
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->level) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getLevel()) ?>
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Força
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->strength_attributes, $character->level)) ?>
+                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getStrengthAttributes(), $character->getAccountCharacter()->getLevel())) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Defesa
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->defense_attributes, $character->level)) ?>
+                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getDefenseAttributes(), $character->getAccountCharacter()->getLevel())) ?>
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Vida
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->life_attributes, $character->level)) ?>
+                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getLifeAttributes(), $character->getAccountCharacter()->getLevel())) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Energia
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->energy_attributes, $character->level)) ?>
+                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getEnergyAttributes(), $character->getAccountCharacter()->getLevel())) ?>
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Agilidade
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->agility_attributes, $character->level)) ?>
+                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getAgilityAttributes(), $character->getAccountCharacter()->getLevel())) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Resistência
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->resistance_attributes, $character->level)) ?>
+                                    <?= Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getResistanceAttributes(), $character->getAccountCharacter()->getLevel())) ?>
                                 </span>
                             </li>
                         </ul>
@@ -104,22 +105,23 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Crítico
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= StatusService::calculateCritical($character->agility_attributes, $character->level) ?>%
+                                    <?= StatusService::calculateCritical($character->getCharacter()->getAgilityAttributes(), $character->getAccountCharacter()->getLevel()) ?>%
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Esquiva
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= StatusService::calculateDodge($character->resistance_attributes, $character->level) ?>%
+                                    <?= StatusService::calculateDodge($character->getCharacter()->getResistanceAttributes(), $character->getAccountCharacter()->getLevel()) ?>%
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Vida
                                 <div class="progress position-relative" style="height:20px; width: 75%"
-                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                      title="<?= Functions::numberFormat($calculatePercentageOfLife) ?>/<?= Functions::numberFormat($calculateLife) ?>">
                                     <div class="progress-bar bg-danger progress-bar-striped"
-                                         role="progressbar" style="width: <?= $character->life ?>%"
+                                         role="progressbar"
+                                         style="width: <?= $character->getAccountCharacter()->getLife() ?>%"
                                          aria-valuenow="0"
                                          aria-valuemin="0"
                                          aria-valuemax="100">
@@ -132,10 +134,11 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Energia
                                 <div class="progress position-relative" style="height:20px; width: 75%"
-                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                      title="<?= Functions::numberFormat($calculatePercentageOfEnergy) ?>/<?= Functions::numberFormat($calculateEnergy) ?>">
                                     <div class="progress-bar bg-primary progress-bar-striped"
-                                         role="progressbar" style="width: <?= $character->energy ?>%"
+                                         role="progressbar"
+                                         style="width: <?= $character->getAccountCharacter()->getEnergy() ?>%"
                                          aria-valuenow="0"
                                          aria-valuemin="0"
                                          aria-valuemax="100">
@@ -173,25 +176,25 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Batalhas NPC
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->npc_battles) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getNpcBattles()) ?>
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Vitórias NPC
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->npc_wins) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getNpcWins()) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary  d-flex justify-content-between align-items-center">
                                 Derrotas NPC
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->npc_defeats) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getNpcDefeats()) ?>
                                 </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Empates NPC
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->npc_draws) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getNpcDraws()) ?>
                                 </span>
                             </li>
                         </ul>
@@ -201,25 +204,25 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Batalhas Arena
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->arena_battles) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getArenaBattles()) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Vitórias Arena
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->arena_wins) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getArenaWins()) ?>
                              </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Derrotas Arena
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->arena_defeats) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getArenaDefeats()) ?>
                                 </span>
                             </li>
                             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                                 Empates Arena
                                 <span class="badge badge-soft-primary rounded-pill">
-                                    <?= Functions::numberFormat($character->arena_draws) ?>
+                                    <?= Functions::numberFormat($character->getAccountCharacter()->getArenaDraws()) ?>
                                 </span>
                             </li>
                         </ul>

@@ -52,7 +52,7 @@ class Crew
             $id = Functions::setAbsoluteValue($_GET['id']);
         }
         $result = CharacterService::showCharacter($id);
-        echo json_encode($result);
+        echo $result->toJSON();
     }
 
     public function recruitCrew(): void

@@ -4,29 +4,36 @@ namespace core\repository;
 
 use core\classes\Database;
 use core\exception\CustomException;
+use core\model\AccountCharacterModel;
+use core\model\CharacterModel;
+use core\model\dto\CharacterAccountCharacterDTO;
+use Exception;
 
-class AccountCharacterRepository
+class AccountCharacterRepository extends AbstractRepository
 {
 
     /**
+     * @return CharacterAccountCharacterDTO[]
      * @throws CustomException
      */
-    public function findAllByAccountCharacterAndCharacterWithPagination(int $accountId, int $page, int $size): array|bool
+    public function findAllByAccountCharacterAndCharacterWithPagination(int $accountId, int $page, int $size): array
     {
         $parameters = [':accountId' => $accountId];
         $database = new Database();
-        return $database->select("
+        $results = $database->select("
             SELECT ac.*, c.image, c.name FROM account_character ac
                 LEFT OUTER JOIN `character` c ON (c.id = ac.character_id)
                     WHERE ac.account_id = :accountId ORDER BY ac.level DESC, ac.id LIMIT $page,$size
             ", $parameters
         );
+        return $this->setFindAllByAccountCharacterAndCharacterWithPagination($results);
     }
 
     /**
      * @throws CustomException
+     * @throws Exception
      */
-    public function findByCharacter(int $id, int $accountId): bool|object
+    public function findByCharacter(int $id, int $accountId): ?CharacterAccountCharacterDTO
     {
         $parameters = [':id' => $id, ':accountId' => $accountId];
         $database = new Database();
@@ -36,8 +43,42 @@ class AccountCharacterRepository
                     WHERE ac.id = :id AND ac.account_id = :accountId
             ', $parameters);
         if (count($result) != 1) {
-            return false;
+            return null;
         }
-        return $result[0];
+        return $this->setFindByCharacter($result[0]);
+    }
+
+    /**
+     * @return CharacterAccountCharacterDTO[]
+     */
+    private function setFindAllByAccountCharacterAndCharacterWithPagination(array $results): array
+    {
+        $array = [];
+        foreach ($results as $result) {
+            $accountCharacterModel = new AccountCharacterModel();
+            $accountCharacterModel->setId($result->id);
+            $accountCharacterModel->setLevel($result->level);
+            $characterModel = new CharacterModel();
+            $characterModel->setName($result->name);
+            $characterModel->setImage($result->image);
+            $dto = new CharacterAccountCharacterDTO();
+            $dto->setAccountCharacter($accountCharacterModel);
+            $dto->setCharacter($characterModel);
+            $array[] = $dto;
+        }
+        return $array;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function setFindByCharacter(object $object): CharacterAccountCharacterDTO
+    {
+        $dto = new CharacterAccountCharacterDTO();
+        $accountCharacterModel = $this->getAccountCharacterAbstract($object);
+        $accountCharacterModel->setId($object->accountCharacterId);
+        $dto->setAccountCharacter($accountCharacterModel);
+        $dto->setCharacter($this->getCharacterAbstract($object));
+        return $dto;
     }
 }

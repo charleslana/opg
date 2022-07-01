@@ -23,8 +23,8 @@ include('components/title.php');
                 <?php foreach ($accountCharacters as $accountCharacter) : ?>
                     <div class="col text-start separate-column">
                         <div class="character-portrait"
-                             onclick="selectCharacter(<?= $accountCharacter->id ?>, '<?= $accountCharacter->name ?>', <?= $accountCharacter->level ?>)"
-                             style="background-image: url('/public/assets/img/characters/portrait/<?= $accountCharacter->image ?>.png')"></div>
+                             onclick="selectCharacter(<?= $accountCharacter->getAccountCharacter()->getId() ?>, '<?= $accountCharacter->getCharacter()->getName() ?>', <?= $accountCharacter->getAccountCharacter()->getLevel() ?>)"
+                             style="background-image: url('/public/assets/img/characters/portrait/<?= $accountCharacter->getCharacter()->getImage() ?>.png')"></div>
                     </div>
                 <?php endforeach; ?>
             </div>

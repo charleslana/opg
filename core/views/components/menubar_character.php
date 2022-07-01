@@ -28,7 +28,7 @@ $character = AccountCharacterService::getCharacter();
             <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
                 <li class="nav-item">
                     <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                        <div class="col-auto navbar-vertical-label"><?= $character->name ?></div>
+                        <div class="col-auto navbar-vertical-label"><?= $character->getCharacter()->getName() ?></div>
                         <div class="col ps-0">
                             <hr class="mb-0 navbar-vertical-divider"/>
                         </div>

@@ -15,7 +15,7 @@ class CharacterModel
     private ?int $characterNpcBattlesUnlock;
     private ?int $characterNpcWinsUnlock;
     private int $defenseAttributes;
-    private int $energy_Attributes;
+    private int $energyAttributes;
     private int $goldUnlock;
     private YesNoEnum $hakiUnlock;
     private int $id;
@@ -160,15 +160,15 @@ class CharacterModel
      */
     public function getEnergyAttributes(): int
     {
-        return $this->energy_Attributes;
+        return $this->energyAttributes;
     }
 
     /**
-     * @param int $energy_Attributes
+     * @param int $energyAttributes
      */
-    public function setEnergyAttributes(int $energy_Attributes): void
+    public function setEnergyAttributes(int $energyAttributes): void
     {
-        $this->energy_Attributes = $energy_Attributes;
+        $this->energyAttributes = $energyAttributes;
     }
 
     /**
@@ -329,5 +329,10 @@ class CharacterModel
     public function setStrengthAttributes(int $strengthAttributes): void
     {
         $this->strengthAttributes = $strengthAttributes;
+    }
+
+    public function toJSON(): string
+    {
+        return json_encode(get_object_vars($this));
     }
 }

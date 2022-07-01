@@ -8,6 +8,7 @@ use core\enum\PaymentEnum;
 use core\enum\ResponseEnum;
 use core\exception\CustomException;
 use core\model\CharacterModel;
+use core\model\dto\CharacterAccountCharacterAccountDTO;
 use core\repository\CharacterRepository;
 
 class CharacterService
@@ -46,7 +47,7 @@ class CharacterService
     /**
      * @throws CustomException
      */
-    public static function showCharacter(int $id): object
+    public static function showCharacter(int $id): CharacterAccountCharacterAccountDTO
     {
         if (!Functions::validateLoggedUser()) {
             Functions::handleResponse(Messages::$accountNotLogged);
@@ -62,13 +63,13 @@ class CharacterService
     /**
      * @throws CustomException
      */
-    private static function payCrew(PaymentEnum $payment, object|bool $result): void
+    private static function payCrew(PaymentEnum $payment, ?CharacterAccountCharacterAccountDTO $result): void
     {
         if ($payment == PaymentEnum::Pay) {
-            if ($result->accountGold < $result->gold_unlock) {
+            if ($result->getAccount()->getGold() < $result->getCharacter()->getGoldUnlock()) {
                 Functions::handleResponse(Messages::$insufficientGold);
             }
-            AccountService::updateGold($result->accountGold - $result->gold_unlock);
+            AccountService::updateGold($result->getAccount()->getGold() - $result->getCharacter()->getGoldUnlock());
         }
     }
 
@@ -81,13 +82,27 @@ class CharacterService
         if (!$result) {
             Functions::handleResponse(Messages::$characterNotFound);
         }
-        if ($payment == PaymentEnum::Free && (AccountService::getAccount()->getLevel() < $result->player_level_unlock || $result->level < $result->character_level_unlock || $result->npc_battles < $result->character_npc_battles_unlock || $result->arena_battles < $result->character_arena_battles_unlock || $result->npc_wins < $result->character_npc_wins_unlock || $result->arena_wins < $result->character_arena_wins_unlock)) {
-            Functions::handleResponse(Messages::$necessaryRequirements);
-        }
-        $existCharacterId = preg_grep("/$id/", explode(',', $result->accountCharacterIds));
+        self::validatePaymentFreeRequirements($payment, $result);
+        $existCharacterId = preg_grep("/$id/", explode(',', $result->getAccountCharacterIds()));
         if ($existCharacterId) {
             Functions::handleResponse(Messages::$characterAlreadyAdded);
         }
         self::payCrew($payment, $result);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    private static function validatePaymentFreeRequirements(PaymentEnum $payment, ?CharacterAccountCharacterAccountDTO $result): void
+    {
+        if ($payment == PaymentEnum::Free &&
+            (AccountService::getAccount()->getLevel() < $result->getCharacter()->getPlayerLevelUnlock()
+                || $result->getAccountCharacter()->getLevel() < $result->getCharacter()->getCharacterLevelUnlock()
+                || $result->getAccountCharacter()->getNpcBattles() < $result->getCharacter()->getCharacterNpcBattlesUnlock()
+                || $result->getAccountCharacter()->getArenaBattles() < $result->getCharacter()->getCharacterArenaBattlesUnlock()
+                || $result->getAccountCharacter()->getNpcWins() < $result->getCharacter()->getCharacterNpcWinsUnlock()
+                || $result->getAccountCharacter()->getArenaWins() < $result->getCharacter()->getCharacterArenaWinsUnlock())) {
+            Functions::handleResponse(Messages::$necessaryRequirements);
+        }
     }
 }

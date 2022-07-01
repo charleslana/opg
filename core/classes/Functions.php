@@ -30,15 +30,15 @@ class Functions
         return substr(str_shuffle($characters), 0, $charactersQuantity);
     }
 
-    public static function handleResponse(string $message, ResponseEnum $status = ResponseEnum::Error): ResponseModel
+    public static function handleResponse(string $message, ResponseEnum $status = ResponseEnum::Error): void
     {
         if ($status == ResponseEnum::Error) {
             http_response_code(400);
         }
         $responseModel = new ResponseModel();
-        $responseModel->status = $status->value;
-        $responseModel->message = $message;
-        echo json_encode($responseModel);
+        $responseModel->setStatus($status->value);
+        $responseModel->setMessage($message);
+        echo $responseModel->toJSON();
         die();
     }
 

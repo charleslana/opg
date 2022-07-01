@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 30/06/2022 às 04:01
+-- Tempo de geração: 01/07/2022 às 03:33
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -51,11 +51,11 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `session`, `level`, `belly`, `gold`, `avatar`, `experience`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$KPoMbviybkfiXsUNXwktEOgFO04FHiS80zDmQ1.YqHnLoXQIb6GBy', 'Charles Lana', 'active', NULL, 'user', 'dIZtoYMhpReO49wDrPXqAGg08iksUc', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-06-29 22:59:47', NULL),
+(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'CbiAn17EXoMrl3cJhDpzGSv0PF6m2Z', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-06-30 22:32:15', NULL),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', 'hSAOzKc9LDsYI2lyRvV0QntgiPEZ17', 1, 0, 0, 1, 0, '2022-06-19 17:36:10', '2022-06-26 22:40:25', NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL),
-(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', '#A8xJ3rns7XepY0aFKmEzIwhTiuWBq', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-06-25 22:56:33', NULL),
+(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', 'OrKdS3pJhmCBAkNqYQM5fg0lGwbVxE', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-06-30 22:31:55', NULL),
 (6, 'jiroxi4322@lenfly.com', '$2y$10$YS1dwoyGFSbM0iPdJQ5Gceh0IFmAc48cxj5ttdcVmsCy9FJagCswG', 'Usuário Temp', 'active', NULL, 'user', 'xKrmi3MsoFV9nev8WYt7SGHE4TRZlb', 1, 0, 0, 1, 0, '2022-06-28 22:27:05', '2022-06-29 19:41:21', NULL);
 
 -- --------------------------------------------------------
@@ -94,12 +94,14 @@ INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `n
 (5, 1, 33, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
 (6, 1, 32, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
 (7, 1, 6, 3, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-26 21:45:19'),
-(8, 2, 26, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-25 20:45:25'),
+(8, 3, 26, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-25 20:45:25', '2022-06-30 22:31:23'),
 (9, 1, 22, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-27 21:20:59', '2022-06-27 21:20:59'),
 (10, 1, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-27 21:21:08', '2022-06-27 21:21:08'),
 (11, 6, 20, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-28 22:44:10', '2022-06-28 22:44:10'),
 (12, 6, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-29 19:41:39', '2022-06-29 19:41:39'),
-(13, 6, 14, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-29 19:43:08', '2022-06-29 19:43:08');
+(13, 6, 14, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-29 19:43:08', '2022-06-29 19:43:08'),
+(14, 1, 17, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-30 15:19:43', '2022-06-30 15:19:43'),
+(15, 3, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-30 22:30:21', '2022-06-30 22:31:27');
 
 -- --------------------------------------------------------
 
@@ -137,7 +139,7 @@ INSERT INTO `character` (`id`, `name`, `image`, `strength_attributes`, `defense_
 (1, 'Luffy (Sem akuma no mi)', '1', 1, 1, 1, 1, 1, 1, 50, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (2, 'Luffy', '2', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (3, 'Luffy (Gomu Gomu no Bazooka)', '3', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(4, 'Luffy (Gomu Gomu no Fusen)', '4', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, 'Luffy (Gomu Gomu no Fusen)', '4', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', 2, NULL, NULL, NULL, NULL, NULL, 0),
 (5, 'Luffy (Gomu Gomu no Jet Gatling)', '5', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (6, 'Luffy (Gear third)', '6', 4, 1, 1, 1, 1, 1, 100, 'yes', 'yes', 10, NULL, 10, 10, 5, 1, 500),
 (7, 'Luffy (Gear second)', '7', 3, 2, 2, 1, 3, 2, 100, 'yes', 'yes', 20, 50, NULL, NULL, NULL, NULL, 1000),
@@ -211,7 +213,7 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT de tabela `account_character`
 --
 ALTER TABLE `account_character`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `character`

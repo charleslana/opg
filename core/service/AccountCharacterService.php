@@ -6,6 +6,7 @@ use core\classes\Functions;
 use core\classes\Messages;
 use core\enum\SessionEnum;
 use core\exception\CustomException;
+use core\model\dto\CharacterAccountCharacterDTO;
 use core\repository\AccountCharacterRepository;
 
 class AccountCharacterService
@@ -21,7 +22,7 @@ class AccountCharacterService
     /**
      * @throws CustomException
      */
-    public static function getCharacter(): object
+    public static function getCharacter(): CharacterAccountCharacterDTO
     {
         $accountCharacterRepository = new AccountCharacterRepository();
         return $accountCharacterRepository->findByCharacter(self::getCharacterId(), AccountService::getAccountId());
@@ -45,10 +46,11 @@ class AccountCharacterService
         if (!$result) {
             Functions::handleResponse(Messages::$characterNotFound);
         }
-        $_SESSION[SessionEnum::AccountCharacterId->value] = $result->accountCharacterId;
+        $_SESSION[SessionEnum::AccountCharacterId->value] = $result->getAccountCharacter()->getId();
     }
 
     /**
+     * @return CharacterAccountCharacterDTO[]
      * @throws CustomException
      */
     public static function showAllCharacter(int $actualPage): array

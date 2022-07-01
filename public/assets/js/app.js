@@ -136,39 +136,39 @@ function validateSaveLoginData() {
 }
 
 function getCharacterStatusDetails(data) {
-    document.getElementById('offcanvasRightLabel').innerText = data.name;
-    document.getElementById('characterImage').src = `../../public/assets/img/characters/landscape/${data.image}.png`;
-    document.getElementById('strengthAttributes').innerText = `+${data.strength_attributes}`;
-    document.getElementById('defenseAttributes').innerText = `+${data.defense_attributes}`;
-    document.getElementById('lifeAttributes').innerText = `+${data.life_attributes}`;
-    document.getElementById('energyAttributes').innerText = `+${data.energy_attributes}`;
-    document.getElementById('agilityAttributes').innerText = `+${data.agility_attributes}`;
-    document.getElementById('resistanceAttributes').innerText = `+${data.resistance_attributes}`;
-    document.getElementById('maximumLevel').innerText = data.maximum_level;
-    document.getElementById('hakiUnlock').innerText = data.haki_unlock === 'no' ? 'não' : 'sim';
-    document.getElementById('akumaNoMiUnlock').innerText = data.akuma_no_mi_unlock === 'no' ? 'não' : 'sim';
+    document.getElementById('offcanvasRightLabel').innerText = data.character.name;
+    document.getElementById('characterImage').src = `../../public/assets/img/characters/landscape/${data.character.image}.png`;
+    document.getElementById('strengthAttributes').innerText = `+${data.character.strengthAttributes}`;
+    document.getElementById('defenseAttributes').innerText = `+${data.character.defenseAttributes}`;
+    document.getElementById('lifeAttributes').innerText = `+${data.character.lifeAttributes}`;
+    document.getElementById('energyAttributes').innerText = `+${data.character.energyAttributes}`;
+    document.getElementById('agilityAttributes').innerText = `+${data.character.agilityAttributes}`;
+    document.getElementById('resistanceAttributes').innerText = `+${data.character.resistanceAttributes}`;
+    document.getElementById('maximumLevel').innerText = data.character.maximumLevel;
+    document.getElementById('hakiUnlock').innerText = data.character.hakiUnlock === 'no' ? 'não' : 'sim';
+    document.getElementById('akumaNoMiUnlock').innerText = data.character.akumaNoMiUnlock === 'no' ? 'não' : 'sim';
 }
 
 function getCharacterRequirementsDetails(data) {
-    document.getElementById('playerLevelUnlock').style.width = `${barCalculation(data.accountLevel, +data.player_level_unlock)}%`;
-    document.querySelector('#playerLevelUnlock > span').innerText = `${data.accountLevel}/${+data.player_level_unlock}`;
-    document.getElementById('characterLevelUnlock').style.width = `${barCalculation(+data.level, +data.character_level_unlock)}%`;
-    document.querySelector('#characterLevelUnlock > span').innerText = `${+data.level}/${+data.character_level_unlock}`;
-    document.getElementById('characterNpcBattlesUnlock').style.width = `${barCalculation(+data.npc_battles, +data.character_npc_battles_unlock)}%`;
-    document.querySelector('#characterNpcBattlesUnlock > span').innerText = `${+data.npc_battles}/${+data.character_npc_battles_unlock}`;
-    document.getElementById('characterArenaBattlesUnlock').style.width = `${barCalculation(+data.arena_battles, +data.character_arena_battles_unlock)}%`;
-    document.querySelector('#characterArenaBattlesUnlock > span').innerText = `${+data.arena_battles}/${+data.character_arena_battles_unlock}`;
-    document.getElementById('characterNpcWinsUnlock').style.width = `${barCalculation(+data.npc_wins, +data.character_npc_wins_unlock)}%`;
-    document.querySelector('#characterNpcWinsUnlock > span').innerText = `${+data.npc_wins}/${+data.character_npc_wins_unlock}`;
-    document.getElementById('characterArenaWinsUnlock').style.width = `${barCalculation(+data.arena_wins, +data.character_arena_wins_unlock)}%`;
-    document.querySelector('#characterArenaWinsUnlock > span').innerText = `${+data.arena_wins}/${+data.character_arena_wins_unlock}`;
+    document.getElementById('playerLevelUnlock').style.width = `${barCalculation(data.account.level, +data.character.playerLevelUnlock)}%`;
+    document.querySelector('#playerLevelUnlock > span').innerText = `${data.account.level}/${+data.character.playerLevelUnlock}`;
+    document.getElementById('characterLevelUnlock').style.width = `${barCalculation(+data.accountCharacter.level, +data.character.characterLevelUnlock)}%`;
+    document.querySelector('#characterLevelUnlock > span').innerText = `${+data.accountCharacter.level}/${+data.character.characterLevelUnlock}`;
+    document.getElementById('characterNpcBattlesUnlock').style.width = `${barCalculation(+data.accountCharacter.npcBattles, +data.character.characterNpcBattlesUnlock)}%`;
+    document.querySelector('#characterNpcBattlesUnlock > span').innerText = `${+data.accountCharacter.npcBattles}/${+data.character.characterNpcBattlesUnlock}`;
+    document.getElementById('characterArenaBattlesUnlock').style.width = `${barCalculation(+data.accountCharacter.arenaBattles, +data.character.characterArenaBattlesUnlock)}%`;
+    document.querySelector('#characterArenaBattlesUnlock > span').innerText = `${+data.accountCharacter.arenaBattles}/${+data.character.characterArenaBattlesUnlock}`;
+    document.getElementById('characterNpcWinsUnlock').style.width = `${barCalculation(+data.accountCharacter.npcWins, +data.character.characterNpcWinsUnlock)}%`;
+    document.querySelector('#characterNpcWinsUnlock > span').innerText = `${+data.accountCharacter.npcWins}/${+data.character.characterNpcWinsUnlock}`;
+    document.getElementById('characterArenaWinsUnlock').style.width = `${barCalculation(+data.accountCharacter.arenaWins, +data.character.characterArenaWinsUnlock)}%`;
+    document.querySelector('#characterArenaWinsUnlock > span').innerText = `${+data.accountCharacter.arenaWins}/${+data.character.characterArenaWinsUnlock}`;
 }
 
 function getCharacterFreeRecruitDetails(data) {
     const freeRecruitElement = document.getElementById('free-recruit');
     freeRecruitElement.style.display = 'block';
     freeRecruitElement.removeAttribute('disabled');
-    if (data.accountLevel < +data.player_level_unlock || +data.level < +data.character_level_unlock || +data.npc_battles < +data.character_npc_battles_unlock || +data.arena_battles < +data.character_arena_battles_unlock || +data.npc_wins < +data.character_npc_wins_unlock || +data.arena_wins < +data.character_arena_wins_unlock) {
+    if (data.account.level < +data.character.playerLevelUnlock || +data.accountCharacter.level < +data.character.characterLevelUnlock || +data.accountCharacter.npcBattles < +data.character.characterNpcBattlesUnlock || +data.accountCharacter.arenaBattles < +data.character.characterArenaBattlesUnlock || +data.accountCharacter.npcWins < +data.character.characterNpcWinsUnlock || +data.accountCharacter.arenaWins < +data.character.characterArenaWinsUnlock) {
         freeRecruitElement.setAttribute('disabled', '');
     }
     return freeRecruitElement;
@@ -178,9 +178,9 @@ function getCharacterGoldUnlockDetails(data) {
     const goldUnlockElement = document.getElementById('goldUnlock');
     goldUnlockElement.style.display = 'block';
     goldUnlockElement.removeAttribute('disabled');
-    goldUnlockElement.innerHTML = `Recrutar ${numberAbbreviation(data.gold_unlock)} <span class="gold-icon"></span>`;
-    goldUnlockElement.setAttribute('data-bs-original-title', `${numberFormat(data.gold_unlock)} Ouro`);
-    if (data.accountGold < data.gold_unlock) {
+    goldUnlockElement.innerHTML = `Recrutar ${numberAbbreviation(data.character.goldUnlock)} <span class="gold-icon"></span>`;
+    goldUnlockElement.setAttribute('data-bs-original-title', `${numberFormat(data.character.goldUnlock)} Ouro`);
+    if (data.account.gold < data.character.goldUnlock) {
         goldUnlockElement.setAttribute('disabled', '');
     }
     return goldUnlockElement;
@@ -204,7 +204,7 @@ function getCharacterAlertRecruitDetails(arrayAccountCharacterIds, data, freeRec
     alert.innerHTML = 'Você pode pagar com <span class="gold-icon"></span> para recrutar agora!';
     const tabRecruitHr = document.querySelector('#tab-recruit hr');
     tabRecruitHr.style.display = 'block';
-    if (arrayAccountCharacterIds.indexOf(data.id) !== -1) {
+    if (arrayAccountCharacterIds.indexOf(data.character.id) !== -1) {
         freeRecruitElement.style.display = 'none';
         goldUnlockElement.style.display = 'none';
         alert.classList.remove('alert-warning');
@@ -221,7 +221,7 @@ function showCharacterDetailsCanvas(data) {
     const goldUnlockElement = getCharacterGoldUnlockDetails(data);
     const arrayAccountCharacterIds = getArrayAccountCharacterIds(data);
     getCharacterAlertRecruitDetails(arrayAccountCharacterIds, data, freeRecruitElement, goldUnlockElement);
-    freeRecruitElement.setAttribute('data-id', data.id);
+    freeRecruitElement.setAttribute('data-id', data.character.id);
     const element = document.getElementById('offcanvasRight');
     const bsOffcanvas = new bootstrap.Offcanvas(element);
     bsOffcanvas.show();
@@ -256,20 +256,13 @@ function barCalculation(min, max) {
 }
 
 function numberAbbreviationSymbol() {
-    return [
-        {value: 1, symbol: ''},
-        {value: 1e3, symbol: 'K'},
-        {value: 1e6, symbol: 'M'},
-        {value: 1e9, symbol: 'B'},
-        {value: 1e12, symbol: 't'},
-        {value: 1e15, symbol: 'q'},
-        {value: 1e18, symbol: 'Q'},
-        {value: 1e21, symbol: 's'},
-        {value: 1e24, symbol: 'S'},
-        {value: 1e27, symbol: 'o'},
-        {value: 1e30, symbol: 'n'},
-        {value: 1e33, symbol: 'd'},
-    ];
+    return [{value: 1, symbol: ''}, {value: 1e3, symbol: 'K'}, {value: 1e6, symbol: 'M'}, {
+        value: 1e9,
+        symbol: 'B'
+    }, {value: 1e12, symbol: 't'}, {value: 1e15, symbol: 'q'}, {value: 1e18, symbol: 'Q'}, {
+        value: 1e21,
+        symbol: 's'
+    }, {value: 1e24, symbol: 'S'}, {value: 1e27, symbol: 'o'}, {value: 1e30, symbol: 'n'}, {value: 1e33, symbol: 'd'},];
 }
 
 function numberAbbreviation(num, digits = 1) {
@@ -281,9 +274,7 @@ function numberAbbreviation(num, digits = 1) {
         .find(function (it) {
             return num >= it.value;
         });
-    return item
-        ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
-        : '0';
+    return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0';
 }
 
 function numberFormat(x) {
@@ -332,8 +323,7 @@ async function recruitPaidCrew() {
     goldUnlockButton.disabled = true;
     axios.post('?action=add_crew', null, {
         params: {
-            id: id,
-            isPaid: true
+            id: id, isPaid: true
         }
     }).then(response => {
         const {data} = response;
