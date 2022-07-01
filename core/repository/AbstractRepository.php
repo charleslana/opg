@@ -25,7 +25,7 @@ abstract class AbstractRepository
         $accountModel->setPassword($object->password);
         $accountModel->setName($object->name);
         $accountModel->setStatus(StatusEnum::from($object->status));
-        $accountModel->setToken($object?->token);
+        $accountModel->setToken($object->token);
         $accountModel->setRole(RoleEnum::from($object->role));
         $this->setAccountCompleteData($accountModel, $object);
         return $accountModel;
