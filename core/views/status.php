@@ -33,8 +33,16 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                             Atributos
                         </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="power-tab" data-bs-toggle="tab" href="#tab-power"
-                                            role="tab" aria-controls="tab-profile" aria-selected="false">Poder</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="power-tab" data-bs-toggle="tab" href="#tab-power"
+                           role="tab" aria-controls="tab-profile" aria-selected="false">Poder
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="detail-tab" data-bs-toggle="tab" href="#tab-detail"
+                           role="tab" aria-controls="tab-detail" aria-selected="false">Detalhes
+                        </a>
+                    </li>
                 </ul>
                 <div class="tab-content border-x border-bottom p-3" id="attribute">
                     <div class="tab-pane fade show active" id="tab-attribute" role="tabpanel"
@@ -147,6 +155,29 @@ $calculatePercentageOfEnergy = StatusService::calculatePercentageOfValue($charac
                                         </span>
                                     </div>
                                 </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="tab-detail" role="tabpanel"
+                         aria-labelledby="attribute-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                                Raça
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= $character->getCharacter()->getBreed()->getName() ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Classe
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= $character->getCharacter()->getClass()->getName() ?>
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                                Organização
+                                <span class="badge badge-soft-primary rounded-pill">
+                                    <?= $character->getCharacter()->getOrganization()->getName() ?>
+                                </span>
                             </li>
                         </ul>
                     </div>

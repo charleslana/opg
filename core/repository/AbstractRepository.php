@@ -7,7 +7,10 @@ use core\enum\StatusEnum;
 use core\enum\YesNoEnum;
 use core\model\AccountCharacterModel;
 use core\model\AccountModel;
+use core\model\BreedModel;
 use core\model\CharacterModel;
+use core\model\ClassModel;
+use core\model\OrganizationModel;
 use DateTime;
 use Exception;
 
@@ -65,6 +68,30 @@ abstract class AbstractRepository
         return $characterModel;
     }
 
+    private function getBreedAbstract(object $object): BreedModel
+    {
+        $breedModel = new BreedModel();
+        $breedModel->setId($object->breedId);
+        $breedModel->setName($object->breedName);
+        return $breedModel;
+    }
+
+    private function getClassAbstract(object $object): ClassModel
+    {
+        $classModel = new ClassModel();
+        $classModel->setId($object->classId);
+        $classModel->setName($object->className);
+        return $classModel;
+    }
+
+    private function getOrganizationAbstract(object $object): OrganizationModel
+    {
+        $organizationModel = new OrganizationModel();
+        $organizationModel->setId($object->organizationId);
+        $organizationModel->setName($object->organizationName);
+        return $organizationModel;
+    }
+
     /**
      * @throws Exception
      */
@@ -108,5 +135,13 @@ abstract class AbstractRepository
         $characterModel->setPlayerLevelUnlock($object->player_level_unlock);
         $characterModel->setResistanceAttributes($object->resistance_attributes);
         $characterModel->setStrengthAttributes($object->strength_attributes);
+        $this->setClassAndBreedAndOrganization($object, $characterModel);
+    }
+
+    private function setClassAndBreedAndOrganization(object $object, CharacterModel $characterModel): void
+    {
+        $characterModel->setClass($this->getClassAbstract($object));
+        $characterModel->setBreed($this->getBreedAbstract($object));
+        $characterModel->setOrganization($this->getOrganizationAbstract($object));
     }
 }

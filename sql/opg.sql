@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 01/07/2022 às 03:33
+-- Tempo de geração: 01/07/2022 às 19:55
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -51,11 +51,11 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `session`, `level`, `belly`, `gold`, `avatar`, `experience`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'CbiAn17EXoMrl3cJhDpzGSv0PF6m2Z', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-06-30 22:32:15', NULL),
+(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'kSz2mQRuahy0INWlZVKidpc6b7L3TM', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-01 14:54:54', NULL),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', 'hSAOzKc9LDsYI2lyRvV0QntgiPEZ17', 1, 0, 0, 1, 0, '2022-06-19 17:36:10', '2022-06-26 22:40:25', NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL),
-(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', 'OrKdS3pJhmCBAkNqYQM5fg0lGwbVxE', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-06-30 22:31:55', NULL),
+(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', 'm2MEoF5HSV3xIXwvODYcByTdUiG861', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-07-01 14:54:38', NULL),
 (6, 'jiroxi4322@lenfly.com', '$2y$10$YS1dwoyGFSbM0iPdJQ5Gceh0IFmAc48cxj5ttdcVmsCy9FJagCswG', 'Usuário Temp', 'active', NULL, 'user', 'xKrmi3MsoFV9nev8WYt7SGHE4TRZlb', 1, 0, 0, 1, 0, '2022-06-28 22:27:05', '2022-06-29 19:41:21', NULL);
 
 -- --------------------------------------------------------
@@ -106,11 +106,43 @@ INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `n
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `breed`
+--
+
+CREATE TABLE `breed` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `breed`
+--
+
+INSERT INTO `breed` (`id`, `name`) VALUES
+(9, 'Animal'),
+(12, 'Bilkan'),
+(5, 'Ciborgue'),
+(3, 'Gigante'),
+(1, 'Humano'),
+(2, 'Meio Gigante'),
+(8, 'Sereia'),
+(11, 'Shandian'),
+(10, 'Skypiean'),
+(4, 'Super Gigante'),
+(6, 'Tritão'),
+(7, 'Wotan');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `character`
 --
 
 CREATE TABLE `character` (
   `id` int(10) UNSIGNED NOT NULL,
+  `class_id` int(10) UNSIGNED NOT NULL,
+  `breed_id` int(10) UNSIGNED NOT NULL,
+  `organization_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   `strength_attributes` int(10) UNSIGNED NOT NULL,
@@ -135,40 +167,109 @@ CREATE TABLE `character` (
 -- Despejando dados para a tabela `character`
 --
 
-INSERT INTO `character` (`id`, `name`, `image`, `strength_attributes`, `defense_attributes`, `life_attributes`, `energy_attributes`, `agility_attributes`, `resistance_attributes`, `maximum_level`, `haki_unlock`, `akuma_no_mi_unlock`, `player_level_unlock`, `character_level_unlock`, `character_npc_battles_unlock`, `character_arena_battles_unlock`, `character_npc_wins_unlock`, `character_arena_wins_unlock`, `gold_unlock`) VALUES
-(1, 'Luffy (Sem akuma no mi)', '1', 1, 1, 1, 1, 1, 1, 50, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(2, 'Luffy', '2', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(3, 'Luffy (Gomu Gomu no Bazooka)', '3', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(4, 'Luffy (Gomu Gomu no Fusen)', '4', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', 2, NULL, NULL, NULL, NULL, NULL, 0),
-(5, 'Luffy (Gomu Gomu no Jet Gatling)', '5', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(6, 'Luffy (Gear third)', '6', 4, 1, 1, 1, 1, 1, 100, 'yes', 'yes', 10, NULL, 10, 10, 5, 1, 500),
-(7, 'Luffy (Gear second)', '7', 3, 2, 2, 1, 3, 2, 100, 'yes', 'yes', 20, 50, NULL, NULL, NULL, NULL, 1000),
-(8, 'Luffy8', '8', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(9, 'Luffy9', '9', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(10, 'Luffy10', '10', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(11, 'Luffy11', '11', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(12, 'Luffy12', '12', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(13, 'Luffy13', '13', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(14, 'Luffy14', '14', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(15, 'Luffy15', '15', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(16, 'Luffy16', '16', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(17, 'Luffy17', '17', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(18, 'Luffy18', '18', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(19, 'Luffy19', '19', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(20, 'Luffy20', '20', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(21, 'Luffy21', '21', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(22, 'Luffy22', '22', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(23, 'Luffy23', '23', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(24, 'Luffy24', '24', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(25, 'Luffy25', '25', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(26, 'Luffy26', '26', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(27, 'Luffy27', '27', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(28, 'Luffy28', '28', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(29, 'Luffy29', '29', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(30, 'Luffy30', '30', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(31, 'Luffy31', '31', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(32, 'Luffy32', '32', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(33, 'Luffy33', '33', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `character` (`id`, `class_id`, `breed_id`, `organization_id`, `name`, `image`, `strength_attributes`, `defense_attributes`, `life_attributes`, `energy_attributes`, `agility_attributes`, `resistance_attributes`, `maximum_level`, `haki_unlock`, `akuma_no_mi_unlock`, `player_level_unlock`, `character_level_unlock`, `character_npc_battles_unlock`, `character_arena_battles_unlock`, `character_npc_wins_unlock`, `character_arena_wins_unlock`, `gold_unlock`) VALUES
+(1, 1, 1, 1, 'Luffy (Sem akuma no mi)', '1', 1, 1, 1, 1, 1, 1, 50, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(2, 1, 1, 1, 'Luffy', '2', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(3, 1, 1, 1, 'Luffy (Gomu Gomu no Bazooka)', '3', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, 1, 1, 1, 'Luffy (Gomu Gomu no Fusen)', '4', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', 2, NULL, NULL, NULL, NULL, NULL, 0),
+(5, 1, 1, 1, 'Luffy (Gomu Gomu no Jet Gatling)', '5', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(6, 2, 2, 2, 'Luffy (Gear third)', '6', 4, 1, 1, 1, 1, 1, 100, 'yes', 'yes', 10, NULL, 10, 10, 5, 1, 500),
+(7, 1, 1, 1, 'Luffy (Gear second)', '7', 3, 2, 2, 1, 3, 2, 100, 'yes', 'yes', 20, 50, NULL, NULL, NULL, NULL, 1000),
+(8, 1, 1, 1, 'Luffy8', '8', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(9, 1, 1, 1, 'Luffy9', '9', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(10, 1, 1, 1, 'Luffy10', '10', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(11, 1, 1, 1, 'Luffy11', '11', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(12, 1, 1, 1, 'Luffy12', '12', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(13, 1, 1, 1, 'Luffy13', '13', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(14, 1, 1, 1, 'Luffy14', '14', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(15, 1, 1, 1, 'Luffy15', '15', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(16, 1, 1, 1, 'Luffy16', '16', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(17, 1, 1, 1, 'Luffy17', '17', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(18, 1, 1, 1, 'Luffy18', '18', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(19, 1, 1, 1, 'Luffy19', '19', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(20, 1, 1, 1, 'Luffy20', '20', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(21, 1, 1, 1, 'Luffy21', '21', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(22, 1, 1, 1, 'Luffy22', '22', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(23, 1, 1, 1, 'Luffy23', '23', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(24, 1, 1, 1, 'Luffy24', '24', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(25, 1, 1, 1, 'Luffy25', '25', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(26, 1, 1, 1, 'Luffy26', '26', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(27, 1, 1, 1, 'Luffy27', '27', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(28, 1, 1, 1, 'Luffy28', '28', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(29, 1, 1, 1, 'Luffy29', '29', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(30, 1, 1, 1, 'Luffy30', '30', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(31, 1, 1, 1, 'Luffy31', '31', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(32, 1, 1, 1, 'Luffy32', '32', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(33, 1, 1, 1, 'Luffy33', '33', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `class`
+--
+
+CREATE TABLE `class` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `class`
+--
+
+INSERT INTO `class` (`id`, `name`) VALUES
+(9, 'Arqueólogo'),
+(5, 'Atirador'),
+(8, 'Carpinteiro'),
+(4, 'Cozinheiro'),
+(2, 'Espadachim'),
+(1, 'Lutador'),
+(6, 'Médico'),
+(7, 'Músico'),
+(3, 'Navegador');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `organization`
+--
+
+CREATE TABLE `organization` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `organization`
+--
+
+INSERT INTO `organization` (`id`, `name`) VALUES
+(1, 'Associação de Vítimas de Thriller Bark'),
+(2, 'Bandidos do Monte Atama'),
+(3, 'Buggy\'s Delivery'),
+(4, 'Cipher Pol'),
+(5, 'CP-0'),
+(6, 'CP5'),
+(7, 'CP6'),
+(8, 'CP7'),
+(9, 'Esquadrão dos Superpatos Selvagens'),
+(10, 'Exército de Deus'),
+(11, 'Família Dadan'),
+(12, 'Família Kyoshiro'),
+(13, 'Galley-La Company'),
+(14, 'Germa 66'),
+(15, 'Governo Mundial'),
+(16, 'Guardas Tsumegeri'),
+(17, 'Isshi-100'),
+(18, 'Marinha'),
+(19, 'Neo Marinha'),
+(20, 'Nove Bainhas Vermelhas'),
+(21, 'Orochi Oniwabanshu'),
+(22, 'Pior Geração'),
+(23, 'Pirata'),
+(24, 'Shichibukai'),
+(25, 'Submundo'),
+(26, 'Tom\'s Workers');
 
 --
 -- Índices para tabelas despejadas
@@ -193,11 +294,35 @@ ALTER TABLE `account_character`
   ADD KEY `fk_account` (`account_id`);
 
 --
+-- Índices de tabela `breed`
+--
+ALTER TABLE `breed`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `breed_name_uindex` (`name`);
+
+--
 -- Índices de tabela `character`
 --
 ALTER TABLE `character`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `character_name_uindex` (`name`);
+  ADD UNIQUE KEY `character_name_uindex` (`name`),
+  ADD KEY `fk_class` (`class_id`),
+  ADD KEY `fk_breed` (`breed_id`),
+  ADD KEY `fk_organization` (`organization_id`);
+
+--
+-- Índices de tabela `class`
+--
+ALTER TABLE `class`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `classes_name_uindex` (`name`);
+
+--
+-- Índices de tabela `organization`
+--
+ALTER TABLE `organization`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `organization_name_uindex` (`name`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -216,10 +341,28 @@ ALTER TABLE `account_character`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT de tabela `breed`
+--
+ALTER TABLE `breed`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de tabela `character`
 --
 ALTER TABLE `character`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT de tabela `class`
+--
+ALTER TABLE `class`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de tabela `organization`
+--
+ALTER TABLE `organization`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restrições para tabelas despejadas
@@ -231,6 +374,14 @@ ALTER TABLE `character`
 ALTER TABLE `account_character`
   ADD CONSTRAINT `fk_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fk_account_character` FOREIGN KEY (`character_id`) REFERENCES `character` (`id`);
+
+--
+-- Restrições para tabelas `character`
+--
+ALTER TABLE `character`
+  ADD CONSTRAINT `fk_breed` FOREIGN KEY (`breed_id`) REFERENCES `breed` (`id`),
+  ADD CONSTRAINT `fk_class` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`),
+  ADD CONSTRAINT `fk_organization` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

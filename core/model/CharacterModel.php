@@ -2,6 +2,7 @@
 
 namespace core\model;
 
+use core\classes\Functions;
 use core\enum\YesNoEnum;
 
 class CharacterModel
@@ -9,11 +10,13 @@ class CharacterModel
 
     private int $agilityAttributes;
     private YesNoEnum $akumaNoMiUnlock;
+    private BreedModel $breed;
     private ?int $characterArenaBattlesUnlock;
     private ?int $characterArenaWinsUnlock;
     private ?int $characterLevelUnlock;
     private ?int $characterNpcBattlesUnlock;
     private ?int $characterNpcWinsUnlock;
+    private ClassModel $class;
     private int $defenseAttributes;
     private int $energyAttributes;
     private int $goldUnlock;
@@ -23,6 +26,7 @@ class CharacterModel
     private int $lifeAttributes;
     private int $maximumLevel;
     private string $name;
+    private OrganizationModel $organization;
     private ?int $playerLevelUnlock;
     private int $resistanceAttributes;
     private int $strengthAttributes;
@@ -57,6 +61,22 @@ class CharacterModel
     public function setAkumaNoMiUnlock(YesNoEnum $akumaNoMiUnlock): void
     {
         $this->akumaNoMiUnlock = $akumaNoMiUnlock;
+    }
+
+    /**
+     * @return BreedModel
+     */
+    public function getBreed(): BreedModel
+    {
+        return $this->breed;
+    }
+
+    /**
+     * @param BreedModel $breed
+     */
+    public function setBreed(BreedModel $breed): void
+    {
+        $this->breed = $breed;
     }
 
     /**
@@ -137,6 +157,22 @@ class CharacterModel
     public function setCharacterNpcWinsUnlock(?int $characterNpcWinsUnlock): void
     {
         $this->characterNpcWinsUnlock = $characterNpcWinsUnlock;
+    }
+
+    /**
+     * @return ClassModel
+     */
+    public function getClass(): ClassModel
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param ClassModel $class
+     */
+    public function setClass(ClassModel $class): void
+    {
+        $this->class = $class;
     }
 
     /**
@@ -284,6 +320,22 @@ class CharacterModel
     }
 
     /**
+     * @return OrganizationModel
+     */
+    public function getOrganization(): OrganizationModel
+    {
+        return $this->organization;
+    }
+
+    /**
+     * @param OrganizationModel $organization
+     */
+    public function setOrganization(OrganizationModel $organization): void
+    {
+        $this->organization = $organization;
+    }
+
+    /**
      * @return int|null
      */
     public function getPlayerLevelUnlock(): ?int
@@ -333,6 +385,11 @@ class CharacterModel
 
     public function toJSON(): string
     {
-        return json_encode(get_object_vars($this));
+        return json_encode(Functions::mergeObject(
+            get_object_vars($this),
+            json_decode($this->getBreed()->toJSON()),
+            json_decode($this->getClass()->toJSON()),
+            json_decode($this->getOrganization()->toJSON())
+        ));
     }
 }

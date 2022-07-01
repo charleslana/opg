@@ -39,10 +39,13 @@ class CharacterRepository extends AbstractRepository
         $parameters = [':id' => $id, ':accountId' => AccountService::getAccountId()];
         $database = new Database();
         $result = $database->select('
-            SELECT c.*, ac.*, a.level AS accountLevel, a.gold AS accountGold, ac2.accountCharacterIds FROM `character` c
+            SELECT c.*, ac.*, a.level AS accountLevel, a.gold AS accountGold, ac2.accountCharacterIds, cl.id AS classId, cl.name AS className, b.id AS breedId, b.name AS breedName, o.id AS organizationId, o.name AS organizationName FROM `character` c
                 LEFT OUTER JOIN (SELECT MAX(level) AS level, MAX(npc_battles) AS npc_battles, MAX(arena_battles) AS arena_battles, MAX(npc_wins) AS npc_wins, MAX(arena_wins) AS arena_wins
                                  FROM account_character WHERE account_id = :accountId LIMIT 1) ac ON (c.id = c.id)
                 LEFT OUTER JOIN (SELECT GROUP_CONCAT(character_id) AS accountCharacterIds FROM account_character WHERE account_id = :accountId) ac2 ON (c.id = c.id)
+                LEFT OUTER JOIN class cl ON (cl.id = c.class_id)
+                LEFT OUTER JOIN breed b ON (b.id = c.breed_id)
+                LEFT OUTER JOIN organization o ON (o.id = c.organization_id)
                 LEFT OUTER JOIN account a ON (a.id = :accountId)
                         WHERE c.id = :id
             ', $parameters

@@ -42,6 +42,15 @@ class Functions
         die();
     }
 
+    public static function mergeObject(): object
+    {
+        $objects = [];
+        foreach (func_get_args() as $a) {
+            $objects[] = (array)$a;
+        }
+        return (object)call_user_func_array('array_merge', $objects);
+    }
+
     public static function numberAbbreviation(int $number, int $floating_points = 1): string
     {
         $a = ['', 'K', 'M', 'B', 't', 'q', 'Q', 's', 'S', 'o', 'n', 'd'];

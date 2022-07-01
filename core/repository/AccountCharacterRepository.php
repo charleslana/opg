@@ -38,8 +38,11 @@ class AccountCharacterRepository extends AbstractRepository
         $parameters = [':id' => $id, ':accountId' => $accountId];
         $database = new Database();
         $result = $database->select('
-            SELECT ac.*, ac.id AS accountCharacterId, c.* FROM account_character ac
+            SELECT ac.*, ac.id AS accountCharacterId, c.*, cl.id AS classId, cl.name AS className, b.id AS breedId, b.name AS breedName, o.id AS organizationId, o.name AS organizationName FROM account_character ac
                 LEFT OUTER JOIN `character` c ON (c.id = ac.character_id)
+                LEFT OUTER JOIN class cl ON (cl.id = c.class_id)
+                LEFT OUTER JOIN breed b ON (b.id = c.breed_id)
+                LEFT OUTER JOIN organization o ON (o.id = c.organization_id)
                     WHERE ac.id = :id AND ac.account_id = :accountId
             ', $parameters);
         if (count($result) != 1) {
