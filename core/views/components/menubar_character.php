@@ -33,7 +33,8 @@ $character = AccountCharacterService::getCharacter();
                             <hr class="mb-0 navbar-vertical-divider"/>
                         </div>
                     </div>
-                    <a class="nav-link" href="?action=status" role="button" data-bs-toggle="" aria-expanded="false">
+                    <a class="nav-link <?= $_GET['action'] == 'status' ? 'active' : '' ?>" href="?action=status"
+                       role="button" data-bs-toggle="" aria-expanded="false">
                         <div class="d-flex align-items-center">
                                     <span class="nav-link-icon">
                                         <span class="ra ra-player"></span>
@@ -41,12 +42,13 @@ $character = AccountCharacterService::getCharacter();
                             <span class="nav-link-text ps-1">Status</span>
                         </div>
                     </a>
-                    <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                    <a class="nav-link <?= $_GET['action'] == 'inventory' ? 'active' : '' ?>" href="?action=inventory"
+                       role="button" data-bs-toggle="" aria-expanded="false">
                         <div class="d-flex align-items-center">
                                     <span class="nav-link-icon">
-                                        <span class="fas fa-comments"></span>
+                                        <span class="ra ra-vest"></span>
                                     </span>
-                            <span class="nav-link-text ps-1">Menu</span>
+                            <span class="nav-link-text ps-1">Inventário</span>
                         </div>
                     </a>
                     <a class="nav-link dropdown-indicator" href="#menu" role="button"

@@ -124,3 +124,12 @@
 .swal2-modal {
     background-color: var(--falcon-modal-content-bg) !important;
 }
+
+.item {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}

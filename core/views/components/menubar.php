@@ -32,7 +32,8 @@ use core\enum\SessionEnum;
                             <hr class="mb-0 navbar-vertical-divider"/>
                         </div>
                     </div>
-                    <a class="nav-link" href="?action=select_crew" role="button" data-bs-toggle=""
+                    <a class="nav-link <?= $_GET['action'] == 'select_crew' ? 'active' : '' ?>"
+                       href="?action=select_crew" role="button" data-bs-toggle=""
                        aria-expanded="false">
                         <div class="d-flex align-items-center">
                                     <span class="nav-link-icon">
@@ -41,7 +42,8 @@ use core\enum\SessionEnum;
                             <span class="nav-link-text ps-1">Selecionar tripulação</span>
                         </div>
                     </a>
-                    <a class="nav-link" href="?action=recruit_crew" role="button" data-bs-toggle=""
+                    <a class="nav-link <?= $_GET['action'] == 'recruit_crew' ? 'active' : '' ?>"
+                       href="?action=recruit_crew" role="button" data-bs-toggle=""
                        aria-expanded="false">
                         <div class="d-flex align-items-center">
                                     <span class="nav-link-icon">
