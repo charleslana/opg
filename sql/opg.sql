@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 01/07/2022 às 19:55
+-- Tempo de geração: 03/07/2022 às 01:54
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -51,11 +51,11 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `session`, `level`, `belly`, `gold`, `avatar`, `experience`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'kSz2mQRuahy0INWlZVKidpc6b7L3TM', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-01 14:54:54', NULL),
+(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'OM8pwSyu5i9WHvehG063UB1NFqPfaT', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-02 20:29:50', NULL),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', 'hSAOzKc9LDsYI2lyRvV0QntgiPEZ17', 1, 0, 0, 1, 0, '2022-06-19 17:36:10', '2022-06-26 22:40:25', NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL),
-(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', 'm2MEoF5HSV3xIXwvODYcByTdUiG861', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-07-01 14:54:38', NULL),
+(5, 'xesix99400@mahazai.com', '$2y$10$1HDpvZthLXcZILyySzdI8OQE.Komml.ErguWA1eMFsCqz8SRQLImq', 'Usuário', 'active', NULL, 'user', 'rdJykcRSpWKZe2wF5i0vXQgA9Vx7Ia', 1, 0, 0, 1, 0, '2022-06-25 22:39:40', '2022-07-01 23:28:00', NULL),
 (6, 'jiroxi4322@lenfly.com', '$2y$10$YS1dwoyGFSbM0iPdJQ5Gceh0IFmAc48cxj5ttdcVmsCy9FJagCswG', 'Usuário Temp', 'active', NULL, 'user', 'xKrmi3MsoFV9nev8WYt7SGHE4TRZlb', 1, 0, 0, 1, 0, '2022-06-28 22:27:05', '2022-06-29 19:41:21', NULL);
 
 -- --------------------------------------------------------
@@ -102,6 +102,20 @@ INSERT INTO `account_character` (`id`, `account_id`, `character_id`, `level`, `n
 (13, 6, 14, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-29 19:43:08', '2022-06-29 19:43:08'),
 (14, 1, 17, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-30 15:19:43', '2022-06-30 15:19:43'),
 (15, 3, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, '2022-06-30 22:30:21', '2022-06-30 22:31:27');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `account_item`
+--
+
+CREATE TABLE `account_item` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `account_id` int(10) UNSIGNED NOT NULL,
+  `item_id` int(10) UNSIGNED NOT NULL,
+  `level` int(10) UNSIGNED DEFAULT 0,
+  `linked` enum('no','yes') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -231,6 +245,36 @@ INSERT INTO `class` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `item`
+--
+
+CREATE TABLE `item` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `strength` int(10) UNSIGNED DEFAULT NULL,
+  `defense` int(10) UNSIGNED DEFAULT NULL,
+  `life` int(10) UNSIGNED DEFAULT NULL,
+  `energy` int(10) UNSIGNED DEFAULT NULL,
+  `agility` int(10) UNSIGNED DEFAULT NULL,
+  `resistance` int(10) UNSIGNED DEFAULT NULL,
+  `minimum_level` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `rarity` enum('common','rare','epic','legendary','mythical') NOT NULL,
+  `linked` enum('no','yes') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `item`
+--
+
+INSERT INTO `item` (`id`, `name`, `description`, `strength`, `defense`, `life`, `energy`, `agility`, `resistance`, `minimum_level`, `rarity`, `linked`) VALUES
+(1, 'Kokutō Yoru', 'A espada usada pelo melhor espadachim do mundo,  Mihawk \"Olhos de Falcão\". É uma das 12 espadas Saijo Owazamono (Espadas de Graau Supremo) e sua lâmina é inclinada com o fio \"Chouji\" com duplo padrão irregular. Ela aparentemente se tornou uma lâmina negra após o uso do Haki de Mihawk.', 100, NULL, NULL, 20, 10, 5, 1, 'mythical', 'no'),
+(2, 'Metal Arm', 'Kid pode organizar os objetos de metal presos ao seu corpo em uma variedade de formas, com sua técnica mais comum sendo formar um gigantesco braço de metal para desencadear ataques poderosos.', 50, 50, 20, NULL, NULL, 10, 1, 'legendary', 'no'),
+(3, 'Kabuto', 'Usopp desenvolveu essa arma em algum momento antes de chegar ao Enies Lobby, usando os Dials que ele obteve em Skypiea. É um engenho metálico verde que parece um cruzamento entre um bastão e um estilingue. É aparentemente é nomeado com o nome do besouro do mesmo nome devido à sua semelhança com o chifre do besouro.', 25, NULL, NULL, 10, 50, NULL, 1, 'epic', 'no');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `organization`
 --
 
@@ -294,6 +338,14 @@ ALTER TABLE `account_character`
   ADD KEY `fk_account` (`account_id`);
 
 --
+-- Índices de tabela `account_item`
+--
+ALTER TABLE `account_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_account_item` (`account_id`),
+  ADD KEY `fk_item` (`item_id`);
+
+--
 -- Índices de tabela `breed`
 --
 ALTER TABLE `breed`
@@ -316,6 +368,13 @@ ALTER TABLE `character`
 ALTER TABLE `class`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `classes_name_uindex` (`name`);
+
+--
+-- Índices de tabela `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `item_name_uindex` (`name`);
 
 --
 -- Índices de tabela `organization`
@@ -341,6 +400,12 @@ ALTER TABLE `account_character`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT de tabela `account_item`
+--
+ALTER TABLE `account_item`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `breed`
 --
 ALTER TABLE `breed`
@@ -359,6 +424,12 @@ ALTER TABLE `class`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT de tabela `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `organization`
 --
 ALTER TABLE `organization`
@@ -374,6 +445,13 @@ ALTER TABLE `organization`
 ALTER TABLE `account_character`
   ADD CONSTRAINT `fk_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fk_account_character` FOREIGN KEY (`character_id`) REFERENCES `character` (`id`);
+
+--
+-- Restrições para tabelas `account_item`
+--
+ALTER TABLE `account_item`
+  ADD CONSTRAINT `fk_account_item` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
+  ADD CONSTRAINT `fk_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
 
 --
 -- Restrições para tabelas `character`
