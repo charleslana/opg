@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('password-login').value = localStorage.getItem('passwordLogin');
         document.getElementById('modal-checkbox').checked = true;
     }
+    if (document.getElementById('inventory-axios')) {
+        showInventory();
+    }
 });
 
 let loadingInterval;
@@ -443,4 +446,39 @@ function getQueryStringParams(param) {
             return parameterName[1];
         }
     }
+}
+
+function showInventory() {
+    document.getElementById('unequipped-items').innerText = '';
+    loading(true);
+    axios.get('?action=all_item', {
+        params: {
+            page: getQueryStringParams('page')
+        }
+    }).then(response => {
+        const {data} = response;
+        unequippedItems(data);
+    }).catch(error => {
+        getAxiosError(error);
+    }).finally(() => {
+        loading(false);
+    });
+}
+
+function unequippedItems(data) {
+    if (data.length) {
+        let equipped = '';
+        data.forEach(object => {
+            if (object.accountItem.equipped === 'no') {
+                equipped += `
+            <div class="col text-start separate-column">
+                <div class="item border rounded-3 bg-danger" style="background-image: url('../../public/assets/img/items/${object.item.image}.png')"></div>
+            </div>
+           `;
+            }
+        });
+        document.getElementById('unequipped-items').innerHTML = equipped;
+        return;
+    }
+    document.getElementById('unequipped-items').innerHTML = '<div class="alert alert-danger text-center mb-3 w-100" role="alert">Nenhum item no inventário.</div>';
 }

@@ -7,11 +7,30 @@ use core\enum\YesNoEnum;
 class AccountItemModel
 {
 
+    private int $accountCharacterId;
     private int $accountId;
+    private YesNoEnum $chest;
+    private YesNoEnum $equipped;
     private int $id;
     private int $itemId;
     private int $level;
     private YesNoEnum $linked;
+
+    /**
+     * @return int
+     */
+    public function getAccountCharacterId(): int
+    {
+        return $this->accountCharacterId;
+    }
+
+    /**
+     * @param int $accountCharacterId
+     */
+    public function setAccountCharacterId(int $accountCharacterId): void
+    {
+        $this->accountCharacterId = $accountCharacterId;
+    }
 
     /**
      * @return int
@@ -27,6 +46,38 @@ class AccountItemModel
     public function setAccountId(int $accountId): void
     {
         $this->accountId = $accountId;
+    }
+
+    /**
+     * @return YesNoEnum
+     */
+    public function getChest(): YesNoEnum
+    {
+        return $this->chest;
+    }
+
+    /**
+     * @param YesNoEnum $chest
+     */
+    public function setChest(YesNoEnum $chest): void
+    {
+        $this->chest = $chest;
+    }
+
+    /**
+     * @return YesNoEnum
+     */
+    public function getEquipped(): YesNoEnum
+    {
+        return $this->equipped;
+    }
+
+    /**
+     * @param YesNoEnum $equipped
+     */
+    public function setEquipped(YesNoEnum $equipped): void
+    {
+        $this->equipped = $equipped;
     }
 
     /**
@@ -91,5 +142,10 @@ class AccountItemModel
     public function setLinked(YesNoEnum $linked): void
     {
         $this->linked = $linked;
+    }
+
+    public function toJSON(): string
+    {
+        return json_encode(get_object_vars($this));
     }
 }

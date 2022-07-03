@@ -2,6 +2,8 @@
 
 namespace core\model;
 
+use core\classes\Functions;
+use core\enum\ItemTypeEnum;
 use core\enum\RarityEnum;
 use core\enum\YesNoEnum;
 
@@ -9,10 +11,12 @@ class ItemModel
 {
 
     private ?int $agility;
+    private ClassModel $class;
     private ?int $defense;
     private ?string $description;
     private ?int $energy;
     private int $id;
+    private int $image;
     private ?int $life;
     private YesNoEnum $linked;
     private int $minimumLevel;
@@ -20,6 +24,7 @@ class ItemModel
     private RarityEnum $rarity;
     private ?int $resistance;
     private ?int $strength;
+    private ItemTypeEnum $type;
 
     /**
      * @return int|null
@@ -35,6 +40,22 @@ class ItemModel
     public function setAgility(?int $agility): void
     {
         $this->agility = $agility;
+    }
+
+    /**
+     * @return ClassModel
+     */
+    public function getClass(): ClassModel
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param ClassModel $class
+     */
+    public function setClass(ClassModel $class): void
+    {
+        $this->class = $class;
     }
 
     /**
@@ -99,6 +120,22 @@ class ItemModel
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getImage(): int
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param int $image
+     */
+    public function setImage(int $image): void
+    {
+        $this->image = $image;
     }
 
     /**
@@ -213,8 +250,27 @@ class ItemModel
         $this->strength = $strength;
     }
 
+    /**
+     * @return ItemTypeEnum
+     */
+    public function getType(): ItemTypeEnum
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param ItemTypeEnum $type
+     */
+    public function setType(ItemTypeEnum $type): void
+    {
+        $this->type = $type;
+    }
+
     public function toJSON(): string
     {
-        return json_encode(get_object_vars($this));
+        return json_encode(Functions::mergeObject(
+            get_object_vars($this),
+            json_decode($this->getClass()->toJSON()),
+        ));
     }
 }

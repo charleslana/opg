@@ -27,13 +27,13 @@ include('components/title.php');
             </div>
             <div class="card-body py-2">
                 <?php
-                $data = array('title' => 'Item de cabeça', 'name' => 'Kabuto', 'image' => 3);
+                $data = array('title' => 'Item de capacete', 'name' => 'Kabuto', 'image' => 3);
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de mão');
+                $data = array('title' => 'Item de arma');
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de corpo');
+                $data = array('title' => 'Item de vestimenta');
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de bota');
+                $data = array('title' => 'Item de calçado');
                 include('components/inventory/equipped_item.php');
                 $data = array('title' => 'Item de acessório');
                 include('components/inventory/equipped_item.php');
@@ -41,7 +41,7 @@ include('components/title.php');
             </div>
         </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-8" id="inventory-axios">
         <div class="card h-100">
             <div class="card-header">
                 <div class="row justify-content-between gx-0">
@@ -57,9 +57,10 @@ include('components/title.php');
                 </div>
             </div>
             <div class="card-body pt-0 pb-3 h-100">
-                <div class="row">
+                <div class="row row-cols-auto" id="unequipped-items">
                     <div class="col text-start separate-column">
-                        <div class="item border rounded-3 bg-danger" style="background-image: url('../../public/assets/img/items/1.png')"></div>
+                        <div class="item border rounded-3 bg-danger"
+                             style="background-image: url('../../public/assets/img/items/1.png')"></div>
                     </div>
                 </div>
             </div>

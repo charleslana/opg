@@ -20,7 +20,8 @@ $routes = [
     'add_crew' => 'Crew@addCrew',
     'create_crew_session' => 'Crew@createCrewSession',
     'status' => 'Status@status',
-    'inventory' => 'Inventory@inventory'
+    'inventory' => 'Inventory@inventory',
+    'all_item' => 'Inventory@allItem'
 ];
 
 $action = 'index';
