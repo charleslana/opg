@@ -113,6 +113,10 @@ include('components/helper.php');
                         <span class="badge badge-soft-primary rounded-pill" id="resistanceAttributes">+1</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Atributos de inteligência por nível
+                        <span class="badge badge-soft-primary rounded-pill" id="intelligenceAttributes">+1</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
                         Nível máximo
                         <span class="badge badge-soft-primary rounded-pill" id="maximumLevel">60</span>
                     </li>

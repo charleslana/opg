@@ -44,11 +44,11 @@ class Functions
 
     public static function mergeObject(): object
     {
-        $objects = [];
-        foreach (func_get_args() as $a) {
-            $objects[] = (array)$a;
+        $array = [];
+        foreach (func_get_args() as $objects) {
+            $array[] = (array)$objects;
         }
-        return (object)call_user_func_array('array_merge', $objects);
+        return (object)call_user_func_array('array_merge', $array);
     }
 
     public static function numberAbbreviation(int $number, int $floating_points = 1): string

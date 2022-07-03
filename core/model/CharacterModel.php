@@ -23,6 +23,7 @@ class CharacterModel
     private YesNoEnum $hakiUnlock;
     private int $id;
     private string $image;
+    private int $intelligenceAttributes;
     private int $lifeAttributes;
     private int $maximumLevel;
     private string $name;
@@ -269,6 +270,22 @@ class CharacterModel
     public function setImage(string $image): void
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIntelligenceAttributes(): int
+    {
+        return $this->intelligenceAttributes;
+    }
+
+    /**
+     * @param int $intelligenceAttributes
+     */
+    public function setIntelligenceAttributes(int $intelligenceAttributes): void
+    {
+        $this->intelligenceAttributes = $intelligenceAttributes;
     }
 
     /**

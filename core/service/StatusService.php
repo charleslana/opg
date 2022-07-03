@@ -10,9 +10,31 @@ class StatusService
         return $attribute * $level;
     }
 
-    public static function calculateCritical(int $agility, int $level): float
+    public static function calculateBar(): int
     {
-        $result = (self::calculateAttribute($agility, $level) * 100) / 1000;
+        $attributes = array_sum(func_get_args());
+        if ($attributes <= 0) {
+            return 0;
+        }
+        $result = ((int)func_get_arg(0) * 100) / $attributes;
+        if ($result > 100) {
+            $result = 100;
+        }
+        return $result;
+    }
+
+    public static function calculateBlocking(int $resistance, int $level): float
+    {
+        $result = (self::calculateAttribute($resistance, $level) * 10) / 1000;
+        if ($result > 50) {
+            $result = 50;
+        }
+        return $result;
+    }
+
+    public static function calculateCritical(int $intelligence, int $level): float
+    {
+        $result = (self::calculateAttribute($intelligence, $level) * 100) / 1000;
         if ($result > 50) {
             $result = 50;
         }
@@ -24,9 +46,9 @@ class StatusService
         return 50 * self::calculateAttribute($strength, $level);
     }
 
-    public static function calculateDodge(int $resistance, int $level): float
+    public static function calculateDodge(int $agility, int $level): float
     {
-        $result = (self::calculateAttribute($resistance, $level) * 50) / 1000;
+        $result = (self::calculateAttribute($agility, $level) * 50) / 1000;
         if ($result > 50) {
             $result = 50;
         }

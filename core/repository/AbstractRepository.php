@@ -135,6 +135,7 @@ abstract class AbstractRepository
         $characterModel->setPlayerLevelUnlock($object->player_level_unlock);
         $characterModel->setResistanceAttributes($object->resistance_attributes);
         $characterModel->setStrengthAttributes($object->strength_attributes);
+        $characterModel->setIntelligenceAttributes($object->intelligence_attributes);
         $this->setClassAndBreedAndOrganization($object, $characterModel);
     }
 

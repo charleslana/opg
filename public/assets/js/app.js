@@ -144,6 +144,7 @@ function getCharacterStatusDetails(data) {
     document.getElementById('energyAttributes').innerText = `+${data.character.energyAttributes}`;
     document.getElementById('agilityAttributes').innerText = `+${data.character.agilityAttributes}`;
     document.getElementById('resistanceAttributes').innerText = `+${data.character.resistanceAttributes}`;
+    document.getElementById('intelligenceAttributes').innerText = `+${data.character.intelligenceAttributes}`;
     document.getElementById('maximumLevel').innerText = data.character.maximumLevel;
     document.getElementById('hakiUnlock').innerText = data.character.hakiUnlock === 'no' ? 'não' : 'sim';
     document.getElementById('akumaNoMiUnlock').innerText = data.character.akumaNoMiUnlock === 'no' ? 'não' : 'sim';
@@ -262,7 +263,7 @@ function numberAbbreviationSymbol() {
     }, {value: 1e12, symbol: 't'}, {value: 1e15, symbol: 'q'}, {value: 1e18, symbol: 'Q'}, {
         value: 1e21,
         symbol: 's'
-    }, {value: 1e24, symbol: 'S'}, {value: 1e27, symbol: 'o'}, {value: 1e30, symbol: 'n'}, {value: 1e33, symbol: 'd'},];
+    }, {value: 1e24, symbol: 'S'}, {value: 1e27, symbol: 'o'}, {value: 1e30, symbol: 'n'}, {value: 1e33, symbol: 'd'}];
 }
 
 function numberAbbreviation(num, digits = 1) {

@@ -4,8 +4,8 @@ if (!isset($data)) {
 }
 extract($data);
 ?>
-<div class="row g-0 align-items-center py-2 position-relative border-bottom border-200" data-bs-toggle="tooltip"
-     data-bs-placement="top" title="<?= $data['tooltip'] ?>">
+<div class="row g-0 align-items-center py-2 position-relative <?= isset($data['separator']) ? 'border-bottom border-200' : '' ?>"
+     data-bs-toggle="tooltip" data-bs-placement="top" title="<?= $data['tooltip'] ?>">
     <div class="col ps-card py-1 position-static">
         <div class="d-flex align-items-center">
             <div class="avatar avatar-xl me-3">
@@ -28,8 +28,8 @@ extract($data);
             </div>
             <div class="col-5 pe-card ps-2">
                 <div class="progress bg-200 me-2" style="height: 5px;">
-                    <div class="progress-bar rounded-pill" role="progressbar" style="width: 38%"
-                         aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar rounded-pill" role="progressbar" style="width: <?= $data['percentage'] ?>%"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>

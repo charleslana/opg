@@ -19,14 +19,16 @@ $strength = Functions::numberFormat(StatusService::calculateAttribute($character
 $defense = Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getDefenseAttributes(), $character->getAccountCharacter()->getLevel()));
 $agility = Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getAgilityAttributes(), $character->getAccountCharacter()->getLevel()));
 $resistance = Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getResistanceAttributes(), $character->getAccountCharacter()->getLevel()));
-$critical = StatusService::calculateCritical($character->getCharacter()->getAgilityAttributes(), $character->getAccountCharacter()->getLevel());
-$dodge = StatusService::calculateDodge($character->getCharacter()->getResistanceAttributes(), $character->getAccountCharacter()->getLevel());
+$intelligence = Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getIntelligenceAttributes(), $character->getAccountCharacter()->getLevel()));
+$critical = StatusService::calculateCritical($character->getCharacter()->getIntelligenceAttributes(), $character->getAccountCharacter()->getLevel());
+$dodge = StatusService::calculateDodge($character->getCharacter()->getAgilityAttributes(), $character->getAccountCharacter()->getLevel());
+$blocking = StatusService::calculateBlocking($character->getCharacter()->getResistanceAttributes(), $character->getAccountCharacter()->getLevel());
 $life = Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getLifeAttributes(), $character->getAccountCharacter()->getLevel()));
 $energy = Functions::numberFormat(StatusService::calculateAttribute($character->getCharacter()->getEnergyAttributes(), $character->getAccountCharacter()->getLevel()));
 ?>
 <div class="row g-3">
     <div class="col-lg-6">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-header d-flex flex-between-center bg-light py-2">
                 <h6 class="mb-0"><?= $character->getCharacter()->getName() ?></h6>
                 <div class="font-sans-serif btn-reveal-trigger">
@@ -51,13 +53,15 @@ $energy = Functions::numberFormat(StatusService::calculateAttribute($character->
             </div>
             <div class="card-body p-0">
                 <?php
-                $data = array('tooltip' => 'Dano', 'icon' => 'ra-muscle-up', 'color' => 'primary', 'name' => 'Força', 'value' => '+' . Functions::numberAbbreviation($damage), 'attribute' => $strength);
+                $data = array('separator' => true, 'tooltip' => 'Dano', 'icon' => 'ra-muscle-up', 'color' => 'primary', 'name' => 'Força', 'value' => '+' . Functions::numberAbbreviation($damage), 'attribute' => $strength, 'percentage' => StatusService::calculateBar($strength, $defense, $intelligence, $agility, $resistance));
                 include('components/status/attributes.php');
-                $data = array('tooltip' => 'Escudo', 'icon' => 'ra-shield', 'color' => 'success', 'name' => 'Defesa', 'value' => '+' . Functions::numberAbbreviation($shield), 'attribute' => $defense);
+                $data = array('separator' => true, 'tooltip' => 'Escudo', 'icon' => 'ra-shield', 'color' => 'success', 'name' => 'Defesa', 'value' => '+' . Functions::numberAbbreviation($shield), 'attribute' => $defense, 'percentage' => StatusService::calculateBar($defense, $strength, $intelligence, $agility, $resistance));
                 include('components/status/attributes.php');
-                $data = array('tooltip' => 'Crítico', 'icon' => 'ra-player-dodge', 'color' => 'info', 'name' => 'Agilidade', 'value' => "$critical%", 'attribute' => $agility);
+                $data = array('separator' => true, 'tooltip' => 'Crítico', 'icon' => 'ra-player-pain', 'color' => 'info', 'name' => 'Inteligência', 'value' => "$critical%", 'attribute' => $intelligence, 'percentage' => StatusService::calculateBar($intelligence, $defense, $strength, $agility, $resistance));
                 include('components/status/attributes.php');
-                $data = array('tooltip' => 'Esquiva', 'icon' => 'ra-player-thunder-struck', 'color' => 'warning', 'name' => 'Resistência', 'value' => "$dodge%", 'attribute' => $resistance);
+                $data = array('separator' => true, 'tooltip' => 'Esquiva', 'icon' => 'ra-player-dodge', 'color' => 'warning', 'name' => 'Agilidade', 'value' => "$dodge%", 'attribute' => $agility, 'percentage' => StatusService::calculateBar($agility, $defense, $intelligence, $strength, $resistance));
+                include('components/status/attributes.php');
+                $data = array('tooltip' => 'Bloqueio', 'icon' => 'ra-player-thunder-struck', 'color' => 'danger', 'name' => 'Resistência', 'value' => "$blocking%", 'attribute' => $resistance, 'percentage' => StatusService::calculateBar($resistance, $defense, $intelligence, $agility, $strength));
                 include('components/status/attributes.php');
                 ?>
             </div>
