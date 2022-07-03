@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 03/07/2022 às 04:17
+-- Tempo de geração: 03/07/2022 às 06:23
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -51,7 +51,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `session`, `level`, `belly`, `gold`, `avatar`, `experience`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'kM09nAW5Yi2xC6DuLdgvUcZB3pNGwH', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-02 22:40:02', NULL),
+(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'mBdr92HPtFozKv1wyeqOfLnkJGXMgD', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-03 00:17:02', NULL),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', 'hSAOzKc9LDsYI2lyRvV0QntgiPEZ17', 1, 0, 0, 1, 0, '2022-06-19 17:36:10', '2022-06-26 22:40:25', NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL),
@@ -165,6 +165,7 @@ CREATE TABLE `character` (
   `energy_attributes` int(10) UNSIGNED NOT NULL,
   `agility_attributes` int(10) UNSIGNED NOT NULL,
   `resistance_attributes` int(10) UNSIGNED NOT NULL,
+  `intelligence_attributes` int(10) UNSIGNED NOT NULL,
   `maximum_level` int(10) UNSIGNED NOT NULL,
   `haki_unlock` enum('no','yes') NOT NULL,
   `akuma_no_mi_unlock` enum('no','yes') NOT NULL,
@@ -181,40 +182,40 @@ CREATE TABLE `character` (
 -- Despejando dados para a tabela `character`
 --
 
-INSERT INTO `character` (`id`, `class_id`, `breed_id`, `organization_id`, `name`, `image`, `strength_attributes`, `defense_attributes`, `life_attributes`, `energy_attributes`, `agility_attributes`, `resistance_attributes`, `maximum_level`, `haki_unlock`, `akuma_no_mi_unlock`, `player_level_unlock`, `character_level_unlock`, `character_npc_battles_unlock`, `character_arena_battles_unlock`, `character_npc_wins_unlock`, `character_arena_wins_unlock`, `gold_unlock`) VALUES
-(1, 1, 1, 1, 'Luffy (Sem akuma no mi)', '1', 1, 1, 1, 1, 1, 1, 50, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(2, 1, 1, 1, 'Luffy', '2', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(3, 1, 1, 1, 'Luffy (Gomu Gomu no Bazooka)', '3', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(4, 1, 1, 1, 'Luffy (Gomu Gomu no Fusen)', '4', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', 2, NULL, NULL, NULL, NULL, NULL, 0),
-(5, 1, 1, 1, 'Luffy (Gomu Gomu no Jet Gatling)', '5', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(6, 2, 2, 2, 'Luffy (Gear third)', '6', 4, 1, 1, 1, 1, 1, 100, 'yes', 'yes', 10, NULL, 10, 10, 5, 1, 500),
-(7, 1, 1, 1, 'Luffy (Gear second)', '7', 3, 2, 2, 1, 3, 2, 100, 'yes', 'yes', 20, 50, NULL, NULL, NULL, NULL, 1000),
-(8, 1, 1, 1, 'Zoro', '8', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(9, 1, 1, 1, 'Zoro (Santoryu)', '9', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(10, 1, 1, 1, 'Zoro (Sanjuroku Pound Ho)', '10', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(11, 1, 1, 1, 'Zoro (Hyakuhachi Pound Hou)', '11', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(12, 1, 1, 1, 'Zoro (Asura)', '12', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(13, 1, 1, 1, 'Nami', '13', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(14, 1, 1, 1, 'Nami (Cyclone Tempo)', '14', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(15, 1, 1, 1, 'Nami (Mirage)', '15', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(16, 1, 1, 1, 'Nami (Shiawase Punch)', '16', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(17, 1, 1, 1, 'Nami (Thunderbolt Tempo)', '17', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(18, 1, 1, 1, 'Usopp', '18', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(19, 1, 1, 1, 'Usopp (Hissatsu Kayaku Boshi)', '19', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(20, 1, 1, 1, 'Usopp (Impact Dial)', '20', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(21, 1, 1, 1, 'Usopp (Pound)', '21', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(22, 1, 1, 1, 'Sogeking', '22', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(23, 1, 1, 1, 'Sanji', '23', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(24, 1, 1, 1, 'Sanji (Parage Shot)', '24', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(25, 1, 1, 1, 'Sanji (O Cozinheiro)', '25', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(26, 1, 1, 1, 'Sanji (Perna Negra)', '26', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(27, 1, 1, 1, 'Chopper', '27', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(28, 1, 1, 1, 'Chopper (Heavy Point)', '28', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(29, 1, 1, 1, 'Chopper (Scope)', '29', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(30, 1, 1, 1, 'Chopper (Arm Point)', '30', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(31, 1, 1, 1, 'Chopper (Horn Point)', '31', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(32, 1, 1, 1, 'Chopper (Guard Point)', '32', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(33, 1, 1, 1, 'Chopper (Monster Point)', '33', 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `character` (`id`, `class_id`, `breed_id`, `organization_id`, `name`, `image`, `strength_attributes`, `defense_attributes`, `life_attributes`, `energy_attributes`, `agility_attributes`, `resistance_attributes`, `intelligence_attributes`, `maximum_level`, `haki_unlock`, `akuma_no_mi_unlock`, `player_level_unlock`, `character_level_unlock`, `character_npc_battles_unlock`, `character_arena_battles_unlock`, `character_npc_wins_unlock`, `character_arena_wins_unlock`, `gold_unlock`) VALUES
+(1, 1, 1, 1, 'Luffy (Sem akuma no mi)', '1', 1, 1, 1, 1, 1, 1, 1, 50, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(2, 1, 1, 1, 'Luffy', '2', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(3, 1, 1, 1, 'Luffy (Gomu Gomu no Bazooka)', '3', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, 1, 1, 1, 'Luffy (Gomu Gomu no Fusen)', '4', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', 2, NULL, NULL, NULL, NULL, NULL, 0),
+(5, 1, 1, 1, 'Luffy (Gomu Gomu no Jet Gatling)', '5', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(6, 2, 2, 2, 'Luffy (Gear third)', '6', 4, 1, 1, 1, 1, 1, 0, 100, 'yes', 'yes', 10, NULL, 10, 10, 5, 1, 500),
+(7, 1, 1, 1, 'Luffy (Gear second)', '7', 3, 2, 2, 1, 3, 2, 0, 100, 'yes', 'yes', 20, 50, NULL, NULL, NULL, NULL, 1000),
+(8, 1, 1, 1, 'Zoro', '8', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(9, 1, 1, 1, 'Zoro (Santoryu)', '9', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(10, 1, 1, 1, 'Zoro (Sanjuroku Pound Ho)', '10', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(11, 1, 1, 1, 'Zoro (Hyakuhachi Pound Hou)', '11', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(12, 1, 1, 1, 'Zoro (Asura)', '12', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(13, 1, 1, 1, 'Nami', '13', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(14, 1, 1, 1, 'Nami (Cyclone Tempo)', '14', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(15, 1, 1, 1, 'Nami (Mirage)', '15', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(16, 1, 1, 1, 'Nami (Shiawase Punch)', '16', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(17, 1, 1, 1, 'Nami (Thunderbolt Tempo)', '17', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(18, 1, 1, 1, 'Usopp', '18', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(19, 1, 1, 1, 'Usopp (Hissatsu Kayaku Boshi)', '19', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(20, 1, 1, 1, 'Usopp (Impact Dial)', '20', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(21, 1, 1, 1, 'Usopp (Pound)', '21', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(22, 1, 1, 1, 'Sogeking', '22', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(23, 1, 1, 1, 'Sanji', '23', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(24, 1, 1, 1, 'Sanji (Parage Shot)', '24', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(25, 1, 1, 1, 'Sanji (O Cozinheiro)', '25', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(26, 1, 1, 1, 'Sanji (Perna Negra)', '26', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(27, 1, 1, 1, 'Chopper', '27', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(28, 1, 1, 1, 'Chopper (Heavy Point)', '28', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(29, 1, 1, 1, 'Chopper (Scope)', '29', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(30, 1, 1, 1, 'Chopper (Arm Point)', '30', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(31, 1, 1, 1, 'Chopper (Horn Point)', '31', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(32, 1, 1, 1, 'Chopper (Guard Point)', '32', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(33, 1, 1, 1, 'Chopper (Monster Point)', '33', 0, 0, 0, 0, 0, 0, 0, 0, 'no', 'no', NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
