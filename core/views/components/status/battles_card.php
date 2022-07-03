@@ -4,7 +4,7 @@ if (!isset($data)) {
 }
 extract($data);
 ?>
-<div class="col-6 col-md-3 border-200 border-bottom pb-4">
+<div class="col-6 col-md-3 border-200 border-bottom pb-4 g-3">
     <h6 class="pb-1 text-700"><?= $data['name'] ?></h6>
     <p class="font-sans-serif lh-1 mb-1 fs-2"><?= $data['value'] ?></p>
     <div class="d-flex align-items-center">
