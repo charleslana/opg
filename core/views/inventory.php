@@ -1,4 +1,11 @@
 <?php
+if (!class_exists('core\classes\Functions')) {
+    die();
+}
+
+use core\classes\Functions;
+
+$page = !isset($_GET['page']) ? 1 : Functions::setAbsoluteValue($_GET['page']);
 $data = array('title' => 'Inventário');
 include('components/title.php');
 ?>
@@ -63,6 +70,30 @@ include('components/title.php');
                              style="background-image: url('../../public/assets/img/items/1.png')"></div>
                     </div>
                 </div>
+            </div>
+            <div class="card-footer bg-light py-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <?php if ($page > 1) : ?>
+                            <li class="page-item">
+                                <a class="page-link" href="?action=inventory&page=<?= $page - 1 ?>"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Anterior</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="page-item active">
+                            <span class="page-link"><?= $page ?></span>
+                        </li>
+                        <li class="page-item" id="inventory-next-page">
+                            <a class="page-link" href="?action=inventory&page=<?= $page + 1 ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próximo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

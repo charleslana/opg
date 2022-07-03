@@ -471,14 +471,15 @@ function unequippedItems(data) {
         data.forEach(object => {
             if (object.accountItem.equipped === 'no') {
                 equipped += `
-            <div class="col text-start separate-column">
-                <div class="item border rounded-3 bg-danger" style="background-image: url('../../public/assets/img/items/${object.item.image}.png')"></div>
-            </div>
-           `;
+                    <div class="col text-start separate-column">
+                        <div class="item border rounded-3 bg-danger" style="background-image: url('../../public/assets/img/items/${object.item.image}.png')"></div>
+                    </div>
+                `;
             }
         });
         document.getElementById('unequipped-items').innerHTML = equipped;
         return;
     }
     document.getElementById('unequipped-items').innerHTML = '<div class="alert alert-danger text-center mb-3 w-100" role="alert">Nenhum item no inventário.</div>';
+    document.getElementById('inventory-next-page').remove();
 }
