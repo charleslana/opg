@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 03/07/2022 às 18:30
+-- Tempo de geração: 03/07/2022 às 23:35
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -51,7 +51,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `password`, `name`, `status`, `token`, `role`, `session`, `level`, `belly`, `gold`, `avatar`, `experience`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'adlLDuhSnqoXzgsieOrwMfvFIPKH5t', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-03 12:43:23', NULL),
+(1, 'suporteopgame@gmail.com', '$2y$10$4PNRyrpe2f1JYMLzKXuqt.7osULID45pw9paM8U34q7TYwPCeEgOC', 'Charles Lana', 'active', NULL, 'user', 'DgrH1aOXQ0MBFbylLvukVU9hYAIf3w', 5, 1500, 500, 2, 3600, '2022-06-19 00:39:52', '2022-07-03 16:52:29', NULL),
 (2, 'charleslanop@gmail.com', '$2y$10$1fMCPQZuJhwjPk4K7EbCAuOLjdbpgb4VIr/Z87EfWigelJKvhxtVK', 'Charles', 'inactive', '2BFSPRa867YG', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 13:05:31', '2022-06-19 17:18:38', NULL),
 (3, 'nosigo7732@runqx.com', '$2y$10$X7Jv.ctJSpKmWEs6JqlPouAdByLVsZnWS21uwkjIcWDn4TtnPMdNi', 'Teste', 'active', NULL, 'user', 'hSAOzKc9LDsYI2lyRvV0QntgiPEZ17', 1, 0, 0, 1, 0, '2022-06-19 17:36:10', '2022-06-26 22:40:25', NULL),
 (4, 'test@test.com', '$2y$10$mh2ntHa6jzlf6C5hT83VbejzpqUAs7oGPsNRl8cIJOr1pJWl0Nwbi', 'Charles 1 2test', 'inactive', 'eIY47rwcoMOv', 'user', NULL, 1, 0, 0, 1, 0, '2022-06-19 17:54:55', '2022-06-19 17:54:55', NULL),
@@ -126,7 +126,27 @@ CREATE TABLE `account_item` (
 
 INSERT INTO `account_item` (`id`, `account_id`, `account_character_id`, `item_id`, `level`, `linked`, `chest`, `equipped`) VALUES
 (1, 1, 1, 1, 0, 'no', 'no', 'no'),
-(2, 1, 1, 2, 0, 'no', 'no', 'no');
+(2, 1, 1, 2, 0, 'no', 'no', 'no'),
+(3, 1, 1, 1, 0, 'no', 'no', 'no'),
+(4, 1, 1, 1, 0, 'no', 'no', 'no'),
+(5, 1, 1, 1, 0, 'no', 'no', 'no'),
+(6, 1, 1, 1, 0, 'no', 'no', 'no'),
+(7, 1, 1, 1, 0, 'no', 'no', 'no'),
+(8, 1, 1, 1, 0, 'no', 'no', 'no'),
+(9, 1, 1, 1, 0, 'no', 'no', 'no'),
+(10, 1, 1, 1, 0, 'no', 'no', 'no'),
+(11, 1, 1, 1, 0, 'no', 'no', 'no'),
+(12, 1, 1, 1, 0, 'no', 'no', 'no'),
+(13, 1, 1, 1, 0, 'no', 'no', 'no'),
+(14, 1, 1, 1, 0, 'no', 'no', 'no'),
+(15, 1, 1, 1, 0, 'no', 'no', 'no'),
+(16, 1, 1, 1, 0, 'no', 'no', 'no'),
+(17, 1, 1, 1, 0, 'no', 'no', 'no'),
+(18, 1, 1, 1, 0, 'no', 'no', 'no'),
+(19, 1, 1, 1, 0, 'no', 'no', 'no'),
+(20, 1, 1, 1, 0, 'no', 'no', 'no'),
+(21, 1, 1, 1, 0, 'no', 'no', 'no'),
+(22, 1, 1, 3, 0, 'no', 'no', 'yes');
 
 -- --------------------------------------------------------
 
@@ -420,7 +440,7 @@ ALTER TABLE `account_character`
 -- AUTO_INCREMENT de tabela `account_item`
 --
 ALTER TABLE `account_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `breed`

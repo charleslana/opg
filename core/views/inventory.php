@@ -4,8 +4,16 @@ if (!class_exists('core\classes\Functions')) {
 }
 
 use core\classes\Functions;
+use core\enum\ItemTypeEnum;
+use core\service\AccountItemService;
 
+$nextPage = true;
 $page = !isset($_GET['page']) ? 1 : Functions::setAbsoluteValue($_GET['page']);
+$unequippedItems = AccountItemService::showUnequippedItem($page);
+$equippedItems = AccountItemService::showEquippedItem();
+if (!$unequippedItems) {
+    $nextPage = false;
+}
 $data = array('title' => 'Inventário');
 include('components/title.php');
 ?>
@@ -34,21 +42,35 @@ include('components/title.php');
             </div>
             <div class="card-body py-2">
                 <?php
-                $data = array('title' => 'Item de capacete', 'name' => 'Kabuto', 'image' => 3);
+                $helmet = array('title' => 'Item de capacete');
+                $weapon = array('title' => 'Item de arma');
+                $clothing = array('title' => 'Item de vestimenta');
+                $shoe = array('title' => 'Item de calçado');
+                $accessory = array('title' => 'Item de acessório');
+                foreach ($equippedItems as $equippedItem) {
+                    match ($equippedItem->getItem()->getType()) {
+                        ItemTypeEnum::Helmet => $helmet = array('title' => 'Item de capacete', 'name' => $equippedItem->getItem()->getName(), 'image' => $equippedItem->getItem()->getImage()),
+                        ItemTypeEnum::Weapon => $weapon = array('title' => 'Item de arma', 'name' => $equippedItem->getItem()->getName(), 'image' => $equippedItem->getItem()->getImage()),
+                        ItemTypeEnum::Clothing => $clothing = array('title' => 'Item de vestimenta', 'name' => $equippedItem->getItem()->getName(), 'image' => $equippedItem->getItem()->getImage()),
+                        ItemTypeEnum::Shoe => $shoe = array('title' => 'Item de calçado', 'name' => $equippedItem->getItem()->getName(), 'image' => $equippedItem->getItem()->getImage()),
+                        ItemTypeEnum::Accessory => $helmet = array('title' => 'Item de acessório', 'name' => $equippedItem->getItem()->getName(), 'image' => $equippedItem->getItem()->getImage())
+                    };
+                }
+                $data = $helmet;
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de arma');
+                $data = $weapon;
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de vestimenta');
+                $data = $clothing;
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de calçado');
+                $data = $shoe;
                 include('components/inventory/equipped_item.php');
-                $data = array('title' => 'Item de acessório');
+                $data = $accessory;
                 include('components/inventory/equipped_item.php');
                 ?>
             </div>
         </div>
     </div>
-    <div class="col-lg-8" id="inventory-axios">
+    <div class="col-lg-8">
         <div class="card h-100">
             <div class="card-header">
                 <div class="row justify-content-between gx-0">
@@ -64,12 +86,20 @@ include('components/title.php');
                 </div>
             </div>
             <div class="card-body pt-0 pb-3 h-100">
-                <div class="row row-cols-auto" id="unequipped-items">
-                    <div class="col text-start separate-column">
-                        <div class="item border rounded-3 bg-danger"
-                             style="background-image: url('../../public/assets/img/items/1.png')"></div>
+                <?php if ($nextPage) : ?>
+                    <div class="row row-cols-auto">
+                        <?php foreach ($unequippedItems as $unequippedItem) : ?>
+                            <div class="col text-start separate-column">
+                                <div class="item border rounded-3 bg-danger"
+                                     style="background-image: url('../../public/assets/img/items/<?= $unequippedItem->getItem()->getImage() ?>.png')"></div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div class="alert alert-danger text-center mb-3 w-100" role="alert">
+                        Nenhum item no inventário.
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="card-footer bg-light py-2">
                 <nav aria-label="Page navigation example">
@@ -86,12 +116,14 @@ include('components/title.php');
                         <li class="page-item active">
                             <span class="page-link"><?= $page ?></span>
                         </li>
-                        <li class="page-item" id="inventory-next-page">
-                            <a class="page-link" href="?action=inventory&page=<?= $page + 1 ?>" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Próximo</span>
-                            </a>
-                        </li>
+                        <?php if ($nextPage) : ?>
+                            <li class="page-item">
+                                <a class="page-link" href="?action=inventory&page=<?= $page + 1 ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Próximo</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
